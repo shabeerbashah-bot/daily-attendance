@@ -1127,7 +1127,7 @@
 
     function updateDynamicGreeting() {
       const hour = new Date().getHours();
-      let greetKey = 'greetingNight'; // Default for Night (9 PM to 5 AM)
+      let greetKey = 'greetingNight'; 
       if (hour >= 5 && hour < 12) greetKey = 'greetingMorning';
       else if (hour >= 12 && hour < 17) greetKey = 'greetingAfternoon';
       else if (hour >= 17 && hour < 21) greetKey = 'greetingEvening';
@@ -1319,34 +1319,27 @@
     }
 
     // ------------------------------------------------------------
-    // Live ID Validation & Login
+    // Live ID Validation (Real-time Auto Check) & Login
     // ------------------------------------------------------------
     const empIdInput = document.getElementById('empId');
     const loginBtn = document.getElementById('loginBtn');
     const liveVal = document.getElementById('liveValidation');
+    
+    let typingTimer;
+    const doneTypingInterval = 500; // 0.5 seconds
 
-    // Hide button if user starts typing again
-    empIdInput.addEventListener('input', function() {
-      loginBtn.classList.remove('show-btn');
-      liveVal.textContent = '';
-      liveVal.className = 'live-val';
-      setLoginMessage(null, 'info');
-    });
-
-    // Validate on blur (when cursor moves away)
-    empIdInput.addEventListener('blur', async function() {
-      const id = this.value.trim().toUpperCase();
+    async function validateId() {
+      const id = empIdInput.value.trim().toUpperCase();
       if(!id) return;
 
       liveVal.className = 'live-val checking';
       liveVal.innerHTML = `<span style="font-size:16px">⏳</span> ${_t('checking')}`;
       
-      // Wait if background fetch is still running
       while(isPreloading) { await sleep(100); }
       if (!cachedExcelData) await preloadExcel(); 
 
       if (!cachedExcelData) {
-        liveVal.textContent = ''; // Fail silently if file can't load, let normal login handle error
+        liveVal.textContent = ''; 
         return;
       }
 
@@ -1364,24 +1357,45 @@
         }
       }
 
+      // Verify if the input value hasn't changed while checking
+      if (empIdInput.value.trim().toUpperCase() !== id) return;
+
       if (found) {
         liveVal.className = 'live-val valid';
         liveVal.innerHTML = `<span style="font-size:16px">✔</span> ${_t('validId')}`;
-        loginBtn.classList.add('show-btn'); // Smoothly show button
+        loginBtn.classList.add('show-btn'); 
       } else {
         liveVal.className = 'live-val invalid';
         liveVal.innerHTML = `<span style="font-size:16px">✖</span> ${_t('invalidId')}`;
         loginBtn.classList.remove('show-btn');
       }
+    }
+
+    // Trigger on typing with a delay (Debounce)
+    empIdInput.addEventListener('input', function() {
+      loginBtn.classList.remove('show-btn');
+      liveVal.textContent = '';
+      liveVal.className = 'live-val';
+      setLoginMessage(null, 'info');
+
+      clearTimeout(typingTimer);
+      if (this.value.trim()) {
+        typingTimer = setTimeout(validateId, doneTypingInterval);
+      }
+    });
+
+    // Trigger on blur as a fallback
+    empIdInput.addEventListener('blur', function() {
+      clearTimeout(typingTimer);
+      if (this.value.trim()) validateId();
     });
 
     // Intercept Enter key
     empIdInput.addEventListener('keydown', function (e) {
       if (e.key === 'Enter') {
         e.preventDefault();
-        // Only allow login if button is visible (Valid ID)
         if(loginBtn.classList.contains('show-btn')) login();
-        else this.blur(); // Trigger validation manually
+        else this.blur(); 
       }
     });
 
@@ -1513,7 +1527,7 @@
     function showDashboard() {
       document.getElementById('loginSection').style.display = 'none';
       document.getElementById('dashboardSection').style.display = 'block';
-      document.getElementById('mainNavbar').style.display = 'block'; // Show Navbar
+      document.getElementById('mainNavbar').style.display = 'block'; 
       window.scrollTo(0, 0);
       renderDashboard();
       startSessionTimer();
@@ -1808,7 +1822,7 @@
       accountVisible = false;
       
       document.getElementById('dashboardSection').style.display = 'none';
-      document.getElementById('mainNavbar').style.display = 'none'; // Hide Navbar again
+      document.getElementById('mainNavbar').style.display = 'none';
       document.getElementById('loginSection').style.display = 'flex';
       document.getElementById('empId').focus();
     }

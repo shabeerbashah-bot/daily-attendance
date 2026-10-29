@@ -208,7 +208,7 @@
       letter-spacing: 0.2px;
     }
     .login-accent { width: 44px; height: 4px; background: #3182ce; border-radius: 2px; margin-bottom: 14px; }
-    .login-subtitle { margin: 0 0 35px 0; font-size: 14px; color: #718096; line-height: 1.6; }
+    .login-subtitle { margin: 0 0 30px 0; font-size: 14px; color: #718096; line-height: 1.6; }
     
     /* Floating Input Animation with Inline Validation */
     .floating-input-group {
@@ -217,7 +217,7 @@
     }
     .floating-input-group input {
       width: 100%;
-      padding: 15px 80px 10px 5px; /* Added right padding for validation text */
+      padding: 15px 85px 10px 5px; /* Added right padding for validation text */
       font-size: 18px;
       font-weight: 500;
       color: #1a202c;
@@ -267,7 +267,7 @@
     .input-status.invalid { color: #e53e3e; }
     .input-status.checking { color: #3182ce; }
 
-    /* Password Group */
+    /* Password Group & Highlighted Hint Box */
     #pwdGroup {
       display: none;
       animation: fadeInDown 0.4s ease forwards;
@@ -276,12 +276,20 @@
       0% { opacity: 0; transform: translateY(-10px); }
       100% { opacity: 1; transform: translateY(0); }
     }
+    
+    /* New Beautiful Hint Box */
     .password-hint {
-      font-size: 11.5px;
-      color: #a0aec0;
-      margin-top: -15px;
+      font-size: 12.5px;
+      color: #2d3748;
+      font-weight: 500;
+      margin-top: -10px;
       margin-bottom: 25px;
-      line-height: 1.4;
+      line-height: 1.5;
+      background: #ebf8ff;
+      padding: 10px 14px;
+      border-radius: 6px;
+      border-left: 4px solid #3182ce;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
     }
 
     /* Animated Hidden Login Button */
@@ -720,11 +728,12 @@
               <label for="empPwd" data-i18n="password">Password</label>
               <div id="pwdStatus" class="input-status"></div>
             </div>
-            <div class="password-hint" data-i18n="passwordHint">Hint: First 4 letters of your name + Birth Year (e.g., THIL1997, RAM1995)</div>
+            <!-- Beautiful Highlighted Hint Box -->
+            <div class="password-hint" data-i18n="passwordHint">Hint: First 4 letters of your name + Birth Year (e.g., SIVA1995, ARUN1992)</div>
           </div>
           
           <!-- Hidden Button (Shows only if ID and Password are Valid) -->
-          <button type="button" class="login-btn" id="loginBtn" onclick="login()" data-i18n="viewProfile">Continue</button>
+          <button type="button" class="login-btn" id="continueBtn" onclick="executeLogin()" data-i18n="viewProfile">Continue</button>
           <div id="loginError" class="info"></div>
         </div>
       </div>
@@ -952,7 +961,7 @@
         idPlaceholder: 'Enter Employee ID',
         employeeId: 'Employee ID',
         password: 'Password',
-        passwordHint: 'Hint: First 4 letters of your name + Birth Year (e.g., THIL1997, RAM1995)',
+        passwordHint: 'Hint: First 4 letters of your name + Birth Year (e.g., SIVA1995, ARUN1992)',
         viewProfile: 'Continue',
         validId: 'Verified',
         invalidId: 'Invalid',
@@ -979,7 +988,7 @@
         secBasic: '1. Basic Information',
         empName: 'Employee Name',
         status: 'Status',
-        dob: 'Date of Birth (DOB)',
+        dob: 'Date of Birth (DOJ)',
         esi: 'ESI Number',
         secContact: '2. Contact Information',
         mobile: 'Mobile Number',
@@ -1033,7 +1042,7 @@
         idPlaceholder: 'உங்கள் ஊழியர் ID-ஐ உள்ளிடவும்',
         employeeId: 'ஊழியர் ID',
         password: 'பாஸ்வேர்ட்',
-        passwordHint: 'குறிப்பு: உங்கள் பெயரின் முதல் 4 எழுத்துக்கள் + பிறந்த வருடம் (உ-ம்: THIL1997, RAM1995)',
+        passwordHint: 'குறிப்பு: உங்கள் பெயரின் முதல் 4 எழுத்துக்கள் + பிறந்த வருடம் (உ-ம்: SIVA1995, ARUN1992)',
         viewProfile: 'தொடரவும்',
         validId: 'சரியானது',
         invalidId: 'தவறானது',
@@ -1114,7 +1123,7 @@
         idPlaceholder: 'अपना कर्मचारी ID दर्ज करें',
         employeeId: 'कर्मचारी ID',
         password: 'पासवर्ड',
-        passwordHint: 'संकेत: आपके नाम के पहले 4 अक्षर + जन्म वर्ष (उदा: THIL1997, RAM1995)',
+        passwordHint: 'संकेत: आपके नाम के पहले 4 अक्षर + जन्म वर्ष (उदा: SIVA1995, ARUN1992)',
         viewProfile: 'जारी रखें',
         validId: 'सत्यापित',
         invalidId: 'अमान्य',
@@ -1503,6 +1512,125 @@
     }
 
     // ------------------------------------------------------------
+    // Date shown on dashboard
+    // ------------------------------------------------------------
+    function setDate() {
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      let text;
+      try {
+        text = new Date().toLocaleDateString(_t('locale'), options);
+      } catch (e) {
+        text = new Date().toLocaleDateString('en-US', options);
+      }
+      document.getElementById('currentDate').textContent = text;
+    }
+
+    // ------------------------------------------------------------
+    // Modal
+    // ------------------------------------------------------------
+    function openStaffModal() {
+      document.getElementById('staffModal').style.display = 'flex';
+    }
+    function closeStaffModal() {
+      document.getElementById('staffModal').style.display = 'none';
+    }
+    function overlayClick(e) {
+      if (e.target.id === 'staffModal') closeStaffModal();
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { closeStaffModal(); closePdfChoice(); }
+    });
+
+    function toggleAccount() {
+      accountVisible = !accountVisible;
+      document.getElementById('modalAccNo').textContent = accountVisible ? currentAccountFull : currentAccountMasked;
+      document.getElementById('toggleAccBtn').textContent = accountVisible ? _t('hideAcc') : _t('showAcc');
+    }
+
+    // ------------------------------------------------------------
+    // Copy buttons
+    // ------------------------------------------------------------
+    function getCopyText(btn) {
+      const src = btn.getAttribute('data-copy');
+      if (src === 'account') return currentAccountFull;
+      const el = document.getElementById(src);
+      const txt = el ? el.textContent.trim() : '';
+      return txt === '---' ? '' : txt;
+    }
+
+    function updateCopyButtons() {
+      document.querySelectorAll('.copy-btn').forEach(function (btn) {
+        btn.style.display = getCopyText(btn) ? 'inline-flex' : 'none';
+      });
+    }
+
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      let ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+      document.body.removeChild(ta);
+      return ok;
+    }
+
+    async function copyText(text) {
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          return true;
+        }
+      } catch (e) { }
+      return fallbackCopy(text);
+    }
+
+    document.querySelectorAll('.copy-btn').forEach(function (btn) {
+      btn.addEventListener('click', async function () {
+        const text = getCopyText(btn);
+        if (!text) return;
+        const ok = await copyText(text);
+        if (!ok) return;
+        btn.classList.add('copied');
+        btn.setAttribute('title', _t('copied'));
+        btn.setAttribute('aria-label', _t('copied'));
+        setTimeout(function () {
+          btn.classList.remove('copied');
+          btn.setAttribute('title', _t('copy'));
+          btn.setAttribute('aria-label', _t('copy'));
+        }, 1500);
+      });
+    });
+
+    // ------------------------------------------------------------
+    // Loading screen
+    // ------------------------------------------------------------
+    const LOADING_MIN_MS = 5000;
+    let loginBusy = false;
+
+    function sleep(ms) {
+      return new Promise(function (resolve) { setTimeout(resolve, ms); });
+    }
+
+    function showLoadingOverlay() {
+      document.getElementById('loadingWelcome').classList.remove('in');
+      document.getElementById('loadingName').textContent = '';
+      document.getElementById('loadingOverlay').classList.add('show');
+    }
+
+    function showLoadingName(name) {
+      document.getElementById('loadingName').textContent = name;
+      document.getElementById('loadingWelcome').classList.add('in');
+    }
+
+    function hideLoadingOverlay() {
+      document.getElementById('loadingOverlay').classList.remove('show');
+    }
+
+    // ------------------------------------------------------------
     // Live Inline ID & Password Validation
     // ------------------------------------------------------------
     const empIdInput = document.getElementById('empId');
@@ -1510,7 +1638,7 @@
     const pwdGroup = document.getElementById('pwdGroup');
     const empPwdInput = document.getElementById('empPwd');
     const pwdStatus = document.getElementById('pwdStatus');
-    const loginBtn = document.getElementById('loginBtn');
+    const continueBtn = document.getElementById('continueBtn');
     
     let typingTimer;
     const doneTypingInterval = 2500; 
@@ -1520,11 +1648,12 @@
       if(!id) return;
 
       idStatus.className = 'input-status checking show';
+      idStatus.style.opacity = '1';
       idStatus.innerHTML = `⏳ ${_t('checking')}`;
       pwdGroup.style.display = 'none';
       empPwdInput.value = '';
       pwdStatus.className = 'input-status';
-      loginBtn.classList.remove('show-btn');
+      continueBtn.classList.remove('show-btn');
       
       while(isPreloading) { await sleep(100); }
       if (!cachedMasterData) await preloadSystemData(); 
@@ -1584,10 +1713,11 @@
 
     empIdInput.addEventListener('input', function() {
       idStatus.className = 'input-status';
+      idStatus.style.opacity = '1';
       pwdGroup.style.display = 'none';
       empPwdInput.value = '';
       pwdStatus.className = 'input-status';
-      loginBtn.classList.remove('show-btn');
+      continueBtn.classList.remove('show-btn');
       setLoginMessage(null, 'info');
 
       clearTimeout(typingTimer);
@@ -1607,7 +1737,7 @@
       idStatus.style.opacity = '0';
       
       const pwd = this.value.trim().toUpperCase();
-      loginBtn.classList.remove('show-btn');
+      continueBtn.classList.remove('show-btn');
       
       if(pwd.length === 0) {
         pwdStatus.className = 'input-status';
@@ -1617,7 +1747,7 @@
       if (pwd === expectedPassword) {
         pwdStatus.className = 'input-status valid show';
         pwdStatus.innerHTML = `✔ ${_t('validId')}`;
-        loginBtn.classList.add('show-btn');
+        continueBtn.classList.add('show-btn');
       } else {
         // Only show invalid cross if they've typed at least 5 chars (to prevent immediate red cross)
         if(pwd.length >= 5) {
@@ -1632,19 +1762,19 @@
     empPwdInput.addEventListener('keydown', function (e) {
       if (e.key === 'Enter') {
         e.preventDefault();
-        if(loginBtn.classList.contains('show-btn')) login();
+        if(continueBtn.classList.contains('show-btn')) executeLogin();
         else this.blur(); 
       }
     });
 
     // ------------------------------------------------------------
-    // Final Login (Fetch Attendance & Show Dashboard)
+    // Final Login Execution (Fetch Attendance & Show Dashboard)
     // ------------------------------------------------------------
-    async function login() {
+    async function executeLogin() {
       if (loginBusy || !currentData || !currentData.masterRow) return;
       
       loginBusy = true;
-      loginBtn.disabled = true;
+      continueBtn.disabled = true;
       setLoginMessage(null, 'info');
       const startedAt = Date.now();
       let success = false;
@@ -1693,7 +1823,7 @@
       } finally {
         if (!success) hideLoadingOverlay();
         loginBusy = false;
-        loginBtn.disabled = false;
+        continueBtn.disabled = false;
       }
     }
 
@@ -2095,10 +2225,10 @@
       document.getElementById('empPwd').value = '';
       
       document.getElementById('idStatus').className = 'input-status';
-      document.getElementById('idStatus').style.opacity = '1'; // Reset opacity
+      document.getElementById('idStatus').style.opacity = '1'; 
       document.getElementById('pwdStatus').className = 'input-status';
       document.getElementById('pwdGroup').style.display = 'none';
-      document.getElementById('loginBtn').classList.remove('show-btn');
+      document.getElementById('continueBtn').classList.remove('show-btn');
       
       setLoginMessage(null, 'info');
       document.getElementById('progressFill').style.width = '0%';

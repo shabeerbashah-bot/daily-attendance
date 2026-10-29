@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Geekay Human Resources Pvt Ltd - Employee Portal</title>
 
-  <!-- Fonts: Poppins for English, Noto Sans Tamil for Tamil -->
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Fonts: Poppins for English, Noto Sans Tamil for Tamil, Noto Sans Devanagari for Hindi -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Libraries: Excel reading and PDF generation -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -16,7 +16,7 @@
     * { box-sizing: border-box; }
 
     body {
-      font-family: 'Poppins', 'Noto Sans Tamil', Arial, sans-serif;
+      font-family: 'Poppins', 'Noto Sans Tamil', 'Noto Sans Devanagari', Arial, sans-serif;
       background: #f4f7f9;
       color: #2d3748;
       margin: 0;
@@ -50,7 +50,8 @@
       background: #ffffff;
       color: #4a5568;
       padding: 8px 16px;
-      font-size: 14px;
+      min-width: 48px;
+      font-size: 15px;
       font-weight: 600;
       cursor: pointer;
     }
@@ -310,8 +311,9 @@
   <div class="login-section" id="loginSection">
     <div class="login-box">
       <div class="lang-switch login-lang" role="group" aria-label="Language">
-        <button type="button" class="lang-btn" data-lang="en">English</button>
-        <button type="button" class="lang-btn" data-lang="ta">தமிழ்</button>
+        <button type="button" class="lang-btn" data-lang="en" title="English" aria-label="English">E</button>
+        <button type="button" class="lang-btn" data-lang="ta" title="தமிழ்" aria-label="தமிழ்">த</button>
+        <button type="button" class="lang-btn" data-lang="hi" title="हिन्दी" aria-label="हिन्दी">हि</button>
       </div>
       <h2 data-i18n="portalTitle">Employee Portal</h2>
       <input type="text" id="empId" autocomplete="off" data-i18n-placeholder="idPlaceholder" placeholder="Enter Employee ID">
@@ -325,8 +327,9 @@
 
     <div class="dashboard-lang-bar">
       <div class="lang-switch" role="group" aria-label="Language">
-        <button type="button" class="lang-btn" data-lang="en">English</button>
-        <button type="button" class="lang-btn" data-lang="ta">தமிழ்</button>
+        <button type="button" class="lang-btn" data-lang="en" title="English" aria-label="English">E</button>
+        <button type="button" class="lang-btn" data-lang="ta" title="தமிழ்" aria-label="தமிழ்">த</button>
+        <button type="button" class="lang-btn" data-lang="hi" title="हिन्दी" aria-label="हिन्दी">हि</button>
       </div>
     </div>
 
@@ -475,9 +478,9 @@
 
     // ------------------------------------------------------------
     // Translations
-    // To add another language later (for example Hindi), copy the "en"
-    // block, rename it (for example "hi"), translate the values, and add
-    // a button with data-lang="hi" in the two language switches above.
+    // To add another language later, copy the "en" block, rename it
+    // (for example "te"), translate the values, and add a button with
+    // data-lang="te" in the two language switches above.
     // ------------------------------------------------------------
     const I18N = {
       en: {
@@ -591,6 +594,62 @@
         msgEmptyBook: 'வருகைக் கோப்பு காலியாக உள்ளது. தயவுசெய்து HR / நிர்வாகத் துறையைத் தொடர்பு கொள்ளவும்.',
         msgSystem: 'கணினிப் பிழை. தரவை ஏற்ற முடியவில்லை. மீண்டும் முயற்சிக்கவும்.',
         msgPdf: 'PDF உருவாக்க முடியவில்லை. மீண்டும் முயற்சிக்கவும்.'
+      },
+      hi: {
+        locale: 'hi-IN',
+        months: ['जन॰', 'फ़र॰', 'मार्च', 'अप्रैल', 'मई', 'जून', 'जुल॰', 'अग॰', 'सित॰', 'अक्टू॰', 'नव॰', 'दिस॰'],
+        portalTitle: 'कर्मचारी पोर्टल',
+        idPlaceholder: 'अपना कर्मचारी ID दर्ज करें',
+        viewProfile: 'विवरण देखें',
+        welcome: 'फिर से स्वागत है,',
+        viewStaff: 'कर्मचारी विवरण',
+        downloadPdf: 'PDF डाउनलोड करें',
+        logout: 'लॉगआउट',
+        aboutEmployee: 'कर्मचारी के बारे में जानकारी',
+        employeeId: 'कर्मचारी ID',
+        doj: 'कार्यग्रहण की तारीख (DOJ)',
+        lwd: 'अंतिम कार्य दिवस (LWD)',
+        totalWorking: 'कुल कार्य दिवस',
+        totalPresent: 'कुल उपस्थित दिन',
+        totalAbsent: 'कुल अनुपस्थित दिन',
+        attPercent: 'उपस्थिति प्रतिशत',
+        attOverview: 'उपस्थिति का विवरण',
+        noteLabel: 'नोट:',
+        noteText: 'अपनी उपस्थिति में किसी भी गड़बड़ी के लिए या अधिक जानकारी के लिए कृपया HR / एडमिन विभाग से संपर्क करें।',
+        staffTitle: 'कर्मचारी के व्यक्तिगत विवरण',
+        secBasic: '1. बुनियादी जानकारी',
+        empName: 'कर्मचारी का नाम',
+        status: 'स्थिति',
+        dob: 'जन्म तिथि (DOB)',
+        esi: 'ESI नंबर',
+        secContact: '2. संपर्क जानकारी',
+        mobile: 'मोबाइल नंबर',
+        email: 'ईमेल पता',
+        secBank: '3. बैंक विवरण',
+        bankName: 'बैंक का नाम',
+        accNo: 'बैंक खाता संख्या',
+        ifsc: 'IFSC कोड',
+        showAcc: 'पूरा नंबर दिखाएँ',
+        hideAcc: 'नंबर छिपाएँ',
+        active: 'कार्यरत',
+        inactive: 'कार्यरत नहीं',
+        lblPresent: 'उपस्थित',
+        lblAbsent: 'अनुपस्थित',
+        lblHalf: 'आधा दिन',
+        lblLeave: 'छुट्टी',
+        lblWeeklyOff: 'साप्ताहिक अवकाश',
+        lblHoliday: 'अवकाश दिवस',
+        lblOff: 'ऑफ़ डे',
+        noAttendance: 'अभी तक कोई उपस्थिति दर्ज नहीं है।',
+        msgEnterId: 'कृपया अपना कर्मचारी ID दर्ज करें।',
+        msgFileProtocol: 'इस पेज को वेब सर्वर (होस्टिंग) से खोलें। कंप्यूटर की फ़ाइल के रूप में खोलने पर ब्राउज़र attendance.xlsx को पढ़ने नहीं देता।',
+        msgAuth: 'जाँच हो रही है...',
+        msgIdColumn: 'Excel फ़ाइल में कर्मचारी ID कॉलम नहीं मिला। कृपया HR / एडमिन विभाग से संपर्क करें।',
+        msgInvalid: 'गलत ID। आपका रिकॉर्ड नहीं मिला।',
+        msgFileNotFound: 'attendance.xlsx फ़ाइल नहीं मिली। कृपया HR / एडमिन विभाग से संपर्क करें।',
+        msgEmptyBook: 'उपस्थिति फ़ाइल खाली है। कृपया HR / एडमिन विभाग से संपर्क करें।',
+        msgSystem: 'सिस्टम में त्रुटि। डेटा लोड नहीं हो सका। कृपया फिर से प्रयास करें।',
+        msgPdf: 'PDF नहीं बन सका। कृपया फिर से प्रयास करें।'
       }
     };
 
@@ -710,7 +769,7 @@
     const _t = t;   // short alias; t('months') returns the month-name list
 
     function applyStaticTranslations() {
-      document.documentElement.lang = currentLang === 'ta' ? 'ta' : 'en';
+      document.documentElement.lang = currentLang;
 
       document.querySelectorAll('[data-i18n]').forEach(function (el) {
         el.textContent = _t(el.getAttribute('data-i18n'));

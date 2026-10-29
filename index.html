@@ -121,31 +121,24 @@
 
     .action-buttons {
       display: flex;
+      flex-wrap: wrap;
       gap: 10px;
     }
-    .download-btn {
-      background: #3182ce;
-      color: white;
+    .btn {
       border: none;
       padding: 10px 20px;
       border-radius: 8px;
       font-weight: 600;
       cursor: pointer;
       font-family: 'Poppins', sans-serif;
+      transition: 0.3s;
     }
-    .download-btn:hover { background: #2b6cb0; }
-    
-    .logout-btn {
-      background: #edf2f7;
-      color: #4a5568;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: 'Poppins', sans-serif;
-    }
-    .logout-btn:hover { background: #e2e8f0; color: #1a202c; }
+    .btn-primary { background: #004080; color: white; }
+    .btn-primary:hover { background: #002d59; }
+    .btn-secondary { background: #3182ce; color: white; }
+    .btn-secondary:hover { background: #2b6cb0; }
+    .btn-light { background: #edf2f7; color: #4a5568; }
+    .btn-light:hover { background: #e2e8f0; color: #1a202c; }
 
     /* About Section */
     .about-card {
@@ -223,12 +216,77 @@
     .day-card.present .status-text { color: #38a169; }
     .day-card.absent .status-text { color: #e53e3e; }
 
-    /* Responsive adjustments */
+    /* Footer Note */
+    .hr-footer {
+      margin-top: 40px;
+      padding: 15px 20px;
+      background: #fffaf0;
+      border-left: 5px solid #dd6b20;
+      border-radius: 8px;
+      color: #9c4221;
+      font-size: 14px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Pop-up Modal Design (Staff Details) */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: white;
+      width: 90%;
+      max-width: 600px;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+    .close-modal {
+      position: absolute;
+      top: 20px; right: 20px;
+      background: #edf2f7;
+      border: none;
+      border-radius: 50%;
+      width: 35px; height: 35px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #4a5568;
+      cursor: pointer;
+      display: flex; justify-content: center; align-items: center;
+    }
+    .close-modal:hover { background: #e2e8f0; color: #e53e3e; }
+    
+    .modal-header { font-size: 22px; color: #004080; font-weight: 700; margin-bottom: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
+    .modal-section { margin-bottom: 25px; }
+    .modal-section-title { font-size: 16px; color: #4a5568; font-weight: 600; margin-bottom: 15px; background: #f7fafc; padding: 8px 12px; border-radius: 6px; }
+    .modal-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+    
+    .status-badge {
+      padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 600;
+    }
+    .status-active { background: #c6f6d5; color: #22543d; }
+    .status-inactive { background: #fed7d7; color: #822727; }
+
+    /* Responsive */
     @media (max-width: 600px) {
       .dashboard-header { flex-direction: column; align-items: flex-start; }
-      .action-buttons { width: 100%; flex-direction: column; }
+      .action-buttons { width: 100%; }
+      .btn { width: 100%; }
       .calendar-grid { grid-template-columns: repeat(2, 1fr); }
       .about-details { flex-direction: column; gap: 15px; }
+      .modal-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -238,6 +296,7 @@
     Geekay Human Resources Pvt Ltd
   </div>
 
+  <!-- Login Section -->
   <div class="login-section" id="loginSection">
     <div class="login-box">
       <h2>Employee Portal</h2>
@@ -247,9 +306,9 @@
     </div>
   </div>
 
+  <!-- Dashboard Section -->
   <div class="dashboard-section" id="dashboardSection">
     
-    <!-- Printable Area Wrapper -->
     <div id="printArea">
       
       <div class="dashboard-header">
@@ -258,8 +317,10 @@
           <p class="current-date" id="currentDate">Loading date...</p>
         </div>
         <div class="action-buttons" id="actionButtons">
-          <button class="download-btn" onclick="downloadPDF()">Download PDF</button>
-          <button class="logout-btn" onclick="logout()">Logout</button>
+          <!-- New Button for Staff Details -->
+          <button class="btn btn-primary" onclick="openStaffModal()">View Staff Details</button>
+          <button class="btn btn-secondary" onclick="downloadPDF()">Download PDF</button>
+          <button class="btn btn-light" onclick="logout()">Logout</button>
         </div>
       </div>
 
@@ -281,7 +342,7 @@
         </div>
       </div>
 
-      <!-- Analytics -->
+      <!-- Analytics Section -->
       <div class="analytics-grid">
         <div class="stat-card">
           <div class="stat-title">Total Working Days</div>
@@ -309,17 +370,103 @@
         <!-- Generated by JS -->
       </div>
       
+      <!-- HR Footer Note -->
+      <div class="hr-footer">
+        <strong>Note:</strong> In case of any discrepancies in your attendance or for further inquiries, please feel free to contact the HR / Admin Department.
+      </div>
+      
     </div> <!-- End Print Area -->
+  </div>
 
+  <!-- Staff Detail Pop-up Modal -->
+  <div class="modal-overlay" id="staffModal">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeStaffModal()">×</button>
+      <div class="modal-header">Staff Personal Details</div>
+      
+      <!-- Basic Info -->
+      <div class="modal-section">
+        <div class="modal-section-title">1. Basic Information</div>
+        <div class="modal-grid">
+          <div class="detail-item">
+            <span class="detail-label">Employee Name</span>
+            <span class="detail-value" id="modalName">---</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Employee ID</span>
+            <span class="detail-value" id="modalId">---</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Status</span>
+            <span class="detail-value"><span class="status-badge status-active" id="modalStatus">Active</span></span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Date of Birth (DOB)</span>
+            <span class="detail-value" id="modalDob">---</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Last Working Day (LWD)</span>
+            <span class="detail-value" id="modalLwd">---</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">ESI Number</span>
+            <span class="detail-value" id="modalEsi">---</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Contact Info -->
+      <div class="modal-section">
+        <div class="modal-section-title">2. Contact Information</div>
+        <div class="modal-grid">
+          <div class="detail-item">
+            <span class="detail-label">Mobile Number</span>
+            <span class="detail-value" id="modalMobile">---</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Email ID</span>
+            <span class="detail-value" id="modalEmail">---</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Bank Details -->
+      <div class="modal-section">
+        <div class="modal-section-title">3. Bank Details</div>
+        <div class="modal-grid">
+          <div class="detail-item">
+            <span class="detail-label">Bank Name</span>
+            <span class="detail-value" id="modalBankName">---</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Account Number</span>
+            <span class="detail-value" id="modalAccNo">---</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">IFSC Code</span>
+            <span class="detail-value" id="modalIfsc">---</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 
   <script>
-    // Set dynamic current date on load
+    // Set dynamic current date
     function setDate() {
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
       document.getElementById('currentDate').innerText = new Date().toLocaleDateString('en-US', options);
     }
     setDate();
+
+    // Modal Functions
+    function openStaffModal() {
+      document.getElementById('staffModal').style.display = 'flex';
+    }
+    function closeStaffModal() {
+      document.getElementById('staffModal').style.display = 'none';
+    }
 
     async function login() {
       let id = document.getElementById('empId').value.trim().toUpperCase();
@@ -375,10 +522,14 @@
       document.getElementById('displayId').innerText = empId;
       
       let doj = record["DOJ"];
-      document.getElementById('displayDoj').innerText = (doj && String(doj).trim() !== "") ? doj : "-";
-      
       let lwd = record["LWD"];
+      document.getElementById('displayDoj').innerText = (doj && String(doj).trim() !== "") ? doj : "-";
       document.getElementById('displayLwd').innerText = (lwd && String(lwd).trim() !== "") ? lwd : "-";
+
+      // Temporary Mapping for Modal (Until Master Data is linked)
+      document.getElementById('modalName').innerText = empName;
+      document.getElementById('modalId').innerText = empId;
+      document.getElementById('modalLwd').innerText = (lwd && String(lwd).trim() !== "") ? lwd : "-";
 
       let ignoreColumns = ["User/Employee Id", "Display Name", "Status", "DOJ", "LWD", "Vendor Name", "DOB"];
       let gridHtml = "";
@@ -422,7 +573,7 @@
       }
       document.getElementById('calendarGrid').innerHTML = gridHtml;
 
-      // Update Analytics UI
+      // Update Analytics
       document.getElementById('statTotal').innerText = totalCount;
       document.getElementById('statPresent').innerText = presentCount;
       document.getElementById('statAbsent').innerText = absentCount;

@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
   <title>Geekay Human Resources Pvt. Ltd. - Employee Portal</title>
 
   <!-- Fonts: Poppins for English, Noto Sans Tamil for Tamil, Noto Sans Devanagari for Hindi -->
@@ -25,7 +26,7 @@
     }
     button, input { font-family: inherit; }
 
-    /* Navbar - Hidden on Login, Shown on Dashboard */
+    /* ---------- Navbar (hidden on the login page, shown on the dashboard) ---------- */
     .navbar {
       display: none;
       position: sticky;
@@ -42,7 +43,7 @@
       letter-spacing: 0.3px;
     }
 
-    /* Session timer */
+    /* ---------- Session timer ---------- */
     .session-timer {
       position: absolute;
       right: 14px;
@@ -59,7 +60,7 @@
     }
     .session-timer.low { background: #fed7d7; color: #c53030; }
 
-    /* Language switch */
+    /* ---------- Language switch (plain text with underline) ---------- */
     .lang-switch { display: inline-flex; align-items: center; gap: 20px; }
     .lang-btn {
       border: none;
@@ -74,15 +75,15 @@
     }
     .lang-btn.active { color: #3182ce; border-bottom-color: #3182ce; }
     .lang-btn:focus-visible { outline: 2px solid #3182ce; outline-offset: 2px; }
-
     .dashboard-lang-bar { display: flex; justify-content: flex-end; margin-bottom: 15px; }
 
-    /* Login Section - Premium Split-Screen Design with Edge Background */
+    /* ---------- Login ---------- */
     .login-section {
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
+      min-height: 100dvh;
       padding: 20px;
       background: #f4f7f9;
       position: relative;
@@ -99,8 +100,6 @@
       position: relative;
       z-index: 10;
     }
-
-    /* Left Brand Panel */
     .login-brand-panel {
       flex: 1;
       background: linear-gradient(135deg, #004080 0%, #3182ce 100%);
@@ -111,20 +110,10 @@
       padding: 50px;
       text-align: left;
     }
-    .login-brand-panel h1 {
-      font-size: 32px;
-      font-weight: 700;
-      line-height: 1.3;
-      margin-bottom: 20px;
-    }
-    .login-brand-panel p {
-      font-size: 16px;
-      font-weight: 400;
-      opacity: 0.9;
-      line-height: 1.6;
-    }
-    
-    /* Full Screen Celestial Animations (Background) */
+    .login-brand-panel h1 { font-size: 32px; font-weight: 700; line-height: 1.3; margin: 0 0 20px 0; }
+    .login-brand-panel p { font-size: 16px; font-weight: 400; opacity: 0.9; line-height: 1.6; margin: 0; }
+
+    /* Background animation (sun / moon glow) */
     .celestial-container {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -136,38 +125,26 @@
       width: 400px;
       height: 400px;
       border-radius: 50%;
-      filter: blur(90px);
+      filter: blur(70px);
       opacity: 0.5;
+      will-change: transform, opacity;
     }
-    .orb-morning {
-      background: radial-gradient(circle, #ffd700, #ff8c00);
-      animation: animMorning 15s ease-out forwards;
-    }
+    .orb-morning { background: radial-gradient(circle, #ffd700, #ff8c00); animation: animMorning 15s ease-out forwards; }
     @keyframes animMorning {
       0% { bottom: -200px; left: -200px; opacity: 0; }
       100% { bottom: 20%; left: -100px; opacity: 0.5; }
     }
-    .orb-afternoon {
-      background: radial-gradient(circle, #fffbe0, #f6e05e);
-      animation: animAfternoon 10s ease-in-out infinite;
-    }
+    .orb-afternoon { background: radial-gradient(circle, #fffbe0, #f6e05e); animation: animAfternoon 10s ease-in-out infinite; }
     @keyframes animAfternoon {
       0%, 100% { top: -200px; left: 50%; transform: translateX(-50%); opacity: 0.4; }
       50% { top: -100px; left: 50%; transform: translateX(-50%); opacity: 0.6; }
     }
-    .orb-evening {
-      background: radial-gradient(circle, #ed8936, #c53030);
-      animation: animEvening 15s ease-out forwards;
-    }
+    .orb-evening { background: radial-gradient(circle, #ed8936, #c53030); animation: animEvening 15s ease-out forwards; }
     @keyframes animEvening {
       0% { top: 20%; right: -150px; opacity: 0.6; }
       100% { top: 80%; right: -200px; opacity: 0.3; }
     }
-    .orb-night {
-      background: radial-gradient(circle, #e2e8f0, #718096);
-      width: 350px; height: 350px;
-      animation: animNight 12s ease-in-out infinite;
-    }
+    .orb-night { background: radial-gradient(circle, #e2e8f0, #718096); width: 350px; height: 350px; animation: animNight 12s ease-in-out infinite; }
     @keyframes animNight {
       0%, 100% { top: 5%; right: 5%; transform: translateY(0); opacity: 0.4; }
       50% { top: 5%; right: 5%; transform: translateY(30px); opacity: 0.6; }
@@ -184,7 +161,6 @@
       50% { opacity: 0.8; transform: scale(1); }
     }
 
-    /* Login Form Panel */
     .login-form-panel {
       flex: 1;
       padding: 50px;
@@ -193,40 +169,26 @@
       justify-content: center;
       background: #ffffff;
     }
-    .login-form-inner {
-      max-width: 360px;
-      width: 100%;
-      margin: 0 auto;
-    }
+    .login-form-inner { max-width: 360px; width: 100%; margin: 0 auto; }
     .login-lang { display: flex; justify-content: flex-end; margin-bottom: 25px; }
-    
-    .login-form-inner h2 {
-      margin: 0 0 6px 0;
-      color: #1a202c;
-      font-size: 26px;
-      font-weight: 700;
-      letter-spacing: 0.2px;
-    }
+    .login-form-inner h2 { margin: 0 0 6px 0; color: #1a202c; font-size: 26px; font-weight: 700; letter-spacing: 0.2px; }
     .login-accent { width: 44px; height: 4px; background: #3182ce; border-radius: 2px; margin-bottom: 14px; }
     .login-subtitle { margin: 0 0 30px 0; font-size: 14px; color: #718096; line-height: 1.6; }
-    
-    /* Floating Input Animation with Inline Validation */
-    .floating-input-group {
-      position: relative;
-      margin-bottom: 25px;
-    }
+
+    /* Underline-style inputs with floating label and inline status */
+    .floating-input-group { position: relative; margin-bottom: 25px; }
     .floating-input-group input {
       width: 100%;
-      padding: 15px 85px 10px 5px; /* Added right padding for validation text */
+      padding: 15px 95px 10px 5px;
       font-size: 18px;
       font-weight: 500;
       color: #1a202c;
       border: none;
       border-bottom: 2px solid #cbd5e1;
+      border-radius: 0;
       background: transparent;
       outline: none;
       transition: border-color 0.3s;
-      font-family: 'Poppins', sans-serif;
     }
     .floating-input-group label {
       position: absolute;
@@ -237,9 +199,7 @@
       transition: all 0.3s ease;
       pointer-events: none;
     }
-    .floating-input-group input:focus {
-      border-bottom-color: #3182ce;
-    }
+    .floating-input-group input:focus { border-bottom-color: #3182ce; }
     .floating-input-group input:focus ~ label,
     .floating-input-group input:not(:placeholder-shown) ~ label {
       top: -10px;
@@ -247,8 +207,6 @@
       color: #3182ce;
       font-weight: 600;
     }
-
-    /* Inline Validation Status (Right aligned on underline) */
     .input-status {
       position: absolute;
       right: 0;
@@ -256,43 +214,22 @@
       font-size: 13.5px;
       font-weight: 600;
       pointer-events: none;
-      transition: opacity 0.4s ease;
-      display: flex;
-      align-items: center;
-      gap: 4px;
+      transition: opacity 0.3s ease;
       opacity: 0;
+      white-space: nowrap;
     }
     .input-status.show { opacity: 1; }
     .input-status.valid { color: #38a169; }
     .input-status.invalid { color: #e53e3e; }
     .input-status.checking { color: #3182ce; }
 
-    /* Password Group & Highlighted Hint Box */
-    #pwdGroup {
-      display: none;
-      animation: fadeInDown 0.4s ease forwards;
-    }
+    #pwdGroup { display: none; animation: fadeInDown 0.4s ease forwards; }
     @keyframes fadeInDown {
       0% { opacity: 0; transform: translateY(-10px); }
       100% { opacity: 1; transform: translateY(0); }
     }
-    
-    /* New Beautiful Hint Box */
-    .password-hint {
-      font-size: 12.5px;
-      color: #2d3748;
-      font-weight: 500;
-      margin-top: -10px;
-      margin-bottom: 25px;
-      line-height: 1.5;
-      background: #ebf8ff;
-      padding: 10px 14px;
-      border-radius: 6px;
-      border-left: 4px solid #3182ce;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
-    }
+    .password-hint { font-size: 12.5px; color: #4a5568; font-weight: 500; margin: -10px 0 25px 0; line-height: 1.6; }
 
-    /* Animated Hidden Login Button */
     .login-btn {
       width: 100%;
       padding: 14px;
@@ -309,20 +246,16 @@
       transform: translateY(-10px);
       transition: all 0.4s ease;
     }
-    .login-btn.show-btn {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
+    .login-btn.show-btn { opacity: 1; visibility: visible; transform: translateY(0); }
     .login-btn:hover { background: #2b6cb0; }
     .login-btn:active { transform: scale(0.98); }
     .login-btn:disabled { background: #94a3b8; cursor: not-allowed; transform: none; }
-    
+
     #loginError { margin-top: 15px; font-size: 14px; font-weight: 500; min-height: 20px; text-align: center; }
     #loginError.error { color: #e53e3e; }
     #loginError.info { color: #004080; }
 
-    /* Dashboard */
+    /* ---------- Dashboard ---------- */
     .dashboard-section { display: none; padding: 30px 20px; max-width: 1100px; margin: 0 auto; }
     .dashboard-header {
       display: flex;
@@ -336,10 +269,10 @@
     .welcome-text .name { color: #004080; }
     .current-date { color: #718096; font-size: 15px; font-weight: 500; margin: 8px 0 0 0; }
 
-    /* Pure Text Action Buttons */
+    /* Text-only action buttons */
     .action-buttons { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; }
     .btn {
-      background: transparent !important;
+      background: transparent;
       border: none;
       padding: 4px 2px;
       border-radius: 0;
@@ -348,24 +281,14 @@
       cursor: pointer;
       transition: color 0.2s, border-color 0.2s;
       border-bottom: 2px solid transparent;
-      font-family: 'Poppins', sans-serif;
     }
-    .btn-primary, .btn-secondary {
-      color: #3182ce;
-    }
-    .btn-primary:hover, .btn-secondary:hover {
-      border-bottom-color: #3182ce;
-    }
-    .btn-light {
-      color: #718096;
-    }
-    .btn-light:hover {
-      color: #e53e3e;
-      border-bottom-color: #e53e3e;
-    }
+    .btn-primary, .btn-secondary { color: #3182ce; }
+    .btn-primary:hover, .btn-secondary:hover { border-bottom-color: #3182ce; }
+    .btn-light { color: #718096; }
+    .btn-light:hover { color: #e53e3e; border-bottom-color: #e53e3e; }
     .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn:focus-visible { outline: 2px solid #3182ce; outline-offset: 2px; }
 
-    /* About card */
     .about-card {
       background: white;
       padding: 25px;
@@ -387,7 +310,6 @@
     .detail-label { font-size: 13px; color: #718096; font-weight: 500; margin-bottom: 4px; }
     .detail-value { font-size: 16px; font-weight: 600; color: #2d3748; word-break: break-word; }
 
-    /* Analytics - 20% Reduced Size */
     .analytics-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -409,37 +331,33 @@
     .progress-bar-bg { background: #edf2f7; height: 6px; border-radius: 10px; margin-top: 8px; overflow: hidden; }
     .progress-bar-fill { background: #004080; height: 100%; width: 0%; transition: width 1s ease-in-out; }
 
-    /* Multi-Month Tabs */
+    /* Month tabs: plain text with underline (no boxes) */
     .month-tabs-container {
       display: flex;
-      gap: 12px;
+      gap: 24px;
       overflow-x: auto;
       margin-bottom: 20px;
-      padding-bottom: 10px;
+      padding-bottom: 6px;
       scrollbar-width: thin;
     }
     .month-tab {
-      background: white;
-      border: 1px solid #cbd5e1;
-      border-radius: 20px;
-      padding: 6px 16px;
-      font-size: 14px;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      border-radius: 0;
+      padding: 6px 2px;
+      font-size: 15px;
       font-weight: 600;
-      color: #4a5568;
+      color: #718096;
       cursor: pointer;
       white-space: nowrap;
-      transition: all 0.3s;
-      font-family: 'Poppins', sans-serif;
+      transition: color 0.2s, border-color 0.2s;
     }
-    .month-tab:hover { border-color: #3182ce; color: #3182ce; }
-    .month-tab.active { 
-      background: #3182ce; 
-      color: white; 
-      border-color: #3182ce; 
-      box-shadow: 0 4px 10px rgba(49, 130, 206, 0.3); 
-    }
+    .month-tab:hover { color: #3182ce; }
+    .month-tab.active { color: #3182ce; border-bottom-color: #3182ce; }
+    .month-tab:focus-visible { outline: 2px solid #3182ce; outline-offset: 2px; }
 
-    /* Attendance grid - Desktop */
+    /* Attendance grid */
     .section-title { font-size: 20px; color: #2d3748; margin-bottom: 20px; font-weight: 600; }
     .calendar-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; }
     .day-card {
@@ -449,23 +367,23 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.03);
       text-align: center;
       border-bottom: 4px solid #cbd5e1;
+      min-width: 0;
     }
     .day-card.present { border-bottom-color: #38a169; }
     .day-card.absent { border-bottom-color: #e53e3e; }
     .day-card.half { border-bottom-color: #d69e2e; }
     .day-card.leave { border-bottom-color: #3182ce; }
     .day-card.off { border-bottom-color: #a0aec0; }
-    .day-card .date-text { font-size: 13px; color: #718096; margin-bottom: 8px; font-weight: 500; word-break: break-word; }
+    .day-card .date-text { font-size: 13px; color: #718096; margin-bottom: 8px; font-weight: 500; overflow-wrap: anywhere; }
     .day-card .status-text { font-size: 18px; font-weight: 700; }
-    .day-card .status-label { font-size: 12px; font-weight: 500; margin-top: 2px; min-height: 18px; }
+    .day-card .status-label { font-size: 12px; font-weight: 500; margin-top: 2px; min-height: 18px; line-height: 1.25; overflow-wrap: anywhere; }
     .day-card.present .status-text, .day-card.present .status-label { color: #38a169; }
     .day-card.absent .status-text, .day-card.absent .status-label { color: #e53e3e; }
     .day-card.half .status-text, .day-card.half .status-label { color: #b7791f; }
     .day-card.leave .status-text, .day-card.leave .status-label { color: #2b6cb0; }
     .day-card.off .status-text, .day-card.off .status-label { color: #718096; }
-    .empty-note { grid-column: 1 / -1; color: #718096; }
+    .empty-note { grid-column: 1 / -1; color: #718096; margin: 0; }
 
-    /* Footer note */
     .hr-footer {
       margin-top: 40px;
       padding: 15px 20px;
@@ -477,7 +395,7 @@
       font-weight: 500;
     }
 
-    /* Modal */
+    /* ---------- Modals ---------- */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -567,27 +485,27 @@
       text-align: left;
     }
 
-    /* PDF choice pop-up */
+    /* PDF choice pop-up: plain text rows (no boxes) */
     .pdf-choice { max-width: 440px; }
     .pdf-option {
       display: block;
       width: 100%;
       text-align: left;
-      padding: 14px 16px;
-      margin-bottom: 10px;
-      border: 1px solid #cbd5e1;
-      border-radius: 10px;
-      background: #ffffff;
+      padding: 14px 2px;
+      border: none;
+      border-bottom: 1px solid #e2e8f0;
+      border-radius: 0;
+      background: none;
       color: #2d3748;
       font-size: 15px;
       font-weight: 600;
       cursor: pointer;
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      transition: border-color 0.2s, color 0.2s;
     }
-    .pdf-option:hover { border-color: #3182ce; color: #3182ce; background: #f7fbff; }
-    .pdf-option:focus-visible { outline: 2px solid #3182ce; }
+    .pdf-option:hover { border-bottom-color: #3182ce; color: #3182ce; }
+    .pdf-option:focus-visible { outline: 2px solid #3182ce; outline-offset: 2px; }
 
-    /* PDF page layout */
+    /* PDF page layout (fixed width so the PDF looks the same on phone and laptop) */
     .pdf-root { width: 900px; padding: 8px 12px; background: #ffffff; color: #2d3748; }
     .pdf-root .pdf-head { margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #3182ce; }
     .pdf-root .pdf-company { font-size: 22px; font-weight: 700; color: #3182ce; }
@@ -595,7 +513,11 @@
     .pdf-root .dashboard-header { flex-direction: row; align-items: flex-start; }
     .pdf-root .about-details { flex-direction: row; gap: 40px; }
     .pdf-root .analytics-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    .pdf-root .calendar-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+    .pdf-root .calendar-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 15px; }
+    .pdf-root .day-card { padding: 15px 10px; border-radius: 10px; border-bottom-width: 4px; }
+    .pdf-root .day-card .date-text { font-size: 13px; margin-bottom: 8px; letter-spacing: 0; }
+    .pdf-root .day-card .status-text { font-size: 18px; }
+    .pdf-root .day-card .status-label { font-size: 12px; margin-top: 2px; min-height: 18px; letter-spacing: 0; }
     .pdf-root .modal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .pdf-root .stat-card, .pdf-root .day-card, .pdf-root .detail-item { min-width: 0; }
     .pdf-root .stat-title, .pdf-root .stat-number, .pdf-root .detail-value { overflow-wrap: anywhere; }
@@ -603,7 +525,7 @@
     .pdf-root .about-card, .pdf-root .stat-card, .pdf-root .day-card { box-shadow: 0 0 0 1px #e2e8f0; }
     .pdf-root .progress-bar-fill { transition: none; }
 
-    /* Loading screen */
+    /* ---------- Loading screen ---------- */
     .loading-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -640,8 +562,6 @@
     }
     .loading-welcome.in { opacity: 1; transform: translateY(0); }
     .lw-small { font-size: 15px; font-weight: 500; letter-spacing: 3px; color: #718096; margin-bottom: 6px; }
-    
-    /* Elegant Loading Name Design */
     .lw-name {
       font-size: clamp(28px, 6vw, 42px);
       font-weight: 300;
@@ -654,11 +574,13 @@
       color: transparent;
       overflow-wrap: anywhere;
     }
+
     @media (prefers-reduced-motion: reduce) {
       .rainbow-ring { animation-duration: 3s; }
+      .celestial-orb, .twinkle-star { animation: none !important; }
     }
 
-    /* Responsive Design Adjustments */
+    /* ---------- Responsive ---------- */
     @media (max-width: 768px) {
       .login-split-container { flex-direction: column; }
       .login-brand-panel { padding: 40px 20px; text-align: center; }
@@ -667,15 +589,16 @@
     @media (max-width: 600px) {
       .session-timer { right: 8px; padding: 3px 8px; font-size: 12px; }
       .dashboard-header { flex-direction: column; align-items: flex-start; }
-      .action-buttons { width: 100%; gap: 10px; }
-      
-      /* Updated Mobile Calendar Grid - Exactly 5 items per row, minimal & compact */
-      .calendar-grid { grid-template-columns: repeat(5, 1fr); gap: 6px; }
+      .action-buttons { width: 100%; gap: 14px; }
+      .analytics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+      /* Mobile calendar: exactly 5 cards per row */
+      .calendar-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
       .day-card { padding: 8px 2px; border-radius: 6px; border-bottom-width: 3px; }
-      .day-card .date-text { font-size: 9.5px; margin-bottom: 4px; letter-spacing: -0.3px; }
-      .day-card .status-text { font-size: 14px; }
-      .day-card .status-label { font-size: 8.5px; line-height: 1.1; margin-top: 4px; min-height: 10px; letter-spacing: -0.3px; }
-      
+      .day-card .date-text { font-size: 10px; margin-bottom: 4px; letter-spacing: -0.2px; }
+      .day-card .status-text { font-size: 15px; }
+      .day-card .status-label { font-size: 10px; line-height: 1.2; margin-top: 4px; min-height: 12px; }
+
       .about-details { flex-direction: column; gap: 15px; }
       .modal-grid { grid-template-columns: 1fr; }
       .dashboard-lang-bar { justify-content: flex-start; }
@@ -684,24 +607,21 @@
 </head>
 <body>
 
-  <!-- Top Navbar - Hidden on Login -->
+  <!-- Top navbar (hidden on the login page) -->
   <div class="navbar" id="mainNavbar">Geekay Human Resources Pvt. Ltd.<span class="session-timer" id="sessionTimer" data-i18n-title="sessionLeft" style="display:none;">02:00</span></div>
 
-  <!-- Login Section with Full Screen Edge Background Animation -->
+  <!-- Login -->
   <div class="login-section" id="loginSection">
-    
-    <!-- Full Screen Celestial Animation Background -->
+
     <div class="celestial-container" id="celestialContainer"></div>
 
     <div class="login-split-container">
-      
-      <!-- Brand Panel (Left) -->
+
       <div class="login-brand-panel">
         <h1>Geekay Human Resources Pvt. Ltd.</h1>
         <p data-i18n="brandSlogan">Empowering our workforce with seamless and secure HR solutions.</p>
       </div>
-      
-      <!-- Form Panel (Right) -->
+
       <div class="login-form-panel">
         <div class="login-form-inner">
           <div class="lang-switch login-lang" role="group" aria-label="Language">
@@ -709,32 +629,28 @@
             <button type="button" class="lang-btn" data-lang="ta" title="தமிழ்" aria-label="தமிழ்">த</button>
             <button type="button" class="lang-btn" data-lang="hi" title="हिन्दी" aria-label="हिन्दी">हि</button>
           </div>
-          
+
           <h2 id="dynamicGreeting">Good Morning</h2>
           <div class="login-accent"></div>
           <p class="login-subtitle" data-i18n="portalSubtitle">Enter your Employee ID to view your attendance and details.</p>
-          
-          <!-- Employee ID Field -->
+
           <div class="floating-input-group">
             <input type="text" id="empId" autocomplete="off" spellcheck="false" placeholder=" ">
             <label for="empId" data-i18n="employeeId">Employee ID</label>
-            <div id="idStatus" class="input-status"></div>
+            <div id="idStatus" class="input-status" aria-live="polite"></div>
           </div>
 
-          <!-- Password Field (Hidden initially) -->
           <div id="pwdGroup">
             <div class="floating-input-group">
               <input type="password" id="empPwd" autocomplete="off" spellcheck="false" placeholder=" ">
               <label for="empPwd" data-i18n="password">Password</label>
-              <div id="pwdStatus" class="input-status"></div>
+              <div id="pwdStatus" class="input-status" aria-live="polite"></div>
             </div>
-            <!-- Beautiful Highlighted Hint Box -->
             <div class="password-hint" data-i18n="passwordHint">Hint: First 4 letters of your name + Birth Year (e.g., SIVA1995, ARUN1992)</div>
           </div>
-          
-          <!-- Hidden Button (Shows only if ID and Password are Valid) -->
+
           <button type="button" class="login-btn" id="continueBtn" onclick="executeLogin()" data-i18n="viewProfile">Continue</button>
-          <div id="loginError" class="info"></div>
+          <div id="loginError" class="info" role="alert"></div>
         </div>
       </div>
 
@@ -759,8 +675,7 @@
           <h2 class="welcome-text"><span data-i18n="welcome">Welcome,</span> <span class="name" id="displayName">Employee</span></h2>
           <p class="current-date" id="currentDate">...</p>
         </div>
-        
-        <!-- Pure Text Action Buttons -->
+
         <div class="action-buttons" id="actionButtons">
           <button type="button" class="btn btn-primary" onclick="openStaffModal()" data-i18n="viewStaff">View Staff Details</button>
           <button type="button" class="btn btn-secondary" id="pdfBtn" onclick="openPdfChoice()" data-i18n="downloadPdf">Download PDF</button>
@@ -770,8 +685,6 @@
 
       <div class="about-card">
         <div class="about-title" data-i18n="aboutEmployee">About Employee</div>
-        
-        <!-- Reordered About Details: Status First -->
         <div class="about-details">
           <div class="detail-item">
             <span class="detail-label" data-i18n="status">Status</span>
@@ -815,8 +728,7 @@
       </div>
 
       <div class="section-title" data-i18n="attOverview">Attendance Overview</div>
-      
-      <!-- Multi-Month Tabs -->
+
       <div id="monthTabsContainer" class="month-tabs-container" style="display: none;"></div>
 
       <div class="calendar-grid" id="calendarGrid"></div>
@@ -828,7 +740,7 @@
     </div>
   </div>
 
-  <!-- Staff Details Modal -->
+  <!-- Staff details pop-up -->
   <div class="modal-overlay" id="staffModal" onclick="overlayClick(event)">
     <div class="modal-content">
       <button type="button" class="close-modal" onclick="closeStaffModal()" aria-label="Close">&times;</button>
@@ -839,11 +751,11 @@
         <div class="modal-grid">
           <div class="detail-item">
             <span class="detail-label" data-i18n="empName">Employee Name</span>
-            <div class="value-row"><span class="detail-value" id="modalName">---</span><button type="button" class="copy-btn" data-copy="modalName" data-i18n-title="copy" style="display:none;"><svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div>
+            <div class="value-row"><span class="detail-value" id="modalName">---</span><button type="button" class="copy-btn" data-copy="modalName" data-i18n-title="copy" style="display:none;"></button></div>
           </div>
           <div class="detail-item">
             <span class="detail-label" data-i18n="employeeId">Employee ID</span>
-            <div class="value-row"><span class="detail-value" id="modalId">---</span><button type="button" class="copy-btn" data-copy="modalId" data-i18n-title="copy" style="display:none;"><svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div>
+            <div class="value-row"><span class="detail-value" id="modalId">---</span><button type="button" class="copy-btn" data-copy="modalId" data-i18n-title="copy" style="display:none;"></button></div>
           </div>
           <div class="detail-item">
             <span class="detail-label" data-i18n="status">Status</span>
@@ -851,19 +763,19 @@
           </div>
           <div class="detail-item">
             <span class="detail-label" data-i18n="dob">Date of Birth (DOB)</span>
-            <div class="value-row"><span class="detail-value" id="modalDob">---</span><button type="button" class="copy-btn" data-copy="modalDob" data-i18n-title="copy" style="display:none;"><svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div>
+            <div class="value-row"><span class="detail-value" id="modalDob">---</span><button type="button" class="copy-btn" data-copy="modalDob" data-i18n-title="copy" style="display:none;"></button></div>
           </div>
           <div class="detail-item">
             <span class="detail-label" data-i18n="bloodGroup">Blood Group</span>
-            <div class="value-row"><span class="detail-value" id="modalBlood">---</span><button type="button" class="copy-btn" data-copy="modalBlood" data-i18n-title="copy" style="display:none;"><svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div>
+            <div class="value-row"><span class="detail-value" id="modalBlood">---</span><button type="button" class="copy-btn" data-copy="modalBlood" data-i18n-title="copy" style="display:none;"></button></div>
           </div>
           <div class="detail-item">
             <span class="detail-label" data-i18n="doj">Date of Joining (DOJ)</span>
-            <div class="value-row"><span class="detail-value" id="modalDoj">---</span><button type="button" class="copy-btn" data-copy="modalDoj" data-i18n-title="copy" style="display:none;"><svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div>
+            <div class="value-row"><span class="detail-value" id="modalDoj">---</span><button type="button" class="copy-btn" data-copy="modalDoj" data-i18n-title="copy" style="display:none;"></button></div>
           </div>
           <div class="detail-item">
             <span class="detail-label" data-i18n="lwd">Last Working Day (LWD)</span>
-            <div class="value-row"><span class="detail-value" id="modalLwd">---</span><button type="button" class="copy-btn" data-copy="modalLwd" data-i18n-title="copy" style="display:none;"><svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div>
+            <div class="value-row"><span class="detail-value" id="modalLwd">---</span><button type="button" class="copy-btn" data-copy="modalLwd" data-i18n-title="copy" style="display:none;"></button></div>
           </div>
         </div>
       </div>
@@ -873,42 +785,42 @@
         <div class="modal-grid">
           <div class="detail-item">
             <span class="detail-label" data-i18n="mobile">Mobile Number</span>
-            <div class="value-row"><span class="detail-value" id="modalMobile">---</span><button type="button" class="copy-btn" data-copy="modalMobile" data-i18n-title="copy" style="display:none;"><svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div>
+            <div class="value-row"><span class="detail-value" id="modalMobile">---</span><button type="button" class="copy-btn" data-copy="modalMobile" data-i18n-title="copy" style="display:none;"></button></div>
           </div>
           <div class="detail-item">
             <span class="detail-label" data-i18n="email">Email ID</span>
-            <div class="value-row"><span class="detail-value" id="modalEmail">---</span><button type="button" class="copy-btn" data-copy="modalEmail" data-i18n-title="copy" style="display:none;"><svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div>
+            <div class="value-row"><span class="detail-value" id="modalEmail">---</span><button type="button" class="copy-btn" data-copy="modalEmail" data-i18n-title="copy" style="display:none;"></button></div>
           </div>
         </div>
       </div>
 
       <div class="modal-section">
-        <div class="modal-section-title" data-i18n="secStatutory">3. Bank & Statutory Details</div>
+        <div class="modal-section-title" data-i18n="secStatutory">3. Bank &amp; Statutory Details</div>
         <div class="modal-grid">
           <div class="detail-item">
             <span class="detail-label" data-i18n="bankName">Bank Name</span>
-            <div class="value-row"><span class="detail-value" id="modalBankName">---</span><button type="button" class="copy-btn" data-copy="modalBankName" data-i18n-title="copy" style="display:none;"><svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div>
+            <div class="value-row"><span class="detail-value" id="modalBankName">---</span><button type="button" class="copy-btn" data-copy="modalBankName" data-i18n-title="copy" style="display:none;"></button></div>
           </div>
           <div class="detail-item">
             <span class="detail-label" data-i18n="accNo">Account Number</span>
-            <div class="value-row"><span class="detail-value" id="modalAccNo">---</span><button type="button" class="copy-btn" data-copy="account" data-i18n-title="copy" style="display:none;"><svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div>
+            <div class="value-row"><span class="detail-value" id="modalAccNo">---</span><button type="button" class="copy-btn" data-copy="account" data-i18n-title="copy" style="display:none;"></button></div>
             <button type="button" class="link-btn" id="toggleAccBtn" onclick="toggleAccount()" style="display:none;">Show full number</button>
           </div>
           <div class="detail-item">
             <span class="detail-label" data-i18n="ifsc">IFSC Code</span>
-            <div class="value-row"><span class="detail-value" id="modalIfsc">---</span><button type="button" class="copy-btn" data-copy="modalIfsc" data-i18n-title="copy" style="display:none;"><svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div>
+            <div class="value-row"><span class="detail-value" id="modalIfsc">---</span><button type="button" class="copy-btn" data-copy="modalIfsc" data-i18n-title="copy" style="display:none;"></button></div>
           </div>
           <div class="detail-item">
             <span class="detail-label" data-i18n="uan">UAN Number</span>
-            <div class="value-row"><span class="detail-value" id="modalUan">---</span><button type="button" class="copy-btn" data-copy="modalUan" data-i18n-title="copy" style="display:none;"><svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div>
+            <div class="value-row"><span class="detail-value" id="modalUan">---</span><button type="button" class="copy-btn" data-copy="modalUan" data-i18n-title="copy" style="display:none;"></button></div>
           </div>
           <div class="detail-item">
             <span class="detail-label" data-i18n="esi">ESI Number</span>
-            <div class="value-row"><span class="detail-value" id="modalEsi">---</span><button type="button" class="copy-btn" data-copy="modalEsi" data-i18n-title="copy" style="display:none;"><svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div>
+            <div class="value-row"><span class="detail-value" id="modalEsi">---</span><button type="button" class="copy-btn" data-copy="modalEsi" data-i18n-title="copy" style="display:none;"></button></div>
           </div>
           <div class="detail-item">
             <span class="detail-label" data-i18n="pf">PF Account Number</span>
-            <div class="value-row"><span class="detail-value" id="modalPf">---</span><button type="button" class="copy-btn" data-copy="modalPf" data-i18n-title="copy" style="display:none;"><svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div>
+            <div class="value-row"><span class="detail-value" id="modalPf">---</span><button type="button" class="copy-btn" data-copy="modalPf" data-i18n-title="copy" style="display:none;"></button></div>
           </div>
         </div>
       </div>
@@ -937,16 +849,24 @@
   </div>
 
   <script>
-    // ------------------------------------------------------------
-    // Settings & Globals
-    // ------------------------------------------------------------
+    // ============================================================
+    // Settings
+    // ============================================================
     const MASTER_FILE = 'master_data/master_data.xlsx';
-    const ATTENDANCE_FOLDER = 'attendance_records/';
+    const ATTENDANCE_FOLDER = 'attendance_records/';   // files named like Oct-2026.xlsx
     const LANG_STORAGE_KEY = 'geekayPortalLang';
+    const SESSION_SECONDS = 120;          // dashboard stays open for 2 minutes
+    const LOADING_MIN_MS = 5000;          // loading screen: at least 5 seconds
+    const ID_CHECK_DELAY_MS = 1500;       // ID is checked this long after typing stops
+    const MASTER_TTL_MS = 10 * 60 * 1000; // master data is re-read after 10 minutes
+    const MONTH_LOOKBACK = 12;            // how many past months are looked for
+    const ENG_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-    // ------------------------------------------------------------
+    // ============================================================
     // Translations
-    // ------------------------------------------------------------
+    // To add another language: copy the "en" block, rename it, translate
+    // the values, and add a button with data-lang="..." in both switches.
+    // ============================================================
     const I18N = {
       en: {
         locale: 'en-US',
@@ -956,9 +876,7 @@
         greetingAfternoon: 'Good Afternoon',
         greetingEvening: 'Good Evening',
         greetingNight: 'Welcome Back',
-        portalTitle: 'Employee Self-Service',
         portalSubtitle: 'Enter your Employee ID to view your attendance and details.',
-        idPlaceholder: 'Enter Employee ID',
         employeeId: 'Employee ID',
         password: 'Password',
         passwordHint: 'Hint: First 4 letters of your name + Birth Year (e.g., SIVA1995, ARUN1992)',
@@ -988,7 +906,7 @@
         secBasic: '1. Basic Information',
         empName: 'Employee Name',
         status: 'Status',
-        dob: 'Date of Birth (DOJ)',
+        dob: 'Date of Birth (DOB)',
         esi: 'ESI Number',
         secContact: '2. Contact Information',
         mobile: 'Mobile Number',
@@ -1006,6 +924,7 @@
         pdfStaff: 'Staff details only',
         pdfAll: 'Overall details (Attendance + Staff details)',
         generatedOn: 'Generated on',
+        monthLabel: 'Month',
         welcomeLoading: 'Welcome',
         sessionLeft: 'Session time left',
         msgSessionEnded: 'Your session has ended. Please log in again.',
@@ -1019,14 +938,13 @@
         lblHoliday: 'Holiday',
         lblOff: 'Off Day',
         noAttendance: 'No attendance dates recorded yet.',
-        msgEnterId: 'Please enter your Employee ID.',
         msgFileProtocol: 'Open this page from a web server (or hosting). Browsers block reading local files.',
-        msgAuth: 'Authenticating...',
-        msgIdColumn: 'Employee ID column not found in the Master file. Please contact HR / Admin.',
-        msgInvalid: 'Invalid ID. Record not found in Master Data.',
+        msgIdColumn: 'Employee ID column not found in the Master Data file. Please contact HR / Admin.',
         msgFileNotFound: 'Master Data file not found. Please contact HR / Admin.',
         msgEmptyBook: 'The Master Data file is empty. Please contact HR / Admin.',
         msgSystem: 'System error. Data could not be loaded. Please try again.',
+        msgNoPassword: 'Your password could not be created because your name or date of birth is missing. Please contact HR / Admin.',
+        msgLoadMonth: 'This month could not be loaded. Please try again.',
         msgPdf: 'PDF could not be created. Please try again.'
       },
       ta: {
@@ -1037,9 +955,7 @@
         greetingAfternoon: 'மதிய வணக்கம்',
         greetingEvening: 'மாலை வணக்கம்',
         greetingNight: 'மீண்டும் வரவேற்கிறோம்',
-        portalTitle: 'ஊழியர் சுய சேவை',
         portalSubtitle: 'உங்கள் வருகைப் பதிவு மற்றும் விவரங்களைப் பார்க்க, உங்கள் ஊழியர் ID-ஐ உள்ளிடவும்.',
-        idPlaceholder: 'உங்கள் ஊழியர் ID-ஐ உள்ளிடவும்',
         employeeId: 'ஊழியர் ID',
         password: 'பாஸ்வேர்ட்',
         passwordHint: 'குறிப்பு: உங்கள் பெயரின் முதல் 4 எழுத்துக்கள் + பிறந்த வருடம் (உ-ம்: SIVA1995, ARUN1992)',
@@ -1087,6 +1003,7 @@
         pdfStaff: 'ஊழியர் விவரங்கள் மட்டும்',
         pdfAll: 'முழு விவரங்கள் (வருகை + ஊழியர் விவரங்கள்)',
         generatedOn: 'உருவாக்கிய தேதி',
+        monthLabel: 'மாதம்',
         welcomeLoading: 'வரவேற்கிறோம்',
         sessionLeft: 'மீதமுள்ள நேரம்',
         msgSessionEnded: 'உங்கள் அமர்வு நேரம் முடிந்தது. மீண்டும் உள்நுழையவும்.',
@@ -1100,14 +1017,13 @@
         lblHoliday: 'விடுமுறை நாள்',
         lblOff: 'ஓய்வு நாள்',
         noAttendance: 'இந்த மாதத்திற்கான வருகைப் பதிவுகள் இன்னும் இல்லை.',
-        msgEnterId: 'தயவுசெய்து உங்கள் ஊழியர் ID-ஐ உள்ளிடவும்.',
-        msgFileProtocol: 'இந்தப் பக்கத்தை இணையதள சேவையகம் (hosting) வழியாகத் திறக்கவும்.',
-        msgAuth: 'சரிபார்க்கிறது...',
+        msgFileProtocol: 'இந்தப் பக்கத்தை இணையதள சேவையகம் (hosting) வழியாகத் திறக்கவும். கணினியில் உள்ள கோப்பாகத் திறந்தால் தரவைப் படிக்க முடியாது.',
         msgIdColumn: 'Master Data கோப்பில் ஊழியர் ID column கிடைக்கவில்லை. தயவுசெய்து HR / நிர்வாகத் துறையைத் தொடர்பு கொள்ளவும்.',
-        msgInvalid: 'தவறான ID. Master Data-வில் உங்கள் பதிவு கிடைக்கவில்லை.',
         msgFileNotFound: 'Master Data கோப்பு கிடைக்கவில்லை. தயவுசெய்து HR / நிர்வாகத் துறையைத் தொடர்பு கொள்ளவும்.',
         msgEmptyBook: 'Master Data கோப்பு காலியாக உள்ளது. தயவுசெய்து HR / நிர்வாகத் துறையைத் தொடர்பு கொள்ளவும்.',
         msgSystem: 'கணினிப் பிழை. தரவை ஏற்ற முடியவில்லை. மீண்டும் முயற்சிக்கவும்.',
+        msgNoPassword: 'உங்கள் பெயர் அல்லது பிறந்த தேதி இல்லாததால் password உருவாக்க முடியவில்லை. தயவுசெய்து HR / நிர்வாகத் துறையைத் தொடர்பு கொள்ளவும்.',
+        msgLoadMonth: 'இந்த மாதத்தின் பதிவை ஏற்ற முடியவில்லை. மீண்டும் முயற்சிக்கவும்.',
         msgPdf: 'PDF உருவாக்க முடியவில்லை. மீண்டும் முயற்சிக்கவும்.'
       },
       hi: {
@@ -1118,9 +1034,7 @@
         greetingAfternoon: 'शुभ दोपहर',
         greetingEvening: 'शुभ संध्या',
         greetingNight: 'वापसी पर स्वागत है',
-        portalTitle: 'कर्मचारी स्व-सेवा',
         portalSubtitle: 'अपनी उपस्थिति और विवरण देखने के लिए अपना कर्मचारी ID दर्ज करें।',
-        idPlaceholder: 'अपना कर्मचारी ID दर्ज करें',
         employeeId: 'कर्मचारी ID',
         password: 'पासवर्ड',
         passwordHint: 'संकेत: आपके नाम के पहले 4 अक्षर + जन्म वर्ष (उदा: SIVA1995, ARUN1992)',
@@ -1168,6 +1082,7 @@
         pdfStaff: 'केवल कर्मचारी विवरण',
         pdfAll: 'पूरा विवरण (उपस्थिति + कर्मचारी विवरण)',
         generatedOn: 'बनाने की तारीख',
+        monthLabel: 'महीना',
         welcomeLoading: 'स्वागत है',
         sessionLeft: 'शेष समय',
         msgSessionEnded: 'आपका समय समाप्त हो गया। कृपया फिर से लॉगिन करें।',
@@ -1181,14 +1096,13 @@
         lblHoliday: 'अवकाश दिवस',
         lblOff: 'ऑफ़ डे',
         noAttendance: 'इस महीने के लिए कोई उपस्थिति दर्ज नहीं है।',
-        msgEnterId: 'कृपया अपना कर्मचारी ID दर्ज करें।',
-        msgFileProtocol: 'इस पेज को वेब सर्वर (होस्टिंग) से खोलें।',
-        msgAuth: 'जाँच हो रही है...',
+        msgFileProtocol: 'इस पेज को वेब सर्वर (होस्टिंग) से खोलें। कंप्यूटर की फ़ाइल के रूप में खोलने पर डेटा पढ़ा नहीं जा सकता।',
         msgIdColumn: 'Master Data फ़ाइल में कर्मचारी ID कॉलम नहीं मिला। कृपया HR / एडमिन विभाग से संपर्क करें।',
-        msgInvalid: 'गलत ID। Master Data में आपका रिकॉर्ड नहीं मिला।',
         msgFileNotFound: 'Master Data फ़ाइल नहीं मिली। कृपया HR / एडमिन विभाग से संपर्क करें।',
         msgEmptyBook: 'Master Data फ़ाइल खाली है। कृपया HR / एडमिन विभाग से संपर्क करें।',
         msgSystem: 'सिस्टम में त्रुटि। डेटा लोड नहीं हो सका। कृपया फिर से प्रयास करें।',
+        msgNoPassword: 'आपका नाम या जन्म तिथि उपलब्ध न होने से पासवर्ड नहीं बन सका। कृपया HR / एडमिन विभाग से संपर्क करें।',
+        msgLoadMonth: 'इस महीने का डेटा लोड नहीं हो सका। कृपया फिर से प्रयास करें।',
         msgPdf: 'PDF नहीं बन सका। कृपया फिर से प्रयास करें।'
       }
     };
@@ -1200,7 +1114,9 @@
       return (key in pack) ? pack[key] : (I18N.en[key] || key);
     }
 
-    // Smart Column Matching Alises based on User's Master Data
+    // ============================================================
+    // Column names (matched after removing spaces, symbols and capitals)
+    // ============================================================
     const COLS = {
       id:      ['epmlid', 'useremployeeid', 'employeeid', 'empid', 'userid', 'employeecode'],
       name:    ['empname', 'displayname', 'employeename', 'name'],
@@ -1221,7 +1137,7 @@
       serial:  ['sln0', 'slno', 'sno', 'serialnumber', 'srno']
     };
 
-    // Attendance codes
+    // Attendance codes (capital letters)
     const CODE_PRESENT    = ['PP', 'P', 'PRESENT'];
     const CODE_ABSENT     = ['AA', 'A', 'ABSENT'];
     const CODE_HALF       = ['HD', 'HALFDAY', 'HALF DAY', 'PA', 'AP'];
@@ -1229,74 +1145,44 @@
     const CODE_WEEKLY_OFF = ['WO', 'WOFF'];
     const CODE_HOLIDAY    = ['H', 'HOL', 'HOLIDAY', 'PH', 'FH'];
     const CODE_OFF        = ['OFF'];
+    const ALL_CODES = [].concat(CODE_PRESENT, CODE_ABSENT, CODE_HALF, CODE_LEAVE, CODE_WEEKLY_OFF, CODE_HOLIDAY, CODE_OFF);
 
-    let currentData = null;
-    let expectedPassword = ''; // Stores dynamically generated password
+    // ============================================================
+    // State
+    // ============================================================
+    let currentData = null;          // set only after a successful login
+    let pendingEmployee = null;      // ID verified, waiting for the password
+    let expectedPassword = '';
     let currentLoginMessage = null;
     let currentAccountFull = '';
     let currentAccountMasked = '';
     let accountVisible = false;
+    let loginBusy = false;
 
-    // Background preloader for System Data
-    let availableMonths = [];
     let cachedMasterData = null;
-    let isPreloading = false;
+    let masterLoadedAt = 0;
+    let masterError = null;
+    let availableMonths = [];
+    let preloadPromise = null;
+    const monthCache = new Map();
 
-    async function preloadSystemData() {
-      if (isPreloading) return;
-      isPreloading = true;
-      
-      // 1. Fetch Master Data
-      try {
-        const response = await fetch(MASTER_FILE + '?v=' + Date.now(), { cache: 'no-store' });
-        if (response.ok) {
-          const arrayBuffer = await response.arrayBuffer();
-          const workbook = XLSX.read(arrayBuffer, { type: 'array', cellDates: true });
-          if (workbook.SheetNames.length) {
-            const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-            cachedMasterData = XLSX.utils.sheet_to_json(firstSheet, { defval: '' });
-          }
-        }
-      } catch (e) {
-        console.error("Master data load failed", e);
-      }
+    let idState = null;              // null | 'checking' | 'valid' | 'invalid'
+    let pwdState = null;             // null | 'valid' | 'invalid'
+    let lastCheckedId = '';
+    let validationSeq = 0;
+    let typingTimer = null;
 
-      // 2. Probe Attendance Folders
-      try {
-        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        let probes = [];
-        let d = new Date();
-        let cm = d.getMonth();
-        let cy = d.getFullYear();
-        
-        for(let i=0; i<12; i++) {
-          probes.push({ str: monthNames[cm] + "-" + cy, m: cm, y: cy });
-          cm--; if(cm < 0) { cm = 11; cy--; }
-        }
-        
-        let validMonths = [];
-        await Promise.all(probes.map(async (p) => {
-          try {
-            let res = await fetch(`${ATTENDANCE_FOLDER}${p.str}.xlsx`, { method: 'HEAD', cache: 'no-store' });
-            if(res.ok) validMonths.push(p);
-          } catch(e) {}
-        }));
-        
-        validMonths.sort((a,b) => {
-          if(a.y !== b.y) return b.y - a.y;
-          return b.m - a.m;
-        });
-        availableMonths = validMonths.map(v => v.str);
-      } catch (e) {
-        console.error("Attendance probe failed", e);
-      }
-      isPreloading = false;
+    // ============================================================
+    // Small helpers
+    // ============================================================
+    function sleep(ms) {
+      return new Promise(function (resolve) { setTimeout(resolve, ms); });
     }
-    window.addEventListener('DOMContentLoaded', preloadSystemData);
 
-    // ------------------------------------------------------------
-    // Helpers
-    // ------------------------------------------------------------
+    function isDateObject(v) {
+      return Object.prototype.toString.call(v) === '[object Date]';
+    }
+
     function normKey(k) {
       return String(k).toLowerCase().replace(/[^a-z0-9]/g, '');
     }
@@ -1330,6 +1216,7 @@
     }
 
     function formatDate(d) {
+      // Small shift avoids Excel rounding showing the previous day
       const x = new Date(d.getTime() + 60000);
       const dd = String(x.getDate()).padStart(2, '0');
       return dd + '-' + t('months')[x.getMonth()] + '-' + x.getFullYear();
@@ -1337,10 +1224,11 @@
 
     function formatValue(v) {
       if (v === null || v === undefined) return '';
-      if (v instanceof Date) return isNaN(v.getTime()) ? '' : formatDate(v);
+      if (isDateObject(v)) return isNaN(v.getTime()) ? '' : formatDate(v);
       return String(v).trim();
     }
 
+    // Column headers that are Excel serial numbers (for example 45678) become dates
     function formatHeader(key) {
       const k = String(key).trim();
       if (/^\d{5}$/.test(k)) {
@@ -1362,84 +1250,167 @@
       document.getElementById(id).textContent = v;
     }
 
-    // Auto-Generate Password from Master Data (First 4 letters of name + 4 digit birth year)
-    function calculatePassword(nameRaw, dobRaw) {
-      let n = String(nameRaw).replace(/\s+/g, '').toUpperCase();
-      let namePart = n.substring(0, 4);
-      let yearPart = "";
-
-      if (dobRaw instanceof Date) {
-        yearPart = dobRaw.getFullYear();
-      } else if (!isNaN(dobRaw) && typeof dobRaw === 'number') {
-        let d = new Date(Math.round((dobRaw - 25569) * 86400 * 1000));
-        yearPart = d.getFullYear();
-      } else {
-        let str = String(dobRaw).trim();
-        let y4 = str.match(/\b(19|20)\d{2}\b/);
-        if (y4) {
-          yearPart = y4[0];
-        } else {
-          let d = new Date(str);
-          if (!isNaN(d.getTime())) yearPart = d.getFullYear();
-          else {
-            let parts = str.split(/[-/]/);
-            let lastPart = parts[parts.length-1];
-            if(lastPart && lastPart.length === 2) {
-               let y = parseInt(lastPart);
-               yearPart = y > 50 ? "19"+lastPart : "20"+lastPart;
-            } else if(lastPart && lastPart.length === 4) {
-               yearPart = lastPart;
-            }
-          }
+    // Finds one employee in a list of rows. The ID column is detected once.
+    function findRecord(rows, empId) {
+      const result = { record: null, keyMap: null, idColumnFound: false };
+      if (!rows || !rows.length) return result;
+      const firstMap = buildKeyMap(rows[0]);
+      let idKey = null;
+      for (const alias of COLS.id) {
+        if (alias in firstMap) { idKey = firstMap[alias]; break; }
+      }
+      if (idKey === null) return result;
+      result.idColumnFound = true;
+      for (let i = 0; i < rows.length; i++) {
+        const v = rows[i][idKey];
+        if (v !== null && v !== undefined && String(v).trim().toUpperCase() === empId) {
+          result.record = rows[i];
+          result.keyMap = buildKeyMap(rows[i]);
+          break;
         }
       }
+      return result;
+    }
+
+    // Password = first 4 letters of the name + 4-digit birth year (empty text if it cannot be made)
+    function extractYear(dobRaw) {
+      if (isDateObject(dobRaw)) {
+        return isNaN(dobRaw.getTime()) ? '' : String(new Date(dobRaw.getTime() + 60000).getFullYear());
+      }
+      if (typeof dobRaw === 'number') {
+        const d = new Date(Math.round((dobRaw - 25569) * 86400 * 1000));
+        return isNaN(d.getTime()) ? '' : String(d.getUTCFullYear());
+      }
+      const str = String(dobRaw).trim();
+      if (!str) return '';
+      if (/^\d{5}$/.test(str)) return extractYear(Number(str));
+      const y4 = str.match(/\b(19|20)\d{2}\b/);
+      if (y4) return y4[0];
+      const parts = str.split(/[-/.\s]+/);
+      const last = parts[parts.length - 1];
+      if (last && /^\d{2}$/.test(last)) {
+        return (parseInt(last, 10) > 50 ? '19' : '20') + last;
+      }
+      return '';
+    }
+
+    function calculatePassword(nameRaw, dobRaw) {
+      const namePart = String(nameRaw).toUpperCase().replace(/[\s.\-_'’`,()]/g, '').substring(0, 4);
+      const yearPart = extractYear(dobRaw);
+      if (!namePart || !yearPart) return '';
       return namePart + yearPart;
     }
 
-    // ------------------------------------------------------------
-    // Language & Dynamic Greetings with Full Screen Celestial Animation
-    // ------------------------------------------------------------
-    const _t = t;
+    // ============================================================
+    // Data loading
+    // ============================================================
+    async function loadMasterData() {
+      try {
+        const response = await fetch(MASTER_FILE + '?v=' + Date.now(), { cache: 'no-store' });
+        if (!response.ok) { masterError = 'msgFileNotFound'; return; }
+        const arrayBuffer = await response.arrayBuffer();
+        const workbook = XLSX.read(arrayBuffer, { type: 'array', cellDates: true });
+        if (!workbook.SheetNames.length) { masterError = 'msgEmptyBook'; return; }
+        const rows = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], { defval: '' });
+        if (!rows.length) { masterError = 'msgEmptyBook'; return; }
+        cachedMasterData = rows;
+        masterLoadedAt = Date.now();
+      } catch (e) {
+        console.error('Master data load failed', e);
+        masterError = 'msgSystem';
+      }
+    }
 
+    // True only when a real file exists (not a web page returned for a missing file)
+    async function fileExists(url) {
+      try {
+        let res = await fetch(url, { method: 'HEAD', cache: 'no-store' });
+        if (res.status === 405 || res.status === 501) {
+          res = await fetch(url, { cache: 'no-store' });
+        }
+        if (!res.ok) return false;
+        const type = (res.headers.get('content-type') || '').toLowerCase();
+        return type.indexOf('text/html') === -1;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    async function probeAttendanceMonths() {
+      const probes = [];
+      const now = new Date();
+      let m = now.getMonth();
+      let y = now.getFullYear();
+      for (let i = 0; i < MONTH_LOOKBACK; i++) {
+        probes.push({ str: ENG_MONTHS[m] + '-' + y, m: m, y: y });
+        m--;
+        if (m < 0) { m = 11; y--; }
+      }
+      const found = [];
+      await Promise.all(probes.map(async function (p) {
+        if (await fileExists(ATTENDANCE_FOLDER + p.str + '.xlsx')) found.push(p);
+      }));
+      found.sort(function (a, b) { return (b.y - a.y) || (b.m - a.m); });
+      availableMonths = found.map(function (v) { return v.str; });
+    }
+
+    function preloadSystemData() {
+      if (preloadPromise) return preloadPromise;
+      preloadPromise = (async function () {
+        masterError = null;
+        if (location.protocol === 'file:') { masterError = 'msgFileProtocol'; return; }
+        await Promise.all([loadMasterData(), probeAttendanceMonths()]);
+      })().then(function () {
+        if (!cachedMasterData) preloadPromise = null;   // allow a retry next time
+      });
+      return preloadPromise;
+    }
+
+    async function getMonthRows(monthStr) {
+      if (monthCache.has(monthStr)) return monthCache.get(monthStr);
+      const response = await fetch(ATTENDANCE_FOLDER + monthStr + '.xlsx?v=' + Date.now(), { cache: 'no-store' });
+      if (!response.ok) throw new Error('MONTH_NOT_FOUND');
+      const buffer = await response.arrayBuffer();
+      const workbook = XLSX.read(buffer, { type: 'array', cellDates: true });
+      if (!workbook.SheetNames.length) throw new Error('MONTH_EMPTY');
+      const rows = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], { defval: '' });
+      monthCache.set(monthStr, rows);
+      return rows;
+    }
+
+    // ============================================================
+    // Language, greeting and background animation
+    // ============================================================
     function updateDynamicGreeting() {
       const hour = new Date().getHours();
-      let greetKey = 'greetingNight'; 
+      let greetKey = 'greetingNight';
       let timeClass = 'night';
 
-      if (hour >= 5 && hour < 12) {
-        greetKey = 'greetingMorning';
-        timeClass = 'morning';
-      }
-      else if (hour >= 12 && hour < 17) {
-        greetKey = 'greetingAfternoon';
-        timeClass = 'afternoon';
-      }
-      else if (hour >= 17 && hour < 20) {
-        greetKey = 'greetingEvening';
-        timeClass = 'evening';
-      }
-      
-      const el = document.getElementById('dynamicGreeting');
-      if(el) el.textContent = _t(greetKey);
+      if (hour >= 5 && hour < 12) { greetKey = 'greetingMorning'; timeClass = 'morning'; }
+      else if (hour >= 12 && hour < 17) { greetKey = 'greetingAfternoon'; timeClass = 'afternoon'; }
+      else if (hour >= 17 && hour < 20) { greetKey = 'greetingEvening'; timeClass = 'evening'; }
+
+      document.getElementById('dynamicGreeting').textContent = t(greetKey);
 
       const container = document.getElementById('celestialContainer');
-      if (container) {
-        container.innerHTML = ''; 
-        const orb = document.createElement('div');
-        orb.className = 'celestial-orb orb-' + timeClass;
-        container.appendChild(orb);
+      if (container.getAttribute('data-time') === timeClass) return;   // already drawn
+      container.setAttribute('data-time', timeClass);
+      container.textContent = '';
+      const orb = document.createElement('div');
+      orb.className = 'celestial-orb orb-' + timeClass;
+      container.appendChild(orb);
 
-        if (timeClass === 'night') {
-          for(let i=0; i<30; i++) {
-            const star = document.createElement('div');
-            star.className = 'twinkle-star';
-            star.style.width = Math.random() * 3 + 'px';
-            star.style.height = star.style.width;
-            star.style.top = Math.random() * 100 + '%';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.animationDelay = Math.random() * 4 + 's';
-            container.appendChild(star);
-          }
+      if (timeClass === 'night') {
+        for (let i = 0; i < 30; i++) {
+          const star = document.createElement('div');
+          star.className = 'twinkle-star';
+          const size = (Math.random() * 3 + 1) + 'px';
+          star.style.width = size;
+          star.style.height = size;
+          star.style.top = Math.random() * 100 + '%';
+          star.style.left = Math.random() * 100 + '%';
+          star.style.animationDelay = Math.random() * 4 + 's';
+          container.appendChild(star);
         }
       }
     }
@@ -1448,13 +1419,10 @@
       document.documentElement.lang = currentLang;
 
       document.querySelectorAll('[data-i18n]').forEach(function (el) {
-        el.textContent = _t(el.getAttribute('data-i18n'));
-      });
-      document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
-        el.setAttribute('placeholder', _t(el.getAttribute('data-i18n-placeholder')));
+        el.textContent = t(el.getAttribute('data-i18n'));
       });
       document.querySelectorAll('[data-i18n-title]').forEach(function (el) {
-        const txt = _t(el.getAttribute('data-i18n-title'));
+        const txt = t(el.getAttribute('data-i18n-title'));
         el.setAttribute('title', txt);
         el.setAttribute('aria-label', txt);
       });
@@ -1466,77 +1434,67 @@
 
       setDate();
       updateDynamicGreeting();
+      renderInputStatuses();
 
-      if (currentLoginMessage) {
-        setLoginMessage(currentLoginMessage.key, currentLoginMessage.type);
-      }
+      if (currentLoginMessage) setLoginMessage(currentLoginMessage.key, currentLoginMessage.type);
 
       const toggleBtn = document.getElementById('toggleAccBtn');
-      if (toggleBtn) toggleBtn.textContent = accountVisible ? _t('hideAcc') : _t('showAcc');
-      
-      if(currentData) {
+      if (toggleBtn) toggleBtn.textContent = accountVisible ? t('hideAcc') : t('showAcc');
+
+      if (currentData) {
         renderMonthTabs();
-        renderDashboard(); 
+        renderDashboard();
       }
     }
 
     function setLanguage(lang) {
       if (!I18N[lang]) lang = 'en';
       currentLang = lang;
-      try { localStorage.setItem(LANG_STORAGE_KEY, lang); } catch (e) { }
+      try { localStorage.setItem(LANG_STORAGE_KEY, lang); } catch (e) { /* storage not available */ }
       applyStaticTranslations();
     }
 
     function loadSavedLanguage() {
       let saved = 'en';
-      try { saved = localStorage.getItem(LANG_STORAGE_KEY) || 'en'; } catch (e) { }
+      try { saved = localStorage.getItem(LANG_STORAGE_KEY) || 'en'; } catch (e) { /* ignore */ }
       currentLang = I18N[saved] ? saved : 'en';
     }
 
     document.querySelectorAll('.lang-btn').forEach(function (btn) {
-      function choose() {
+      btn.addEventListener('click', function () {
         const lang = btn.getAttribute('data-lang');
         if (lang !== currentLang) setLanguage(lang);
-      }
-      btn.addEventListener('click', choose);
+      });
     });
 
-    // ------------------------------------------------------------
-    // Messages on the login box
-    // ------------------------------------------------------------
     function setLoginMessage(key, type) {
       const el = document.getElementById('loginError');
       currentLoginMessage = key ? { key: key, type: type } : null;
-      el.textContent = key ? _t(key) : '';
+      el.textContent = key ? t(key) : '';
       el.className = type || 'info';
     }
 
-    // ------------------------------------------------------------
-    // Date shown on dashboard
-    // ------------------------------------------------------------
     function setDate() {
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
       let text;
       try {
-        text = new Date().toLocaleDateString(_t('locale'), options);
+        text = new Date().toLocaleDateString(t('locale'), options);
       } catch (e) {
         text = new Date().toLocaleDateString('en-US', options);
       }
       document.getElementById('currentDate').textContent = text;
     }
 
-    // ------------------------------------------------------------
-    // Modal
-    // ------------------------------------------------------------
-    function openStaffModal() {
-      document.getElementById('staffModal').style.display = 'flex';
-    }
-    function closeStaffModal() {
-      document.getElementById('staffModal').style.display = 'none';
-    }
-    function overlayClick(e) {
-      if (e.target.id === 'staffModal') closeStaffModal();
-    }
+    // ============================================================
+    // Pop-ups
+    // ============================================================
+    function openStaffModal() { document.getElementById('staffModal').style.display = 'flex'; }
+    function closeStaffModal() { document.getElementById('staffModal').style.display = 'none'; }
+    function overlayClick(e) { if (e.target.id === 'staffModal') closeStaffModal(); }
+    function openPdfChoice() { document.getElementById('pdfModal').style.display = 'flex'; }
+    function closePdfChoice() { document.getElementById('pdfModal').style.display = 'none'; }
+    function pdfOverlayClick(e) { if (e.target.id === 'pdfModal') closePdfChoice(); }
+
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') { closeStaffModal(); closePdfChoice(); }
     });
@@ -1544,12 +1502,16 @@
     function toggleAccount() {
       accountVisible = !accountVisible;
       document.getElementById('modalAccNo').textContent = accountVisible ? currentAccountFull : currentAccountMasked;
-      document.getElementById('toggleAccBtn').textContent = accountVisible ? _t('hideAcc') : _t('showAcc');
+      document.getElementById('toggleAccBtn').textContent = accountVisible ? t('hideAcc') : t('showAcc');
     }
 
-    // ------------------------------------------------------------
+    // ============================================================
     // Copy buttons
-    // ------------------------------------------------------------
+    // ============================================================
+    const COPY_ICON =
+      '<svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>' +
+      '<svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+
     function getCopyText(btn) {
       const src = btn.getAttribute('data-copy');
       if (src === 'account') return currentAccountFull;
@@ -1584,195 +1546,195 @@
           await navigator.clipboard.writeText(text);
           return true;
         }
-      } catch (e) { }
+      } catch (e) { /* use fallback below */ }
       return fallbackCopy(text);
     }
 
     document.querySelectorAll('.copy-btn').forEach(function (btn) {
+      btn.innerHTML = COPY_ICON;
       btn.addEventListener('click', async function () {
         const text = getCopyText(btn);
         if (!text) return;
         const ok = await copyText(text);
         if (!ok) return;
         btn.classList.add('copied');
-        btn.setAttribute('title', _t('copied'));
-        btn.setAttribute('aria-label', _t('copied'));
+        btn.setAttribute('title', t('copied'));
+        btn.setAttribute('aria-label', t('copied'));
         setTimeout(function () {
           btn.classList.remove('copied');
-          btn.setAttribute('title', _t('copy'));
-          btn.setAttribute('aria-label', _t('copy'));
+          btn.setAttribute('title', t('copy'));
+          btn.setAttribute('aria-label', t('copy'));
         }, 1500);
       });
     });
 
-    // ------------------------------------------------------------
+    // ============================================================
     // Loading screen
-    // ------------------------------------------------------------
-    const LOADING_MIN_MS = 5000;
-    let loginBusy = false;
-
-    function sleep(ms) {
-      return new Promise(function (resolve) { setTimeout(resolve, ms); });
-    }
-
+    // ============================================================
     function showLoadingOverlay() {
       document.getElementById('loadingWelcome').classList.remove('in');
       document.getElementById('loadingName').textContent = '';
       document.getElementById('loadingOverlay').classList.add('show');
     }
-
     function showLoadingName(name) {
       document.getElementById('loadingName').textContent = name;
       document.getElementById('loadingWelcome').classList.add('in');
     }
-
     function hideLoadingOverlay() {
       document.getElementById('loadingOverlay').classList.remove('show');
     }
 
-    // ------------------------------------------------------------
-    // Live Inline ID & Password Validation
-    // ------------------------------------------------------------
+    // ============================================================
+    // Login: Employee ID check, then password check
+    // ============================================================
     const empIdInput = document.getElementById('empId');
     const idStatus = document.getElementById('idStatus');
     const pwdGroup = document.getElementById('pwdGroup');
     const empPwdInput = document.getElementById('empPwd');
     const pwdStatus = document.getElementById('pwdStatus');
     const continueBtn = document.getElementById('continueBtn');
-    
-    let typingTimer;
-    const doneTypingInterval = 2500; 
+
+    function renderStatus(el, state) {
+      if (!state) {
+        el.className = 'input-status';
+        el.textContent = '';
+        return;
+      }
+      const icons = { checking: '\u23F3 ', valid: '\u2714 ', invalid: '\u2716 ' };
+      const keys = { checking: 'checking', valid: 'validId', invalid: 'invalidId' };
+      el.className = 'input-status ' + state + ' show';
+      el.textContent = icons[state] + t(keys[state]);
+    }
+
+    function renderInputStatuses() {
+      renderStatus(idStatus, idState);
+      renderStatus(pwdStatus, pwdState);
+    }
+
+    function hidePasswordStep() {
+      pwdGroup.style.display = 'none';
+      empPwdInput.value = '';
+      pwdState = null;
+      expectedPassword = '';
+      pendingEmployee = null;
+      continueBtn.classList.remove('show-btn');
+    }
 
     async function validateId() {
       const id = empIdInput.value.trim().toUpperCase();
-      if(!id) return;
+      if (!id) return;
+      if (id === lastCheckedId && (idState === 'valid' || idState === 'invalid')) return;
 
-      idStatus.className = 'input-status checking show';
-      idStatus.style.opacity = '1';
-      idStatus.innerHTML = `⏳ ${_t('checking')}`;
-      pwdGroup.style.display = 'none';
-      empPwdInput.value = '';
-      pwdStatus.className = 'input-status';
-      continueBtn.classList.remove('show-btn');
-      
-      while(isPreloading) { await sleep(100); }
-      if (!cachedMasterData) await preloadSystemData(); 
+      const seq = ++validationSeq;
+      idState = 'checking';
+      hidePasswordStep();
+      renderInputStatuses();
+      setLoginMessage(null, 'info');
+
+      // Re-read the master file if it is old
+      if (cachedMasterData && Date.now() - masterLoadedAt > MASTER_TTL_MS) {
+        cachedMasterData = null;
+        preloadPromise = null;
+      }
+      await preloadSystemData();
+      if (seq !== validationSeq) return;   // a newer check has started
 
       if (!cachedMasterData) {
-        idStatus.className = 'input-status';
+        idState = null;
+        renderInputStatuses();
+        setLoginMessage(masterError || 'msgSystem', 'error');
         return;
       }
 
-      let masterRecord = null;
-      let masterKm = null;
-      
-      for (let i = 0; i < cachedMasterData.length; i++) {
-        const km = buildKeyMap(cachedMasterData[i]);
-        let idKey = null;
-        for (const alias of COLS.id) {
-          if (alias in km) { idKey = km[alias]; break; }
-        }
-        if (idKey === null) continue;
-        const rowId = cachedMasterData[i][idKey];
-        if (rowId !== null && rowId !== undefined && String(rowId).trim().toUpperCase() === id) {
-          masterRecord = cachedMasterData[i];
-          masterKm = km;
-          break;
-        }
+      const found = findRecord(cachedMasterData, id);
+      lastCheckedId = id;
+
+      if (!found.idColumnFound) {
+        idState = null;
+        renderInputStatuses();
+        setLoginMessage('msgIdColumn', 'error');
+        return;
+      }
+      if (!found.record) {
+        idState = 'invalid';
+        renderInputStatuses();
+        return;
       }
 
-      if (empIdInput.value.trim().toUpperCase() !== id) return;
+      const nameRaw = getField(found.record, found.keyMap, COLS.name);
+      const dobRaw = getField(found.record, found.keyMap, COLS.dob);
+      const password = calculatePassword(nameRaw, dobRaw);
 
-      if (masterRecord) {
-        idStatus.className = 'input-status valid show';
-        idStatus.innerHTML = `✔ ${_t('validId')}`;
-        
-        // Calculate Expected Password
-        const nameRaw = getField(masterRecord, masterKm, COLS.name);
-        const dobRaw = getField(masterRecord, masterKm, COLS.dob);
-        expectedPassword = calculatePassword(nameRaw, dobRaw);
-        
-        // Store Data temporarily for Login Step
-        currentData = { 
-          masterRow: masterRecord, 
-          masterKeyMap: masterKm, 
-          empId: id, 
-          attRow: null, 
-          attKeyMap: null, 
-          currentMonth: null 
-        };
-
-        // Reveal Password Field
-        pwdGroup.style.display = 'block';
-        
-      } else {
-        idStatus.className = 'input-status invalid show';
-        idStatus.innerHTML = `✖ ${_t('invalidId')}`;
+      if (!password) {
+        idState = null;
+        lastCheckedId = '';
+        renderInputStatuses();
+        setLoginMessage('msgNoPassword', 'error');
+        return;
       }
+
+      expectedPassword = password;
+      pendingEmployee = { masterRow: found.record, masterKeyMap: found.keyMap, empId: id };
+      idState = 'valid';
+      pwdGroup.style.display = 'block';
+      renderInputStatuses();
     }
 
-    empIdInput.addEventListener('input', function() {
-      idStatus.className = 'input-status';
-      idStatus.style.opacity = '1';
-      pwdGroup.style.display = 'none';
-      empPwdInput.value = '';
-      pwdStatus.className = 'input-status';
-      continueBtn.classList.remove('show-btn');
-      setLoginMessage(null, 'info');
-
+    empIdInput.addEventListener('input', function () {
       clearTimeout(typingTimer);
+      validationSeq++;               // cancel any check that is still running
+      lastCheckedId = '';
+      idState = null;
+      hidePasswordStep();
+      renderInputStatuses();
+      setLoginMessage(null, 'info');
       if (this.value.trim()) {
-        typingTimer = setTimeout(validateId, doneTypingInterval);
+        typingTimer = setTimeout(validateId, ID_CHECK_DELAY_MS);
       }
     });
 
-    empIdInput.addEventListener('blur', function() {
+    empIdInput.addEventListener('blur', function () {
       clearTimeout(typingTimer);
       if (this.value.trim() && pwdGroup.style.display === 'none') validateId();
     });
 
-    // Password Validation (Instant)
-    empPwdInput.addEventListener('input', function() {
-      // Hide ID Verified status organically when user starts typing password
-      idStatus.style.opacity = '0';
-      
-      const pwd = this.value.trim().toUpperCase();
-      continueBtn.classList.remove('show-btn');
-      
-      if(pwd.length === 0) {
-        pwdStatus.className = 'input-status';
-        return;
-      }
+    empIdInput.addEventListener('keydown', async function (e) {
+      if (e.key !== 'Enter') return;
+      e.preventDefault();
+      clearTimeout(typingTimer);
+      await validateId();
+      if (pwdGroup.style.display === 'block') empPwdInput.focus();
+    });
 
-      if (pwd === expectedPassword) {
-        pwdStatus.className = 'input-status valid show';
-        pwdStatus.innerHTML = `✔ ${_t('validId')}`;
+    empPwdInput.addEventListener('input', function () {
+      idState = null;                // the ID tick fades out while the password is typed
+      renderStatus(idStatus, null);
+      continueBtn.classList.remove('show-btn');
+
+      const pwd = this.value.trim().toUpperCase();
+      if (!pwd || !expectedPassword) {
+        pwdState = null;
+      } else if (pwd === expectedPassword) {
+        pwdState = 'valid';
         continueBtn.classList.add('show-btn');
+      } else if (pwd.length >= expectedPassword.length) {
+        pwdState = 'invalid';
       } else {
-        // Only show invalid cross if they've typed at least 5 chars (to prevent immediate red cross)
-        if(pwd.length >= 5) {
-          pwdStatus.className = 'input-status invalid show';
-          pwdStatus.innerHTML = `✖ ${_t('invalidId')}`;
-        } else {
-          pwdStatus.className = 'input-status';
-        }
+        pwdState = null;
       }
+      renderStatus(pwdStatus, pwdState);
     });
 
     empPwdInput.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        if(continueBtn.classList.contains('show-btn')) executeLogin();
-        else this.blur(); 
-      }
+      if (e.key !== 'Enter') return;
+      e.preventDefault();
+      if (continueBtn.classList.contains('show-btn')) executeLogin();
     });
 
-    // ------------------------------------------------------------
-    // Final Login Execution (Fetch Attendance & Show Dashboard)
-    // ------------------------------------------------------------
     async function executeLogin() {
-      if (loginBusy || !currentData || !currentData.masterRow) return;
-      
+      if (loginBusy || !pendingEmployee) return;
+      if (empPwdInput.value.trim().toUpperCase() !== expectedPassword) return;
+
       loginBusy = true;
       continueBtn.disabled = true;
       setLoginMessage(null, 'info');
@@ -1781,34 +1743,30 @@
       showLoadingOverlay();
 
       try {
-        if(availableMonths.length === 0) await preloadSystemData();
-        
-        // Fetch Attendance for the latest available month
+        const data = {
+          masterRow: pendingEmployee.masterRow,
+          masterKeyMap: pendingEmployee.masterKeyMap,
+          empId: pendingEmployee.empId,
+          attRow: null,
+          attKeyMap: null,
+          currentMonth: null
+        };
+
+        if (availableMonths.length === 0) await probeAttendanceMonths();
+
         if (availableMonths.length > 0) {
-          const latestMonth = availableMonths[0];
-          currentData.currentMonth = latestMonth;
+          data.currentMonth = availableMonths[0];
           try {
-            const res = await fetch(`${ATTENDANCE_FOLDER}${latestMonth}.xlsx?v=${Date.now()}`, { cache: 'no-store' });
-            if (res.ok) {
-              const buf = await res.arrayBuffer();
-              const wb = XLSX.read(buf, { type: 'array', cellDates: true });
-              if (wb.SheetNames.length) {
-                const attData = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: '' });
-                for (let i = 0; i < attData.length; i++) {
-                  const km = buildKeyMap(attData[i]);
-                  let idKey = null;
-                  for (let alias of COLS.id) { if (alias in km) { idKey = km[alias]; break; } }
-                  if (idKey && String(attData[i][idKey]).trim().toUpperCase() === currentData.empId) {
-                    currentData.attRow = attData[i];
-                    currentData.attKeyMap = km;
-                    break;
-                  }
-                }
-              }
-            }
-          } catch(e) { console.error("Error loading attendance for month", e); }
+            const rows = await getMonthRows(data.currentMonth);
+            const found = findRecord(rows, data.empId);
+            data.attRow = found.record;
+            data.attKeyMap = found.keyMap;
+          } catch (e) {
+            console.error('Attendance could not be loaded', e);
+          }
         }
 
+        currentData = data;
         showLoadingName(pick('name') || 'Employee');
         const waitMore = LOADING_MIN_MS - (Date.now() - startedAt);
         if (waitMore > 0) await sleep(waitMore);
@@ -1816,9 +1774,12 @@
         showDashboard();
         hideLoadingOverlay();
         success = true;
-
+        // The password is not needed any more
+        expectedPassword = '';
+        empPwdInput.value = '';
       } catch (error) {
         console.error(error);
+        currentData = null;
         setLoginMessage('msgSystem', 'error');
       } finally {
         if (!success) hideLoadingOverlay();
@@ -1827,100 +1788,85 @@
       }
     }
 
-    // ------------------------------------------------------------
-    // Dynamic Month Tabs Generation
-    // ------------------------------------------------------------
+    // ============================================================
+    // Month tabs
+    // ============================================================
     function renderMonthTabs() {
       const container = document.getElementById('monthTabsContainer');
-      if(availableMonths.length <= 1) {
+      container.textContent = '';
+      if (!currentData || availableMonths.length <= 1) {
         container.style.display = 'none';
         return;
       }
       container.style.display = 'flex';
-      container.innerHTML = '';
-      
-      availableMonths.forEach((m) => {
+
+      availableMonths.forEach(function (m) {
         const btn = document.createElement('button');
+        btn.type = 'button';
         btn.className = 'month-tab' + (currentData.currentMonth === m ? ' active' : '');
         btn.id = 'tab-' + m;
-        
+
         const parts = m.split('-');
-        let displayStr = m;
-        if(parts.length === 2) {
-          const engMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-          const idx = engMonths.indexOf(parts[0]);
-          if(idx !== -1) {
-            displayStr = _t('months')[idx] + ' ' + parts[1];
-          }
-        }
-        
-        btn.textContent = displayStr;
-        btn.onclick = () => loadSpecificMonth(m);
+        let label = m;
+        const idx = ENG_MONTHS.indexOf(parts[0]);
+        if (parts.length === 2 && idx !== -1) label = t('months')[idx] + ' ' + parts[1];
+
+        btn.textContent = label;
+        btn.addEventListener('click', function () { loadSpecificMonth(m); });
         container.appendChild(btn);
       });
     }
 
     async function loadSpecificMonth(monthStr) {
-      if(currentData.currentMonth === monthStr) return; 
-      
-      document.querySelectorAll('.month-tab').forEach(b => b.classList.remove('active'));
-      document.getElementById('tab-' + monthStr).classList.add('active');
-      
-      document.getElementById('calendarGrid').innerHTML = `<p class='empty-note'>${_t('checking')}</p>`;
-      
-      try {
-        let path = `${ATTENDANCE_FOLDER}${monthStr}.xlsx`;
-        const response = await fetch(path + '?v=' + Date.now(), { cache: 'no-store' });
-        if(!response.ok) throw new Error("Not found");
-        
-        const arrayBuffer = await response.arrayBuffer();
-        const workbook = XLSX.read(arrayBuffer, { type: 'array', cellDates: true });
-        
-        const data = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], { defval: '' });
-        
-        let attRecord = null;
-        let attKm = null;
-        for (let i = 0; i < data.length; i++) {
-          const km = buildKeyMap(data[i]);
-          let idKey = null;
-          for (const alias of COLS.id) {
-            if (alias in km) { idKey = km[alias]; break; }
-          }
-          if (idKey === null) continue;
+      const owner = currentData;
+      if (!owner || owner.currentMonth === monthStr) return;
 
-          const rowId = data[i][idKey];
-          if (rowId !== null && rowId !== undefined && String(rowId).trim().toUpperCase() === currentData.empId) {
-            attRecord = data[i];
-            attKm = km; 
-            break;
-          }
-        }
-        
-        currentData.currentMonth = monthStr;
-        currentData.attRow = attRecord;
-        currentData.attKeyMap = attKm;
-        
-        renderDashboard(); 
-      } catch(e) {
-        document.getElementById('calendarGrid').innerHTML = `<p class='empty-note'>Error loading data.</p>`;
+      document.querySelectorAll('.month-tab').forEach(function (b) { b.classList.remove('active'); });
+      const tab = document.getElementById('tab-' + monthStr);
+      if (tab) tab.classList.add('active');
+
+      const grid = document.getElementById('calendarGrid');
+      grid.textContent = '';
+      const loadingNote = document.createElement('p');
+      loadingNote.className = 'empty-note';
+      loadingNote.textContent = t('checking');
+      grid.appendChild(loadingNote);
+
+      try {
+        const rows = await getMonthRows(monthStr);
+        if (currentData !== owner) return;   // logged out meanwhile
+        const found = findRecord(rows, owner.empId);
+        owner.currentMonth = monthStr;
+        owner.attRow = found.record;
+        owner.attKeyMap = found.keyMap;
+        renderDashboard();
+      } catch (e) {
+        if (currentData !== owner) return;
+        grid.textContent = '';
+        const err = document.createElement('p');
+        err.className = 'empty-note';
+        err.textContent = t('msgLoadMonth');
+        grid.appendChild(err);
+        renderMonthTabs();   // restore the highlight on the month that is really shown
       }
     }
 
-    // ------------------------------------------------------------
-    // Dashboard Rendering & Auto-Resign Logic
-    // ------------------------------------------------------------
+    // ============================================================
+    // Dashboard
+    // ============================================================
     function pick(group) {
       const d = currentData;
+      if (!d) return '';
       let v = '';
-      if(d.masterRow) v = getField(d.masterRow, d.masterKeyMap, COLS[group]);
-      if(v === '' && d.attRow) v = getField(d.attRow, d.attKeyMap, COLS[group]);
+      if (d.masterRow) v = getField(d.masterRow, d.masterKeyMap, COLS[group]);
+      if (v === '' && d.attRow) v = getField(d.attRow, d.attKeyMap, COLS[group]);
       return formatValue(v);
     }
 
     function showDashboard() {
       document.getElementById('loginSection').style.display = 'none';
       document.getElementById('dashboardSection').style.display = 'block';
-      document.getElementById('mainNavbar').style.display = 'block'; 
+      document.getElementById('mainNavbar').style.display = 'block';
       window.scrollTo(0, 0);
       renderMonthTabs();
       renderDashboard();
@@ -1965,42 +1911,37 @@
       setText('modalBankName', bank);
       setText('modalIfsc', ifsc);
 
-      // Smart Auto-Resign Logic based on LWD
+      // Status: an LWD means Resigned; otherwise the Status column is used
       let statusKey = null;
       let statusShown = statusRaw;
-      
-      if (lwd && String(lwd).trim() !== '' && String(lwd).trim() !== '-') {
+      if (lwd && lwd !== '-') {
         statusKey = 'resigned';
       } else {
         const su = statusRaw.toUpperCase();
-        if (statusRaw === '') {
-          statusKey = 'active';
-        } else if (['ACTIVE', 'WORKING', 'CONTINUING'].includes(su)) {
+        if (statusRaw === '' || ['ACTIVE', 'WORKING', 'CONTINUING'].includes(su)) {
           statusKey = 'active';
         } else if (['INACTIVE', 'IN-ACTIVE', 'IN ACTIVE'].includes(su)) {
           statusKey = 'inactive';
         }
       }
-      
-      if (statusKey) statusShown = _t(statusKey);
+      if (statusKey) statusShown = t(statusKey);
 
+      const badgeClass = 'status-badge ' + (statusKey === 'active' ? 'status-active' : 'status-inactive');
       const badge = document.getElementById('modalStatus');
       badge.textContent = statusShown;
-      badge.className = 'status-badge ' + (statusKey === 'active' ? 'status-active' : 'status-inactive');
-
+      badge.className = badgeClass;
       const aboutBadge = document.getElementById('displayStatus');
       aboutBadge.textContent = statusShown;
-      aboutBadge.className = badge.className;
+      aboutBadge.className = badgeClass;
 
+      // Bank account: hidden by default except the last 4 digits
       currentAccountFull = account;
-      currentAccountMasked = account.length > 4
-        ? '*'.repeat(account.length - 4) + account.slice(-4)
-        : account;
+      currentAccountMasked = account.length > 4 ? '*'.repeat(account.length - 4) + account.slice(-4) : account;
       const toggleBtn = document.getElementById('toggleAccBtn');
       if (account) {
         document.getElementById('modalAccNo').textContent = accountVisible ? currentAccountFull : currentAccountMasked;
         toggleBtn.style.display = 'inline-block';
-        toggleBtn.textContent = accountVisible ? _t('hideAcc') : _t('showAcc');
+        toggleBtn.textContent = accountVisible ? t('hideAcc') : t('showAcc');
       } else {
         document.getElementById('modalAccNo').textContent = '---';
         toggleBtn.style.display = 'none';
@@ -2008,6 +1949,7 @@
 
       updateCopyButtons();
 
+      // Attendance cards
       const grid = document.getElementById('calendarGrid');
       grid.textContent = '';
 
@@ -2021,6 +1963,10 @@
 
           let statusVal = formatValue(d.attRow[key]).toUpperCase();
           if (statusVal === '') statusVal = '-';
+
+          // Only day columns are shown: the header has a number (1, 01-Oct, 45678 ...) or the value is a known code
+          const looksLikeDay = /\d/.test(cleanKey);
+          if (!looksLikeDay && !ALL_CODES.includes(statusVal)) continue;
 
           let cardClass = '';
           let labelKey = '';
@@ -2045,7 +1991,7 @@
 
           const labelDiv = document.createElement('div');
           labelDiv.className = 'status-label';
-          labelDiv.textContent = labelKey ? _t(labelKey) : '';
+          labelDiv.textContent = labelKey ? t(labelKey) : '';
 
           card.appendChild(dateDiv);
           card.appendChild(statusDiv);
@@ -2058,10 +2004,11 @@
       if (cardsAdded === 0) {
         const p = document.createElement('p');
         p.className = 'empty-note';
-        p.textContent = _t('noAttendance');
+        p.textContent = t('noAttendance');
         grid.appendChild(p);
       }
 
+      // A half day counts as 0.5 present and 0.5 absent. Leave, weekly off and holidays are not working days.
       const totalCount = cntPresent + cntAbsent + cntHalf;
       const presentCount = cntPresent + cntHalf * 0.5;
       const absentCount = cntAbsent + cntHalf * 0.5;
@@ -2074,12 +2021,15 @@
       document.getElementById('progressFill').style.width = percent + '%';
     }
 
-    // ------------------------------------------------------------
+    // ============================================================
     // PDF
-    // ------------------------------------------------------------
-    function openPdfChoice() { document.getElementById('pdfModal').style.display = 'flex'; }
-    function closePdfChoice() { document.getElementById('pdfModal').style.display = 'none'; }
-    function pdfOverlayClick(e) { if (e.target.id === 'pdfModal') closePdfChoice(); }
+    // ============================================================
+    function currentMonthLabel() {
+      if (!currentData || !currentData.currentMonth) return '';
+      const parts = currentData.currentMonth.split('-');
+      const idx = ENG_MONTHS.indexOf(parts[0]);
+      return (parts.length === 2 && idx !== -1) ? t('months')[idx] + ' ' + parts[1] : currentData.currentMonth;
+    }
 
     function buildPdfRoot(mode) {
       const root = document.createElement('div');
@@ -2092,7 +2042,9 @@
       company.textContent = 'Geekay Human Resources Pvt. Ltd.';
       const generated = document.createElement('div');
       generated.className = 'pdf-generated';
-      generated.textContent = _t('generatedOn') + ': ' + document.getElementById('currentDate').textContent;
+      let line = t('generatedOn') + ': ' + document.getElementById('currentDate').textContent;
+      if (mode !== 'staff' && currentMonthLabel()) line += '   |   ' + t('monthLabel') + ': ' + currentMonthLabel();
+      generated.textContent = line;
       head.appendChild(company);
       head.appendChild(generated);
       root.appendChild(head);
@@ -2101,10 +2053,8 @@
         const att = document.getElementById('printArea').cloneNode(true);
         const btns = att.querySelector('#actionButtons');
         if (btns) btns.remove();
-        
-        const mTabs = att.querySelector('#monthTabsContainer');
-        if(mTabs) mTabs.remove();
-        
+        const tabs = att.querySelector('#monthTabsContainer');
+        if (tabs) tabs.remove();
         root.appendChild(att);
       }
 
@@ -2134,9 +2084,12 @@
 
       const pdfBtn = document.getElementById('pdfBtn');
       const empId = currentData.empId;
-      
-      let mthStr = currentData.currentMonth ? `_${currentData.currentMonth}` : '';
-      const names = { attendance: `Attendance_Report${mthStr}_`, staff: 'Staff_Details_', all: `Full_Report${mthStr}_` };
+      const monthPart = currentData.currentMonth ? '_' + currentData.currentMonth : '';
+      const names = {
+        attendance: 'Attendance_Report' + monthPart + '_',
+        staff: 'Staff_Details_',
+        all: 'Full_Report' + monthPart + '_'
+      };
 
       pdfBtn.disabled = true;
 
@@ -2163,17 +2116,16 @@
         await html2pdf().set(opt).from(root).save();
       } catch (err) {
         console.error(err);
-        alert(_t('msgPdf'));
+        alert(t('msgPdf'));
       } finally {
         wrapper.remove();
         pdfBtn.disabled = false;
       }
     }
 
-    // ------------------------------------------------------------
-    // Session timer & Logout
-    // ------------------------------------------------------------
-    const SESSION_SECONDS = 120;
+    // ============================================================
+    // Session timer and logout
+    // ============================================================
     let sessionTimerId = null;
     let sessionEndTime = 0;
 
@@ -2218,37 +2170,43 @@
       stopSessionTimer();
       closeStaffModal();
       closePdfChoice();
+      clearTimeout(typingTimer);
+      validationSeq++;
+
       currentData = null;
+      pendingEmployee = null;
       expectedPassword = '';
-      
-      document.getElementById('empId').value = '';
-      document.getElementById('empPwd').value = '';
-      
-      document.getElementById('idStatus').className = 'input-status';
-      document.getElementById('idStatus').style.opacity = '1'; 
-      document.getElementById('pwdStatus').className = 'input-status';
-      document.getElementById('pwdGroup').style.display = 'none';
-      document.getElementById('continueBtn').classList.remove('show-btn');
-      
+      monthCache.clear();           // attendance of other employees is not kept in memory
+      lastCheckedId = '';
+      idState = null;
+      pwdState = null;
+
+      empIdInput.value = '';
+      empPwdInput.value = '';
+      pwdGroup.style.display = 'none';
+      continueBtn.classList.remove('show-btn');
+      renderInputStatuses();
+
       setLoginMessage(null, 'info');
       document.getElementById('progressFill').style.width = '0%';
       document.getElementById('calendarGrid').textContent = '';
-      document.getElementById('monthTabsContainer').innerHTML = '';
+      document.getElementById('monthTabsContainer').textContent = '';
       currentAccountFull = '';
       currentAccountMasked = '';
       accountVisible = false;
-      
+
       document.getElementById('dashboardSection').style.display = 'none';
       document.getElementById('mainNavbar').style.display = 'none';
       document.getElementById('loginSection').style.display = 'flex';
-      document.getElementById('empId').focus();
+      empIdInput.focus();
     }
 
-    // ------------------------------------------------------------
+    // ============================================================
     // Start
-    // ------------------------------------------------------------
+    // ============================================================
     loadSavedLanguage();
     applyStaticTranslations();
+    preloadSystemData();
   </script>
 </body>
 </html>

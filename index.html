@@ -885,6 +885,8 @@
     // ------------------------------------------------------------
     // Settings & Globals
     // ------------------------------------------------------------
+    const MASTER_FILE = 'master_data/master_data.xlsx';
+    const ATTENDANCE_FOLDER = 'attendance_records/';
     const LANG_STORAGE_KEY = 'geekayPortalLang';
 
     // ------------------------------------------------------------
@@ -957,12 +959,12 @@
         lblOff: 'Off Day',
         noAttendance: 'No attendance dates recorded yet.',
         msgEnterId: 'Please enter your Employee ID.',
-        msgFileProtocol: 'Open this page from a web server (or hosting). Browsers block reading attendance.xlsx from a local file.',
+        msgFileProtocol: 'Open this page from a web server (or hosting). Browsers block reading local files.',
         msgAuth: 'Authenticating...',
-        msgIdColumn: 'Employee ID column not found in the Excel file. Please contact HR / Admin.',
-        msgInvalid: 'Invalid ID. Record not found.',
-        msgFileNotFound: 'Data files not found. Please contact HR / Admin.',
-        msgEmptyBook: 'The attendance file is empty. Please contact HR / Admin.',
+        msgIdColumn: 'Employee ID column not found in the Master file. Please contact HR / Admin.',
+        msgInvalid: 'Invalid ID. Record not found in Master Data.',
+        msgFileNotFound: 'Master Data file not found. Please contact HR / Admin.',
+        msgEmptyBook: 'The Master Data file is empty. Please contact HR / Admin.',
         msgSystem: 'System error. Data could not be loaded. Please try again.',
         msgPdf: 'PDF could not be created. Please try again.'
       },
@@ -1030,14 +1032,14 @@
         lblWeeklyOff: 'வார விடுமுறை',
         lblHoliday: 'விடுமுறை நாள்',
         lblOff: 'ஓய்வு நாள்',
-        noAttendance: 'வருகைப் பதிவுகள் இன்னும் இல்லை.',
+        noAttendance: 'இந்த மாதத்திற்கான வருகைப் பதிவுகள் இன்னும் இல்லை.',
         msgEnterId: 'தயவுசெய்து உங்கள் ஊழியர் ID-ஐ உள்ளிடவும்.',
-        msgFileProtocol: 'இந்தப் பக்கத்தை இணையதள சேவையகம் (hosting) வழியாகத் திறக்கவும். கணினியில் உள்ள கோப்பாகத் திறந்தால் attendance.xlsx-ஐப் படிக்க முடியாது.',
+        msgFileProtocol: 'இந்தப் பக்கத்தை இணையதள சேவையகம் (hosting) வழியாகத் திறக்கவும்.',
         msgAuth: 'சரிபார்க்கிறது...',
-        msgIdColumn: 'Excel கோப்பில் ஊழியர் ID column கிடைக்கவில்லை. தயவுசெய்து HR / நிர்வாகத் துறையைத் தொடர்பு கொள்ளவும்.',
-        msgInvalid: 'தவறான ID. உங்கள் பதிவு கிடைக்கவில்லை.',
-        msgFileNotFound: 'தரவு கோப்புகள் கிடைக்கவில்லை. தயவுசெய்து HR / நிர்வாகத் துறையைத் தொடர்பு கொள்ளவும்.',
-        msgEmptyBook: 'வருகைக் கோப்பு காலியாக உள்ளது. தயவுசெய்து HR / நிர்வாகத் துறையைத் தொடர்பு கொள்ளவும்.',
+        msgIdColumn: 'Master Data கோப்பில் ஊழியர் ID column கிடைக்கவில்லை. தயவுசெய்து HR / நிர்வாகத் துறையைத் தொடர்பு கொள்ளவும்.',
+        msgInvalid: 'தவறான ID. Master Data-வில் உங்கள் பதிவு கிடைக்கவில்லை.',
+        msgFileNotFound: 'Master Data கோப்பு கிடைக்கவில்லை. தயவுசெய்து HR / நிர்வாகத் துறையைத் தொடர்பு கொள்ளவும்.',
+        msgEmptyBook: 'Master Data கோப்பு காலியாக உள்ளது. தயவுசெய்து HR / நிர்வாகத் துறையைத் தொடர்பு கொள்ளவும்.',
         msgSystem: 'கணினிப் பிழை. தரவை ஏற்ற முடியவில்லை. மீண்டும் முயற்சிக்கவும்.',
         msgPdf: 'PDF உருவாக்க முடியவில்லை. மீண்டும் முயற்சிக்கவும்.'
       },
@@ -1105,14 +1107,14 @@
         lblWeeklyOff: 'साप्ताहिक अवकाश',
         lblHoliday: 'अवकाश दिवस',
         lblOff: 'ऑफ़ डे',
-        noAttendance: 'अभी तक कोई उपस्थिति दर्ज नहीं है।',
+        noAttendance: 'इस महीने के लिए कोई उपस्थिति दर्ज नहीं है।',
         msgEnterId: 'कृपया अपना कर्मचारी ID दर्ज करें।',
-        msgFileProtocol: 'इस पेज को वेब सर्वर (होस्टिंग) से खोलें। कंप्यूटर की फ़ाइल के रूप में खोलने पर ब्राउज़र attendance.xlsx को पढ़ने नहीं देता।',
+        msgFileProtocol: 'इस पेज को वेब सर्वर (होस्टिंग) से खोलें।',
         msgAuth: 'जाँच हो रही है...',
-        msgIdColumn: 'Excel फ़ाइल में कर्मचारी ID कॉलम नहीं मिला। कृपया HR / एडमिन विभाग से संपर्क करें।',
-        msgInvalid: 'गलत ID। आपका रिकॉर्ड नहीं मिला।',
-        msgFileNotFound: 'डेटा फ़ाइलें नहीं मिलीं। कृपया HR / एडमिन विभाग से संपर्क करें।',
-        msgEmptyBook: 'उपस्थिति फ़ाइल खाली है। कृपया HR / एडमिन विभाग से संपर्क करें।',
+        msgIdColumn: 'Master Data फ़ाइल में कर्मचारी ID कॉलम नहीं मिला। कृपया HR / एडमिन विभाग से संपर्क करें।',
+        msgInvalid: 'गलत ID। Master Data में आपका रिकॉर्ड नहीं मिला।',
+        msgFileNotFound: 'Master Data फ़ाइल नहीं मिली। कृपया HR / एडमिन विभाग से संपर्क करें।',
+        msgEmptyBook: 'Master Data फ़ाइल खाली है। कृपया HR / एडमिन विभाग से संपर्क करें।',
         msgSystem: 'सिस्टम में त्रुटि। डेटा लोड नहीं हो सका। कृपया फिर से प्रयास करें।',
         msgPdf: 'PDF नहीं बन सका। कृपया फिर से प्रयास करें।'
       }
@@ -1158,14 +1160,31 @@
     let currentAccountMasked = '';
     let accountVisible = false;
 
-    // Background preloader for live ID validation & Multi-Month Support
+    // Background preloader for System Data
     let availableMonths = [];
-    let cachedLatestData = null;
+    let cachedMasterData = null;
     let isPreloading = false;
 
-    async function probeAvailableMonths() {
-      if (isPreloading || availableMonths.length > 0) return;
+    async function preloadSystemData() {
+      if (isPreloading) return;
       isPreloading = true;
+      
+      // 1. Fetch Master Data (for fast validation)
+      try {
+        const response = await fetch(MASTER_FILE + '?v=' + Date.now(), { cache: 'no-store' });
+        if (response.ok) {
+          const arrayBuffer = await response.arrayBuffer();
+          const workbook = XLSX.read(arrayBuffer, { type: 'array', cellDates: true });
+          if (workbook.SheetNames.length) {
+            const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+            cachedMasterData = XLSX.utils.sheet_to_json(firstSheet, { defval: '' });
+          }
+        }
+      } catch (e) {
+        console.error("Master data load failed", e);
+      }
+
+      // 2. Probe Attendance Folders for available months
       try {
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         let probes = [];
@@ -1173,7 +1192,6 @@
         let cm = d.getMonth();
         let cy = d.getFullYear();
         
-        // Probe last 12 months in the attendance_records folder
         for(let i=0; i<12; i++) {
           probes.push({ str: monthNames[cm] + "-" + cy, m: cm, y: cy });
           cm--; if(cm < 0) { cm = 11; cy--; }
@@ -1182,7 +1200,7 @@
         let validMonths = [];
         await Promise.all(probes.map(async (p) => {
           try {
-            let res = await fetch(`attendance_records/${p.str}.xlsx`, { method: 'HEAD', cache: 'no-store' });
+            let res = await fetch(`${ATTENDANCE_FOLDER}${p.str}.xlsx`, { method: 'HEAD', cache: 'no-store' });
             if(res.ok) validMonths.push(p);
           } catch(e) {}
         }));
@@ -1192,34 +1210,12 @@
           return b.m - a.m;
         });
         availableMonths = validMonths.map(v => v.str);
-
-        // Safe Fallback: If folder doesn't exist or is empty, fallback to legacy root file
-        if(availableMonths.length === 0) {
-          try {
-            let res = await fetch('attendance.xlsx', { method: 'HEAD', cache: 'no-store' });
-            if(res.ok) availableMonths.push('attendance');
-          } catch(e) {}
-        }
-        
-        // Preload the latest file for fast live ID validation
-        if(availableMonths.length > 0) {
-          let latestPath = availableMonths[0] === 'attendance' ? 'attendance.xlsx' : `attendance_records/${availableMonths[0]}.xlsx`;
-          const response = await fetch(latestPath + '?v=' + Date.now(), { cache: 'no-store' });
-          if (response.ok) {
-            const arrayBuffer = await response.arrayBuffer();
-            const workbook = XLSX.read(arrayBuffer, { type: 'array', cellDates: true });
-            if (workbook.SheetNames.length) {
-              const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-              cachedLatestData = XLSX.utils.sheet_to_json(firstSheet, { defval: '' });
-            }
-          }
-        }
       } catch (e) {
-        console.error("Background data load failed", e);
+        console.error("Attendance probe failed", e);
       }
       isPreloading = false;
     }
-    window.addEventListener('DOMContentLoaded', probeAvailableMonths);
+    window.addEventListener('DOMContentLoaded', preloadSystemData);
 
     // ------------------------------------------------------------
     // Helpers
@@ -1238,6 +1234,7 @@
     }
 
     function getField(row, keyMap, aliases) {
+      if (!row || !keyMap) return '';
       for (const alias of aliases) {
         if (alias in keyMap) {
           const v = row[keyMap[alias]];
@@ -1367,7 +1364,6 @@
       const toggleBtn = document.getElementById('toggleAccBtn');
       if (toggleBtn) toggleBtn.textContent = accountVisible ? _t('hideAcc') : _t('showAcc');
       
-      // Update Month Tabs translation if present
       if(currentData) renderMonthTabs();
     }
 
@@ -1523,7 +1519,7 @@
     }
 
     // ------------------------------------------------------------
-    // Live ID Validation (Real-time Auto Check)
+    // Live ID Validation against MASTER DATA
     // ------------------------------------------------------------
     const empIdInput = document.getElementById('empId');
     const loginBtn = document.getElementById('loginBtn');
@@ -1540,22 +1536,22 @@
       liveVal.innerHTML = `<span style="font-size:16px">⏳</span> ${_t('checking')}`;
       
       while(isPreloading) { await sleep(100); }
-      if (availableMonths.length === 0) await probeAvailableMonths(); 
+      if (!cachedMasterData) await preloadSystemData(); 
 
-      if (!cachedLatestData) {
+      if (!cachedMasterData) {
         liveVal.textContent = ''; 
         return;
       }
 
       let found = false;
-      for (let i = 0; i < cachedLatestData.length; i++) {
-        const km = buildKeyMap(cachedLatestData[i]);
+      for (let i = 0; i < cachedMasterData.length; i++) {
+        const km = buildKeyMap(cachedMasterData[i]);
         let idKey = null;
         for (const alias of COLS.id) {
           if (alias in km) { idKey = km[alias]; break; }
         }
         if (idKey === null) continue;
-        const rowId = cachedLatestData[i][idKey];
+        const rowId = cachedMasterData[i][idKey];
         if (rowId !== null && rowId !== undefined && String(rowId).trim().toUpperCase() === id) {
           found = true; break;
         }
@@ -1600,7 +1596,7 @@
     });
 
     // ------------------------------------------------------------
-    // Login & Multi-Month Data Fetching
+    // Login & Architecture Update (Master + Attendance)
     // ------------------------------------------------------------
     async function login() {
       if (loginBusy) return;
@@ -1612,7 +1608,6 @@
         setLoginMessage('msgEnterId', 'error');
         return;
       }
-
       if (location.protocol === 'file:') {
         setLoginMessage('msgFileProtocol', 'error');
         return;
@@ -1626,80 +1621,76 @@
       showLoadingOverlay();
 
       try {
-        if(availableMonths.length === 0) await probeAvailableMonths();
-        if(availableMonths.length === 0) throw new Error('FILE_NOT_FOUND');
+        if(!cachedMasterData) await preloadSystemData();
+        if(!cachedMasterData) throw new Error('MASTER_NOT_FOUND');
 
-        // Always log in using the latest available month
-        let latestPath = availableMonths[0] === 'attendance' ? 'attendance.xlsx' : `attendance_records/${availableMonths[0]}.xlsx`;
-
-        const response = await fetch(latestPath + '?v=' + Date.now(), { cache: 'no-store' });
-        if (!response.ok) throw new Error('FILE_NOT_FOUND');
-
-        const arrayBuffer = await response.arrayBuffer();
-        const workbook = XLSX.read(arrayBuffer, { type: 'array', cellDates: true });
-
-        if (!workbook.SheetNames.length) throw new Error('EMPTY_BOOK');
-
-        const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-        const data = XLSX.utils.sheet_to_json(firstSheet, { defval: '' });
-
-        let record = null;
-        let keyMap = null;
+        // 1. Fetch Employee from Master Data
+        let masterRecord = null;
+        let masterKm = null;
         let idColumnFound = false;
 
-        for (let i = 0; i < data.length; i++) {
-          const km = buildKeyMap(data[i]);
+        for (let i = 0; i < cachedMasterData.length; i++) {
+          const km = buildKeyMap(cachedMasterData[i]);
           let idKey = null;
           for (const alias of COLS.id) {
             if (alias in km) { idKey = km[alias]; break; }
           }
           if (idKey === null) continue;
           idColumnFound = true;
-
-          const rowId = data[i][idKey];
+          
+          const rowId = cachedMasterData[i][idKey];
           if (rowId !== null && rowId !== undefined && String(rowId).trim().toUpperCase() === id) {
-            record = data[i];
-            keyMap = km;
+            masterRecord = cachedMasterData[i];
+            masterKm = km;
             break;
           }
         }
 
-        if (!idColumnFound && data.length > 0) {
+        if (!idColumnFound && cachedMasterData.length > 0) {
           setLoginMessage('msgIdColumn', 'error');
           return;
         }
-        if (!record) {
+        if (!masterRecord) {
           setLoginMessage('msgInvalid', 'error');
           return;
         }
 
-        // Master details from sheets
-        const master = {};
-        for (let s = 1; s < workbook.SheetNames.length; s++) {
-          const rows = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[s]], { defval: '' });
-          for (let r = 0; r < rows.length; r++) {
-            const km = buildKeyMap(rows[r]);
-            let idKey = null;
-            for (const alias of COLS.id) {
-              if (alias in km) { idKey = km[alias]; break; }
-            }
-            if (idKey === null) continue;
-            if (String(rows[r][idKey]).trim().toUpperCase() === id) {
-              for (const group in COLS) {
-                if (group === 'id') continue;
-                if (!(group in master)) {
-                  const val = getField(rows[r], km, COLS[group]);
-                  if (val !== '') master[group] = val;
+        currentData = { 
+          masterRow: masterRecord, 
+          masterKeyMap: masterKm, 
+          empId: id, 
+          attRow: null, 
+          attKeyMap: null, 
+          currentMonth: null 
+        };
+
+        // 2. Fetch Attendance for the latest available month (if any)
+        if (availableMonths.length > 0) {
+          const latestMonth = availableMonths[0];
+          currentData.currentMonth = latestMonth;
+          try {
+            const res = await fetch(`${ATTENDANCE_FOLDER}${latestMonth}.xlsx?v=${Date.now()}`, { cache: 'no-store' });
+            if (res.ok) {
+              const buf = await res.arrayBuffer();
+              const wb = XLSX.read(buf, { type: 'array', cellDates: true });
+              if (wb.SheetNames.length) {
+                const attData = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: '' });
+                for (let i = 0; i < attData.length; i++) {
+                  const km = buildKeyMap(attData[i]);
+                  let idKey = null;
+                  for (let alias of COLS.id) { if (alias in km) { idKey = km[alias]; break; } }
+                  if (idKey && String(attData[i][idKey]).trim().toUpperCase() === id) {
+                    currentData.attRow = attData[i];
+                    currentData.attKeyMap = km;
+                    break;
+                  }
                 }
               }
-              break;
             }
-          }
+          } catch(e) { console.error("Error loading attendance for month", e); }
         }
 
-        currentData = { record: record, keyMap: keyMap, master: master, empId: id, currentMonth: availableMonths[0] };
         setLoginMessage(null, 'info');
-
         showLoadingName(pick('name') || 'Employee');
         const waitMore = LOADING_MIN_MS - (Date.now() - startedAt);
         if (waitMore > 0) await sleep(waitMore);
@@ -1710,10 +1701,8 @@
 
       } catch (error) {
         console.error(error);
-        if (error.message === 'FILE_NOT_FOUND') {
+        if (error.message === 'MASTER_NOT_FOUND') {
           setLoginMessage('msgFileNotFound', 'error');
-        } else if (error.message === 'EMPTY_BOOK') {
-          setLoginMessage('msgEmptyBook', 'error');
         } else {
           setLoginMessage('msgSystem', 'error');
         }
@@ -1737,13 +1726,10 @@
       container.innerHTML = '';
       
       availableMonths.forEach((m) => {
-        if(m === 'attendance') return; // Skip legacy file in tabs
-        
         const btn = document.createElement('button');
         btn.className = 'month-tab' + (currentData.currentMonth === m ? ' active' : '');
         btn.id = 'tab-' + m;
         
-        // Translate Month text (e.g. Oct-2026 to translated equivalent)
         const parts = m.split('-');
         let displayStr = m;
         if(parts.length === 2) {
@@ -1761,7 +1747,7 @@
     }
 
     async function loadSpecificMonth(monthStr) {
-      if(currentData.currentMonth === monthStr) return; // Already selected
+      if(currentData.currentMonth === monthStr) return; 
       
       document.querySelectorAll('.month-tab').forEach(b => b.classList.remove('active'));
       document.getElementById('tab-' + monthStr).classList.add('active');
@@ -1769,7 +1755,7 @@
       document.getElementById('calendarGrid').innerHTML = `<p class='empty-note'>${_t('checking')}</p>`;
       
       try {
-        let path = `attendance_records/${monthStr}.xlsx`;
+        let path = `${ATTENDANCE_FOLDER}${monthStr}.xlsx`;
         const response = await fetch(path + '?v=' + Date.now(), { cache: 'no-store' });
         if(!response.ok) throw new Error("Not found");
         
@@ -1778,7 +1764,8 @@
         
         const data = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], { defval: '' });
         
-        let record = null;
+        let attRecord = null;
+        let attKm = null;
         for (let i = 0; i < data.length; i++) {
           const km = buildKeyMap(data[i]);
           let idKey = null;
@@ -1789,24 +1776,17 @@
 
           const rowId = data[i][idKey];
           if (rowId !== null && rowId !== undefined && String(rowId).trim().toUpperCase() === currentData.empId) {
-            record = data[i];
-            currentData.keyMap = km; 
+            attRecord = data[i];
+            attKm = km; 
             break;
           }
         }
         
         currentData.currentMonth = monthStr;
-        if (record) {
-          currentData.record = record;
-          renderDashboard(); 
-        } else {
-          document.getElementById('statTotal').textContent = '0';
-          document.getElementById('statPresent').textContent = '0';
-          document.getElementById('statAbsent').textContent = '0';
-          document.getElementById('statPercent').textContent = '0%';
-          document.getElementById('progressFill').style.width = '0%';
-          document.getElementById('calendarGrid').innerHTML = `<p class='empty-note'>${_t('noAttendance')}</p>`;
-        }
+        currentData.attRow = attRecord;
+        currentData.attKeyMap = attKm;
+        
+        renderDashboard(); 
       } catch(e) {
         document.getElementById('calendarGrid').innerHTML = `<p class='empty-note'>Error loading data.</p>`;
       }
@@ -1817,8 +1797,9 @@
     // ------------------------------------------------------------
     function pick(group) {
       const d = currentData;
-      let v = getField(d.record, d.keyMap, COLS[group]);
-      if (v === '' && d.master[group] !== undefined) v = d.master[group];
+      let v = '';
+      if(d.masterRow) v = getField(d.masterRow, d.masterKeyMap, COLS[group]);
+      if(v === '' && d.attRow) v = getField(d.attRow, d.attKeyMap, COLS[group]);
       return formatValue(v);
     }
 
@@ -1835,7 +1816,6 @@
     function renderDashboard() {
       const d = currentData;
       if (!d) return;
-      const record = d.record;
 
       const empName = pick('name') || 'Employee';
       const doj     = pick('doj');
@@ -1906,43 +1886,46 @@
       let cntPresent = 0, cntAbsent = 0, cntHalf = 0;
       let cardsAdded = 0;
 
-      for (const key in record) {
-        const cleanKey = String(key).trim();
-        if (cleanKey === '' || cleanKey.startsWith('__EMPTY') || isInfoColumn(cleanKey)) continue;
+      // Loop over attendance row if it exists
+      if (d.attRow) {
+        for (const key in d.attRow) {
+          const cleanKey = String(key).trim();
+          if (cleanKey === '' || cleanKey.startsWith('__EMPTY') || isInfoColumn(cleanKey)) continue;
 
-        let statusVal = formatValue(record[key]).toUpperCase();
-        if (statusVal === '') statusVal = '-';
+          let statusVal = formatValue(d.attRow[key]).toUpperCase();
+          if (statusVal === '') statusVal = '-';
 
-        let cardClass = '';
-        let labelKey = '';
-        if (CODE_PRESENT.includes(statusVal))         { cardClass = 'present'; labelKey = 'lblPresent';   cntPresent++; }
-        else if (CODE_ABSENT.includes(statusVal))     { cardClass = 'absent';  labelKey = 'lblAbsent';    cntAbsent++; }
-        else if (CODE_HALF.includes(statusVal))       { cardClass = 'half';    labelKey = 'lblHalf';      cntHalf++; }
-        else if (CODE_LEAVE.includes(statusVal))      { cardClass = 'leave';   labelKey = 'lblLeave'; }
-        else if (CODE_WEEKLY_OFF.includes(statusVal)) { cardClass = 'off';     labelKey = 'lblWeeklyOff'; }
-        else if (CODE_HOLIDAY.includes(statusVal))    { cardClass = 'off';     labelKey = 'lblHoliday'; }
-        else if (CODE_OFF.includes(statusVal))        { cardClass = 'off';     labelKey = 'lblOff'; }
+          let cardClass = '';
+          let labelKey = '';
+          if (CODE_PRESENT.includes(statusVal))         { cardClass = 'present'; labelKey = 'lblPresent';   cntPresent++; }
+          else if (CODE_ABSENT.includes(statusVal))     { cardClass = 'absent';  labelKey = 'lblAbsent';    cntAbsent++; }
+          else if (CODE_HALF.includes(statusVal))       { cardClass = 'half';    labelKey = 'lblHalf';      cntHalf++; }
+          else if (CODE_LEAVE.includes(statusVal))      { cardClass = 'leave';   labelKey = 'lblLeave'; }
+          else if (CODE_WEEKLY_OFF.includes(statusVal)) { cardClass = 'off';     labelKey = 'lblWeeklyOff'; }
+          else if (CODE_HOLIDAY.includes(statusVal))    { cardClass = 'off';     labelKey = 'lblHoliday'; }
+          else if (CODE_OFF.includes(statusVal))        { cardClass = 'off';     labelKey = 'lblOff'; }
 
-        const card = document.createElement('div');
-        card.className = 'day-card' + (cardClass ? ' ' + cardClass : '');
+          const card = document.createElement('div');
+          card.className = 'day-card' + (cardClass ? ' ' + cardClass : '');
 
-        const dateDiv = document.createElement('div');
-        dateDiv.className = 'date-text';
-        dateDiv.textContent = formatHeader(cleanKey);
+          const dateDiv = document.createElement('div');
+          dateDiv.className = 'date-text';
+          dateDiv.textContent = formatHeader(cleanKey);
 
-        const statusDiv = document.createElement('div');
-        statusDiv.className = 'status-text';
-        statusDiv.textContent = statusVal;
+          const statusDiv = document.createElement('div');
+          statusDiv.className = 'status-text';
+          statusDiv.textContent = statusVal;
 
-        const labelDiv = document.createElement('div');
-        labelDiv.className = 'status-label';
-        labelDiv.textContent = labelKey ? _t(labelKey) : '';
+          const labelDiv = document.createElement('div');
+          labelDiv.className = 'status-label';
+          labelDiv.textContent = labelKey ? _t(labelKey) : '';
 
-        card.appendChild(dateDiv);
-        card.appendChild(statusDiv);
-        card.appendChild(labelDiv);
-        grid.appendChild(card);
-        cardsAdded++;
+          card.appendChild(dateDiv);
+          card.appendChild(statusDiv);
+          card.appendChild(labelDiv);
+          grid.appendChild(card);
+          cardsAdded++;
+        }
       }
 
       if (cardsAdded === 0) {
@@ -1992,7 +1975,6 @@
         const btns = att.querySelector('#actionButtons');
         if (btns) btns.remove();
         
-        // Remove month tabs from PDF
         const mTabs = att.querySelector('#monthTabsContainer');
         if(mTabs) mTabs.remove();
         
@@ -2026,8 +2008,7 @@
       const pdfBtn = document.getElementById('pdfBtn');
       const empId = currentData.empId;
       
-      // Include current month in filename if possible
-      let mthStr = currentData.currentMonth && currentData.currentMonth !== 'attendance' ? `_${currentData.currentMonth}` : '';
+      let mthStr = currentData.currentMonth ? `_${currentData.currentMonth}` : '';
       const names = { attendance: `Attendance_Report${mthStr}_`, staff: 'Staff_Details_', all: `Full_Report${mthStr}_` };
 
       pdfBtn.disabled = true;

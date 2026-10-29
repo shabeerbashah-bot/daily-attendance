@@ -305,6 +305,40 @@
       text-align: left;
     }
 
+    /* PDF choice pop-up */
+    .pdf-choice { max-width: 440px; }
+    .pdf-option {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      background: #ffffff;
+      color: #2d3748;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .pdf-option:hover { border-color: #3182ce; color: #3182ce; background: #f7fbff; }
+    .pdf-option:focus-visible { outline: 2px solid #3182ce; }
+
+    /* PDF page layout (fixed desktop-like width so the PDF looks the same on phone and laptop) */
+    .pdf-root { width: 900px; padding: 8px 12px; background: #ffffff; color: #2d3748; }
+    .pdf-root .pdf-head { margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #3182ce; }
+    .pdf-root .pdf-company { font-size: 22px; font-weight: 700; color: #3182ce; }
+    .pdf-root .pdf-generated { font-size: 13px; color: #718096; margin-top: 2px; }
+    .pdf-root .dashboard-header { flex-direction: row; align-items: flex-start; }
+    .pdf-root .about-details { flex-direction: row; gap: 40px; }
+    .pdf-root .analytics-grid { grid-template-columns: repeat(4, 1fr); }
+    .pdf-root .calendar-grid { grid-template-columns: repeat(6, 1fr); }
+    .pdf-root .modal-grid { grid-template-columns: repeat(2, 1fr); }
+    .pdf-root .modal-header { padding-right: 0; }
+    .pdf-root .about-card, .pdf-root .stat-card, .pdf-root .day-card { box-shadow: 0 0 0 1px #e2e8f0; }
+    .pdf-root .progress-bar-fill { transition: none; }
+
     /* Responsive */
     @media (max-width: 600px) {
       .dashboard-header { flex-direction: column; align-items: flex-start; }
@@ -356,7 +390,7 @@
         </div>
         <div class="action-buttons" id="actionButtons">
           <button type="button" class="btn btn-primary" onclick="openStaffModal()" data-i18n="viewStaff">View Staff Details</button>
-          <button type="button" class="btn btn-secondary" id="pdfBtn" onclick="downloadPDF()" data-i18n="downloadPdf">Download PDF</button>
+          <button type="button" class="btn btn-secondary" id="pdfBtn" onclick="openPdfChoice()" data-i18n="downloadPdf">Download PDF</button>
           <button type="button" class="btn btn-light" onclick="logout()" data-i18n="logout">Logout</button>
         </div>
       </div>
@@ -483,6 +517,17 @@
     </div>
   </div>
 
+  <!-- PDF choice pop-up -->
+  <div class="modal-overlay" id="pdfModal" onclick="pdfOverlayClick(event)">
+    <div class="modal-content pdf-choice">
+      <button type="button" class="close-modal" onclick="closePdfChoice()" aria-label="Close">&times;</button>
+      <div class="modal-header" data-i18n="pdfChooseTitle">What do you want to download?</div>
+      <button type="button" class="pdf-option" onclick="generatePDF('attendance')" data-i18n="pdfAttendance">Attendance only</button>
+      <button type="button" class="pdf-option" onclick="generatePDF('staff')" data-i18n="pdfStaff">Staff details only</button>
+      <button type="button" class="pdf-option" onclick="generatePDF('all')" data-i18n="pdfAll">Overall details (Attendance + Staff details)</button>
+    </div>
+  </div>
+
   <script>
     // ------------------------------------------------------------
     // Settings
@@ -535,6 +580,11 @@
         hideAcc: 'Hide number',
         copy: 'Copy',
         copied: 'Copied',
+        pdfChooseTitle: 'What do you want to download?',
+        pdfAttendance: 'Attendance only',
+        pdfStaff: 'Staff details only',
+        pdfAll: 'Overall details (Attendance + Staff details)',
+        generatedOn: 'Generated on',
         active: 'Active',
         inactive: 'Inactive',
         lblPresent: 'Present',
@@ -593,6 +643,11 @@
         hideAcc: 'எண்ணை மறை',
         copy: 'நகலெடு',
         copied: 'நகலெடுக்கப்பட்டது',
+        pdfChooseTitle: 'எதைப் பதிவிறக்க வேண்டும்?',
+        pdfAttendance: 'வருகைப் பதிவு மட்டும்',
+        pdfStaff: 'ஊழியர் விவரங்கள் மட்டும்',
+        pdfAll: 'முழு விவரங்கள் (வருகை + ஊழியர் விவரங்கள்)',
+        generatedOn: 'உருவாக்கிய தேதி',
         active: 'பணியில் உள்ளார்',
         inactive: 'பணியில் இல்லை',
         lblPresent: 'வருகை',
@@ -651,6 +706,11 @@
         hideAcc: 'नंबर छिपाएँ',
         copy: 'कॉपी करें',
         copied: 'कॉपी हो गया',
+        pdfChooseTitle: 'आप क्या डाउनलोड करना चाहते हैं?',
+        pdfAttendance: 'केवल उपस्थिति',
+        pdfStaff: 'केवल कर्मचारी विवरण',
+        pdfAll: 'पूरा विवरण (उपस्थिति + कर्मचारी विवरण)',
+        generatedOn: 'बनाने की तारीख',
         active: 'कार्यरत',
         inactive: 'कार्यरत नहीं',
         lblPresent: 'उपस्थित',
@@ -880,7 +940,7 @@
       if (e.target.id === 'staffModal') closeStaffModal();
     }
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') closeStaffModal();
+      if (e.key === 'Escape') { closeStaffModal(); closePdfChoice(); }
     });
 
     function toggleAccount() {
@@ -1213,34 +1273,105 @@
     }
 
     // ------------------------------------------------------------
-    // PDF
+    // PDF (the person chooses: Attendance only / Staff details only / Overall)
     // ------------------------------------------------------------
-    async function downloadPDF() {
-      const buttons = document.getElementById('actionButtons');
+    function openPdfChoice() {
+      document.getElementById('pdfModal').style.display = 'flex';
+    }
+    function closePdfChoice() {
+      document.getElementById('pdfModal').style.display = 'none';
+    }
+    function pdfOverlayClick(e) {
+      if (e.target.id === 'pdfModal') closePdfChoice();
+    }
+
+    // Builds the page that will become the PDF
+    function buildPdfRoot(mode) {
+      const root = document.createElement('div');
+      root.className = 'pdf-root';
+
+      // Header: company name and date
+      const head = document.createElement('div');
+      head.className = 'pdf-head';
+      const company = document.createElement('div');
+      company.className = 'pdf-company';
+      company.textContent = 'Geekay Human Resources Pvt Ltd';
+      const generated = document.createElement('div');
+      generated.className = 'pdf-generated';
+      generated.textContent = _t('generatedOn') + ': ' + document.getElementById('currentDate').textContent;
+      head.appendChild(company);
+      head.appendChild(generated);
+      root.appendChild(head);
+
+      // Attendance part (same as the dashboard on screen, without the buttons)
+      if (mode === 'attendance' || mode === 'all') {
+        const att = document.getElementById('printArea').cloneNode(true);
+        const btns = att.querySelector('#actionButtons');
+        if (btns) btns.remove();
+        root.appendChild(att);
+      }
+
+      // Page break between the two parts
+      if (mode === 'all') {
+        const br = document.createElement('div');
+        br.className = 'html2pdf__page-break';
+        root.appendChild(br);
+      }
+
+      // Staff details part (same as the pop-up on screen, without the buttons)
+      if (mode === 'staff' || mode === 'all') {
+        const staff = document.createElement('div');
+        const source = document.querySelector('#staffModal .modal-content');
+        Array.prototype.forEach.call(source.children, function (child) {
+          staff.appendChild(child.cloneNode(true));
+        });
+        staff.querySelectorAll('.close-modal, .copy-btn, .link-btn').forEach(function (el) { el.remove(); });
+        root.appendChild(staff);
+      }
+
+      // Duplicate ids are not needed in the copy
+      root.querySelectorAll('[id]').forEach(function (el) { el.removeAttribute('id'); });
+      return root;
+    }
+
+    async function generatePDF(mode) {
+      closePdfChoice();
+      if (!currentData) return;
+
       const pdfBtn = document.getElementById('pdfBtn');
-      const empId = document.getElementById('displayId').textContent.trim();
+      const empId = currentData.empId;
+      const names = { attendance: 'Attendance_Report_', staff: 'Staff_Details_', all: 'Full_Report_' };
 
       pdfBtn.disabled = true;
-      buttons.style.display = 'none';
+
+      // The page is built outside the visible screen, then turned into a PDF
+      const wrapper = document.createElement('div');
+      wrapper.style.cssText = 'position:fixed;top:0;left:-10000px;width:900px;overflow:hidden;';
+      const root = buildPdfRoot(mode);
+      wrapper.appendChild(root);
+      document.body.appendChild(wrapper);
 
       try {
-        // Make sure the Tamil / English fonts are loaded before drawing the PDF
+        // Wait until English / Tamil / Hindi fonts are loaded
         if (document.fonts && document.fonts.ready) await document.fonts.ready;
 
-        const element = document.getElementById('printArea');
         const opt = {
-          margin: 0.3,
-          filename: 'Attendance_Report_' + (empId || 'Employee') + '.pdf',
-          image: { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 2, scrollY: 0 },
-          jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+          margin: [0.3, 0.25, 0.3, 0.25],
+          filename: (names[mode] || 'Report_') + empId + '.pdf',
+          image: { type: 'jpeg', quality: 1 },
+          html2canvas: { scale: 3, scrollX: 0, scrollY: 0, useCORS: true, backgroundColor: '#ffffff' },
+          jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait', compress: true },
+          pagebreak: {
+            mode: ['css', 'legacy'],
+            avoid: ['.pdf-head', '.about-card', '.stat-card', '.day-card', '.hr-footer', '.modal-section']
+          }
         };
-        await html2pdf().set(opt).from(element).save();
+        await html2pdf().set(opt).from(root).save();
       } catch (err) {
         console.error(err);
         alert(_t('msgPdf'));
       } finally {
-        buttons.style.display = 'flex';
+        wrapper.remove();
         pdfBtn.disabled = false;
       }
     }

@@ -410,7 +410,7 @@
       box-shadow: 0 4px 10px rgba(49, 130, 206, 0.3); 
     }
 
-    /* Attendance grid */
+    /* Attendance grid - Desktop */
     .section-title { font-size: 20px; color: #2d3748; margin-bottom: 20px; font-weight: 600; }
     .calendar-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; }
     .day-card {
@@ -639,7 +639,14 @@
       .session-timer { right: 8px; padding: 3px 8px; font-size: 12px; }
       .dashboard-header { flex-direction: column; align-items: flex-start; }
       .action-buttons { width: 100%; gap: 10px; }
-      .calendar-grid { grid-template-columns: repeat(2, 1fr); }
+      
+      /* Updated Mobile Calendar Grid - Exactly 5 items per row, minimal & compact */
+      .calendar-grid { grid-template-columns: repeat(5, 1fr); gap: 6px; }
+      .day-card { padding: 8px 2px; border-radius: 6px; border-bottom-width: 3px; }
+      .day-card .date-text { font-size: 9.5px; margin-bottom: 4px; letter-spacing: -0.3px; }
+      .day-card .status-text { font-size: 14px; }
+      .day-card .status-label { font-size: 8.5px; line-height: 1.1; margin-top: 4px; min-height: 10px; letter-spacing: -0.3px; }
+      
       .about-details { flex-direction: column; gap: 15px; }
       .modal-grid { grid-template-columns: 1fr; }
       .dashboard-lang-bar { justify-content: flex-start; }

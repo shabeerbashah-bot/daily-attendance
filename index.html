@@ -1127,22 +1127,22 @@
       return (key in pack) ? pack[key] : (I18N.en[key] || key);
     }
 
-    // Column name aliases.
+    // Smart Column Matching Alises based on User's Master Data
     const COLS = {
-      id:      ['useremployeeid', 'employeeid', 'empid', 'userid', 'employeecode'],
-      name:    ['displayname', 'employeename', 'name'],
+      id:      ['epmlid', 'useremployeeid', 'employeeid', 'empid', 'userid', 'employeecode'],
+      name:    ['empname', 'displayname', 'employeename', 'name'],
       status:  ['status', 'employeestatus'],
-      doj:     ['doj', 'dateofjoining'],
+      doj:     ['dojddmmyyyy', 'doj', 'dateofjoining'],
       lwd:     ['lwd', 'lastworkingday'],
-      dob:     ['dob', 'dateofbirth'],
+      dob:     ['dobddmmyyyy', 'dob', 'dateofbirth'],
       esi:     ['esinumber', 'esino', 'esi', 'esic', 'esicnumber'],
-      mobile:  ['mobilenumber', 'mobile', 'mobileno', 'phone', 'phonenumber', 'contactnumber'],
-      email:   ['emailid', 'email', 'emailaddress'],
+      mobile:  ['personalcontactno', 'mobilenumber', 'mobile', 'mobileno', 'phone', 'phonenumber', 'contactnumber'],
+      email:   ['personalemailid', 'emailid', 'email', 'emailaddress'],
       bank:    ['bankname', 'bank'],
-      account: ['accountnumber', 'accountno', 'bankaccountnumber', 'bankaccount', 'accno'],
+      account: ['bankaccountnumber', 'accountnumber', 'accountno', 'bankaccount', 'accno'],
       ifsc:    ['ifsccode', 'ifsc'],
       vendor:  ['vendorname', 'vendor'],
-      serial:  ['slno', 'sno', 'serialnumber', 'srno']
+      serial:  ['sln0', 'slno', 'sno', 'serialnumber', 'srno']
     };
 
     // Attendance codes

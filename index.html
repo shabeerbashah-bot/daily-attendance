@@ -38,26 +38,21 @@
     }
 
     /* Language switch */
-    .lang-switch {
-      display: inline-flex;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      overflow: hidden;
-      background: #ffffff;
-    }
+    .lang-switch { display: inline-flex; align-items: center; gap: 20px; }
     .lang-btn {
       border: none;
-      background: #ffffff;
-      color: #4a5568;
-      padding: 8px 16px;
-      min-width: 48px;
+      background: none;
+      color: #718096;
+      padding: 4px 2px;
       font-size: 15px;
       font-weight: 600;
       cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
     }
-    .lang-btn + .lang-btn { border-left: 1px solid #cbd5e1; }
-    .lang-btn.active { background: #004080; color: #ffffff; }
-    .lang-btn:focus-visible { outline: 2px solid #3182ce; outline-offset: -2px; }
+    .lang-btn:hover { color: #3182ce; }
+    .lang-btn.active { color: #3182ce; border-bottom-color: #3182ce; }
+    .lang-btn:focus-visible { outline: 2px solid #3182ce; outline-offset: 2px; }
 
     .login-lang { margin-bottom: 20px; }
     .dashboard-lang-bar { display: flex; justify-content: flex-end; margin-bottom: 15px; }
@@ -281,17 +276,23 @@
     .status-inactive { background: #fed7d7; color: #822727; }
     .value-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
     .copy-btn {
-      background: #edf2f7;
-      color: #3182ce;
-      border: 1px solid #cbd5e1;
-      border-radius: 6px;
-      padding: 3px 10px;
-      font-size: 12px;
-      font-weight: 600;
+      background: none;
+      border: none;
+      padding: 3px;
+      color: #718096;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 4px;
+      transition: color 0.2s, background 0.2s;
     }
-    .copy-btn:hover { background: #e2e8f0; }
-    .copy-btn.copied { background: #c6f6d5; color: #22543d; border-color: #9ae6b4; }
+    .copy-btn:hover { color: #3182ce; background: #edf2f7; }
+    .copy-btn:focus-visible { outline: 2px solid #3182ce; }
+    .copy-btn svg { width: 16px; height: 16px; display: block; }
+    .copy-btn .ic-check { display: none; }
+    .copy-btn.copied { color: #38a169; background: #c6f6d5; }
+    .copy-btn.copied .ic-copy { display: none; }
+    .copy-btn.copied .ic-check { display: block; }
     .link-btn {
       background: none;
       border: none;
@@ -421,11 +422,11 @@
         <div class="modal-grid">
           <div class="detail-item">
             <span class="detail-label" data-i18n="empName">Employee Name</span>
-            <span class="detail-value" id="modalName">---</span>
+            <div class="value-row"><span class="detail-value" id="modalName">---</span><button type="button" class="copy-btn" data-copy="modalName" data-i18n-title="copy" style="display:none;"><svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div>
           </div>
           <div class="detail-item">
             <span class="detail-label" data-i18n="employeeId">Employee ID</span>
-            <div class="value-row"><span class="detail-value" id="modalId">---</span><button type="button" class="copy-btn" data-copy="modalId" data-i18n="copy" style="display:none;">Copy</button></div>
+            <div class="value-row"><span class="detail-value" id="modalId">---</span><button type="button" class="copy-btn" data-copy="modalId" data-i18n-title="copy" style="display:none;"><svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div>
           </div>
           <div class="detail-item">
             <span class="detail-label" data-i18n="status">Status</span>
@@ -433,15 +434,15 @@
           </div>
           <div class="detail-item">
             <span class="detail-label" data-i18n="dob">Date of Birth (DOB)</span>
-            <span class="detail-value" id="modalDob">---</span>
+            <div class="value-row"><span class="detail-value" id="modalDob">---</span><button type="button" class="copy-btn" data-copy="modalDob" data-i18n-title="copy" style="display:none;"><svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div>
           </div>
           <div class="detail-item">
             <span class="detail-label" data-i18n="lwd">Last Working Day (LWD)</span>
-            <span class="detail-value" id="modalLwd">---</span>
+            <div class="value-row"><span class="detail-value" id="modalLwd">---</span><button type="button" class="copy-btn" data-copy="modalLwd" data-i18n-title="copy" style="display:none;"><svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div>
           </div>
           <div class="detail-item">
             <span class="detail-label" data-i18n="esi">ESI Number</span>
-            <div class="value-row"><span class="detail-value" id="modalEsi">---</span><button type="button" class="copy-btn" data-copy="modalEsi" data-i18n="copy" style="display:none;">Copy</button></div>
+            <div class="value-row"><span class="detail-value" id="modalEsi">---</span><button type="button" class="copy-btn" data-copy="modalEsi" data-i18n-title="copy" style="display:none;"><svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div>
           </div>
         </div>
       </div>
@@ -451,11 +452,11 @@
         <div class="modal-grid">
           <div class="detail-item">
             <span class="detail-label" data-i18n="mobile">Mobile Number</span>
-            <div class="value-row"><span class="detail-value" id="modalMobile">---</span><button type="button" class="copy-btn" data-copy="modalMobile" data-i18n="copy" style="display:none;">Copy</button></div>
+            <div class="value-row"><span class="detail-value" id="modalMobile">---</span><button type="button" class="copy-btn" data-copy="modalMobile" data-i18n-title="copy" style="display:none;"><svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div>
           </div>
           <div class="detail-item">
             <span class="detail-label" data-i18n="email">Email ID</span>
-            <div class="value-row"><span class="detail-value" id="modalEmail">---</span><button type="button" class="copy-btn" data-copy="modalEmail" data-i18n="copy" style="display:none;">Copy</button></div>
+            <div class="value-row"><span class="detail-value" id="modalEmail">---</span><button type="button" class="copy-btn" data-copy="modalEmail" data-i18n-title="copy" style="display:none;"><svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div>
           </div>
         </div>
       </div>
@@ -465,16 +466,16 @@
         <div class="modal-grid">
           <div class="detail-item">
             <span class="detail-label" data-i18n="bankName">Bank Name</span>
-            <span class="detail-value" id="modalBankName">---</span>
+            <div class="value-row"><span class="detail-value" id="modalBankName">---</span><button type="button" class="copy-btn" data-copy="modalBankName" data-i18n-title="copy" style="display:none;"><svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div>
           </div>
           <div class="detail-item">
             <span class="detail-label" data-i18n="accNo">Account Number</span>
-            <div class="value-row"><span class="detail-value" id="modalAccNo">---</span><button type="button" class="copy-btn" data-copy="account" data-i18n="copy" style="display:none;">Copy</button></div>
+            <div class="value-row"><span class="detail-value" id="modalAccNo">---</span><button type="button" class="copy-btn" data-copy="account" data-i18n-title="copy" style="display:none;"><svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div>
             <button type="button" class="link-btn" id="toggleAccBtn" onclick="toggleAccount()" style="display:none;">Show full number</button>
           </div>
           <div class="detail-item">
             <span class="detail-label" data-i18n="ifsc">IFSC Code</span>
-            <div class="value-row"><span class="detail-value" id="modalIfsc">---</span><button type="button" class="copy-btn" data-copy="modalIfsc" data-i18n="copy" style="display:none;">Copy</button></div>
+            <div class="value-row"><span class="detail-value" id="modalIfsc">---</span><button type="button" class="copy-btn" data-copy="modalIfsc" data-i18n-title="copy" style="display:none;"><svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div>
           </div>
         </div>
       </div>
@@ -796,6 +797,11 @@
       document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
         el.setAttribute('placeholder', _t(el.getAttribute('data-i18n-placeholder')));
       });
+      document.querySelectorAll('[data-i18n-title]').forEach(function (el) {
+        const txt = _t(el.getAttribute('data-i18n-title'));
+        el.setAttribute('title', txt);
+        el.setAttribute('aria-label', txt);
+      });
       document.querySelectorAll('.lang-btn').forEach(function (btn) {
         const active = btn.getAttribute('data-lang') === currentLang;
         btn.classList.toggle('active', active);
@@ -829,9 +835,12 @@
     }
 
     document.querySelectorAll('.lang-btn').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        setLanguage(btn.getAttribute('data-lang'));
-      });
+      function choose() {
+        const lang = btn.getAttribute('data-lang');
+        if (lang !== currentLang) setLanguage(lang);
+      }
+      btn.addEventListener('mouseenter', choose);   // mouse pointer placed on the letter
+      btn.addEventListener('click', choose);        // tap on phones, or keyboard Enter
     });
 
     // ------------------------------------------------------------
@@ -894,7 +903,7 @@
     // Show a copy button only when its value exists
     function updateCopyButtons() {
       document.querySelectorAll('.copy-btn').forEach(function (btn) {
-        btn.style.display = getCopyText(btn) ? 'inline-block' : 'none';
+        btn.style.display = getCopyText(btn) ? 'inline-flex' : 'none';
       });
     }
 
@@ -928,11 +937,13 @@
         if (!text) return;
         const ok = await copyText(text);
         if (!ok) return;
-        btn.textContent = _t('copied');
         btn.classList.add('copied');
+        btn.setAttribute('title', _t('copied'));
+        btn.setAttribute('aria-label', _t('copied'));
         setTimeout(function () {
-          btn.textContent = _t('copy');
           btn.classList.remove('copied');
+          btn.setAttribute('title', _t('copy'));
+          btn.setAttribute('aria-label', _t('copy'));
         }, 1500);
       });
     });

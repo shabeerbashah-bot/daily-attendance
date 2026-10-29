@@ -32,12 +32,13 @@
       z-index: 500;
       background: #ffffff;
       color: #3182ce;
-      padding: 20px 80px;
-      text-align: center;
-      font-size: 22px;
+      padding: 16px 84px 16px 16px;
+      text-align: left;
+      white-space: nowrap;
+      font-size: clamp(11px, 3.6vw, 22px);
       font-weight: 700;
       box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      letter-spacing: 0.5px;
+      letter-spacing: 0.3px;
     }
 
     /* Session timer (top right corner of the header) */
@@ -131,7 +132,7 @@
       flex-wrap: wrap;
       gap: 15px;
     }
-    .welcome-text { font-size: 24px; font-weight: 600; color: #1a202c; margin: 0; }
+    .welcome-text { font-size: 28px; font-weight: 600; color: #1a202c; margin: 0; }
     .welcome-text .name { color: #004080; }
     .current-date { color: #718096; font-size: 15px; font-weight: 500; margin: 8px 0 0 0; }
 
@@ -362,7 +363,6 @@
 
     /* Responsive */
     @media (max-width: 600px) {
-      .navbar { font-size: 16px; padding: 18px 64px; }
       .session-timer { right: 8px; padding: 3px 8px; font-size: 12px; }
       .dashboard-header { flex-direction: column; align-items: flex-start; }
       .action-buttons { width: 100%; }
@@ -432,6 +432,10 @@
           <div class="detail-item">
             <span class="detail-label" data-i18n="lwd">Last Working Day (LWD)</span>
             <span class="detail-value" id="displayLwd">-</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label" data-i18n="status">Status</span>
+            <span class="detail-value"><span class="status-badge status-active" id="displayStatus">Active</span></span>
           </div>
         </div>
       </div>
@@ -1216,6 +1220,11 @@
       const badge = document.getElementById('modalStatus');
       badge.textContent = statusShown;
       badge.className = 'status-badge ' + (statusKey === 'active' ? 'status-active' : 'status-inactive');
+
+      // Same status also shown in the "About Employee" card
+      const aboutBadge = document.getElementById('displayStatus');
+      aboutBadge.textContent = statusShown;
+      aboutBadge.className = badge.className;
 
       // Bank account: masked by default
       currentAccountFull = account;

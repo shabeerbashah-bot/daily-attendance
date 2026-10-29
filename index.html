@@ -97,7 +97,7 @@
       box-shadow: 0 15px 35px rgba(0,0,0,0.1);
       overflow: hidden;
       position: relative;
-      z-index: 10; /* Keeps the box above the celestial background */
+      z-index: 10;
     }
 
     /* Left Brand Panel */
@@ -139,7 +139,6 @@
       filter: blur(90px);
       opacity: 0.5;
     }
-    /* Morning - Sunrise from Bottom Left Edge */
     .orb-morning {
       background: radial-gradient(circle, #ffd700, #ff8c00);
       animation: animMorning 15s ease-out forwards;
@@ -148,7 +147,6 @@
       0% { bottom: -200px; left: -200px; opacity: 0; }
       100% { bottom: 20%; left: -100px; opacity: 0.5; }
     }
-    /* Afternoon - High Sun on Top Center Edge */
     .orb-afternoon {
       background: radial-gradient(circle, #fffbe0, #f6e05e);
       animation: animAfternoon 10s ease-in-out infinite;
@@ -157,7 +155,6 @@
       0%, 100% { top: -200px; left: 50%; transform: translateX(-50%); opacity: 0.4; }
       50% { top: -100px; left: 50%; transform: translateX(-50%); opacity: 0.6; }
     }
-    /* Evening - Sunset on Right Edge going down */
     .orb-evening {
       background: radial-gradient(circle, #ed8936, #c53030);
       animation: animEvening 15s ease-out forwards;
@@ -166,7 +163,6 @@
       0% { top: 20%; right: -150px; opacity: 0.6; }
       100% { top: 80%; right: -200px; opacity: 0.3; }
     }
-    /* Night - Moon floating on Top Right Edge */
     .orb-night {
       background: radial-gradient(circle, #e2e8f0, #718096);
       width: 350px; height: 350px;
@@ -176,7 +172,6 @@
       0%, 100% { top: 5%; right: 5%; transform: translateY(0); opacity: 0.4; }
       50% { top: 5%; right: 5%; transform: translateY(30px); opacity: 0.6; }
     }
-    /* Night - Stars across the full screen background */
     .twinkle-star {
       position: absolute;
       background: white;
@@ -384,6 +379,36 @@
     .stat-number { font-size: 22px; font-weight: 700; color: #1a202c; }
     .progress-bar-bg { background: #edf2f7; height: 6px; border-radius: 10px; margin-top: 8px; overflow: hidden; }
     .progress-bar-fill { background: #004080; height: 100%; width: 0%; transition: width 1s ease-in-out; }
+
+    /* Multi-Month Tabs */
+    .month-tabs-container {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      scrollbar-width: thin;
+    }
+    .month-tab {
+      background: white;
+      border: 1px solid #cbd5e1;
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #4a5568;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.3s;
+      font-family: 'Poppins', sans-serif;
+    }
+    .month-tab:hover { border-color: #3182ce; color: #3182ce; }
+    .month-tab.active { 
+      background: #3182ce; 
+      color: white; 
+      border-color: #3182ce; 
+      box-shadow: 0 4px 10px rgba(49, 130, 206, 0.3); 
+    }
 
     /* Attendance grid */
     .section-title { font-size: 20px; color: #2d3748; margin-bottom: 20px; font-weight: 600; }
@@ -744,6 +769,10 @@
       </div>
 
       <div class="section-title" data-i18n="attOverview">Attendance Overview</div>
+      
+      <!-- Multi-Month Tabs -->
+      <div id="monthTabsContainer" class="month-tabs-container" style="display: none;"></div>
+
       <div class="calendar-grid" id="calendarGrid"></div>
 
       <div class="hr-footer">
@@ -847,9 +876,8 @@
 
   <script>
     // ------------------------------------------------------------
-    // Settings
+    // Settings & Globals
     // ------------------------------------------------------------
-    const EXCEL_FILE = 'attendance.xlsx';
     const LANG_STORAGE_KEY = 'geekayPortalLang';
 
     // ------------------------------------------------------------
@@ -926,7 +954,7 @@
         msgAuth: 'Authenticating...',
         msgIdColumn: 'Employee ID column not found in the Excel file. Please contact HR / Admin.',
         msgInvalid: 'Invalid ID. Record not found.',
-        msgFileNotFound: 'attendance.xlsx was not found. Please contact HR / Admin.',
+        msgFileNotFound: 'Data files not found. Please contact HR / Admin.',
         msgEmptyBook: 'The attendance file is empty. Please contact HR / Admin.',
         msgSystem: 'System error. Data could not be loaded. Please try again.',
         msgPdf: 'PDF could not be created. Please try again.'
@@ -1001,7 +1029,7 @@
         msgAuth: 'சரிபார்க்கிறது...',
         msgIdColumn: 'Excel கோப்பில் ஊழியர் ID column கிடைக்கவில்லை. தயவுசெய்து HR / நிர்வாகத் துறையைத் தொடர்பு கொள்ளவும்.',
         msgInvalid: 'தவறான ID. உங்கள் பதிவு கிடைக்கவில்லை.',
-        msgFileNotFound: 'attendance.xlsx கோப்பு கிடைக்கவில்லை. தயவுசெய்து HR / நிர்வாகத் துறையைத் தொடர்பு கொள்ளவும்.',
+        msgFileNotFound: 'தரவு கோப்புகள் கிடைக்கவில்லை. தயவுசெய்து HR / நிர்வாகத் துறையைத் தொடர்பு கொள்ளவும்.',
         msgEmptyBook: 'வருகைக் கோப்பு காலியாக உள்ளது. தயவுசெய்து HR / நிர்வாகத் துறையைத் தொடர்பு கொள்ளவும்.',
         msgSystem: 'கணினிப் பிழை. தரவை ஏற்ற முடியவில்லை. மீண்டும் முயற்சிக்கவும்.',
         msgPdf: 'PDF உருவாக்க முடியவில்லை. மீண்டும் முயற்சிக்கவும்.'
@@ -1076,7 +1104,7 @@
         msgAuth: 'जाँच हो रही है...',
         msgIdColumn: 'Excel फ़ाइल में कर्मचारी ID कॉलम नहीं मिला। कृपया HR / एडमिन विभाग से संपर्क करें।',
         msgInvalid: 'गलत ID। आपका रिकॉर्ड नहीं मिला।',
-        msgFileNotFound: 'attendance.xlsx फ़ाइल नहीं मिली। कृपया HR / एडमिन विभाग से संपर्क करें।',
+        msgFileNotFound: 'डेटा फ़ाइलें नहीं मिलीं। कृपया HR / एडमिन विभाग से संपर्क करें।',
         msgEmptyBook: 'उपस्थिति फ़ाइल खाली है। कृपया HR / एडमिन विभाग से संपर्क करें।',
         msgSystem: 'सिस्टम में त्रुटि। डेटा लोड नहीं हो सका। कृपया फिर से प्रयास करें।',
         msgPdf: 'PDF नहीं बन सका। कृपया फिर से प्रयास करें।'
@@ -1123,21 +1151,60 @@
     let currentAccountMasked = '';
     let accountVisible = false;
 
-    // Background preloader for live ID validation
-    let cachedExcelData = null;
+    // Background preloader for live ID validation & Multi-Month Support
+    let availableMonths = [];
+    let cachedLatestData = null;
     let isPreloading = false;
 
-    async function preloadExcel() {
-      if (cachedExcelData || isPreloading) return;
+    async function probeAvailableMonths() {
+      if (isPreloading || availableMonths.length > 0) return;
       isPreloading = true;
       try {
-        const response = await fetch(EXCEL_FILE + '?v=' + Date.now(), { cache: 'no-store' });
-        if (response.ok) {
-          const arrayBuffer = await response.arrayBuffer();
-          const workbook = XLSX.read(arrayBuffer, { type: 'array', cellDates: true });
-          if (workbook.SheetNames.length) {
-            const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-            cachedExcelData = XLSX.utils.sheet_to_json(firstSheet, { defval: '' });
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        let probes = [];
+        let d = new Date();
+        let cm = d.getMonth();
+        let cy = d.getFullYear();
+        
+        // Probe last 12 months in the attendance_records folder
+        for(let i=0; i<12; i++) {
+          probes.push({ str: monthNames[cm] + "-" + cy, m: cm, y: cy });
+          cm--; if(cm < 0) { cm = 11; cy--; }
+        }
+        
+        let validMonths = [];
+        await Promise.all(probes.map(async (p) => {
+          try {
+            let res = await fetch(`attendance_records/${p.str}.xlsx`, { method: 'HEAD', cache: 'no-store' });
+            if(res.ok) validMonths.push(p);
+          } catch(e) {}
+        }));
+        
+        validMonths.sort((a,b) => {
+          if(a.y !== b.y) return b.y - a.y;
+          return b.m - a.m;
+        });
+        availableMonths = validMonths.map(v => v.str);
+
+        // Safe Fallback: If folder doesn't exist or is empty, fallback to legacy root file
+        if(availableMonths.length === 0) {
+          try {
+            let res = await fetch('attendance.xlsx', { method: 'HEAD', cache: 'no-store' });
+            if(res.ok) availableMonths.push('attendance');
+          } catch(e) {}
+        }
+        
+        // Preload the latest file for fast live ID validation
+        if(availableMonths.length > 0) {
+          let latestPath = availableMonths[0] === 'attendance' ? 'attendance.xlsx' : `attendance_records/${availableMonths[0]}.xlsx`;
+          const response = await fetch(latestPath + '?v=' + Date.now(), { cache: 'no-store' });
+          if (response.ok) {
+            const arrayBuffer = await response.arrayBuffer();
+            const workbook = XLSX.read(arrayBuffer, { type: 'array', cellDates: true });
+            if (workbook.SheetNames.length) {
+              const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+              cachedLatestData = XLSX.utils.sheet_to_json(firstSheet, { defval: '' });
+            }
           }
         }
       } catch (e) {
@@ -1145,7 +1212,7 @@
       }
       isPreloading = false;
     }
-    window.addEventListener('DOMContentLoaded', preloadExcel);
+    window.addEventListener('DOMContentLoaded', probeAvailableMonths);
 
     // ------------------------------------------------------------
     // Helpers
@@ -1292,6 +1359,9 @@
 
       const toggleBtn = document.getElementById('toggleAccBtn');
       if (toggleBtn) toggleBtn.textContent = accountVisible ? _t('hideAcc') : _t('showAcc');
+      
+      // Update Month Tabs translation if present
+      if(currentData) renderMonthTabs();
     }
 
     function setLanguage(lang) {
@@ -1446,14 +1516,14 @@
     }
 
     // ------------------------------------------------------------
-    // Live ID Validation (Real-time Auto Check) & Login
+    // Live ID Validation (Real-time Auto Check)
     // ------------------------------------------------------------
     const empIdInput = document.getElementById('empId');
     const loginBtn = document.getElementById('loginBtn');
     const liveVal = document.getElementById('liveValidation');
     
     let typingTimer;
-    const doneTypingInterval = 3000; // 3 seconds delay for relaxed typing
+    const doneTypingInterval = 3000; 
 
     async function validateId() {
       const id = empIdInput.value.trim().toUpperCase();
@@ -1463,22 +1533,22 @@
       liveVal.innerHTML = `<span style="font-size:16px">⏳</span> ${_t('checking')}`;
       
       while(isPreloading) { await sleep(100); }
-      if (!cachedExcelData) await preloadExcel(); 
+      if (availableMonths.length === 0) await probeAvailableMonths(); 
 
-      if (!cachedExcelData) {
+      if (!cachedLatestData) {
         liveVal.textContent = ''; 
         return;
       }
 
       let found = false;
-      for (let i = 0; i < cachedExcelData.length; i++) {
-        const km = buildKeyMap(cachedExcelData[i]);
+      for (let i = 0; i < cachedLatestData.length; i++) {
+        const km = buildKeyMap(cachedLatestData[i]);
         let idKey = null;
         for (const alias of COLS.id) {
           if (alias in km) { idKey = km[alias]; break; }
         }
         if (idKey === null) continue;
-        const rowId = cachedExcelData[i][idKey];
+        const rowId = cachedLatestData[i][idKey];
         if (rowId !== null && rowId !== undefined && String(rowId).trim().toUpperCase() === id) {
           found = true; break;
         }
@@ -1522,6 +1592,9 @@
       }
     });
 
+    // ------------------------------------------------------------
+    // Login & Multi-Month Data Fetching
+    // ------------------------------------------------------------
     async function login() {
       if (loginBusy) return;
       const input = document.getElementById('empId');
@@ -1546,7 +1619,13 @@
       showLoadingOverlay();
 
       try {
-        const response = await fetch(EXCEL_FILE + '?v=' + Date.now(), { cache: 'no-store' });
+        if(availableMonths.length === 0) await probeAvailableMonths();
+        if(availableMonths.length === 0) throw new Error('FILE_NOT_FOUND');
+
+        // Always log in using the latest available month
+        let latestPath = availableMonths[0] === 'attendance' ? 'attendance.xlsx' : `attendance_records/${availableMonths[0]}.xlsx`;
+
+        const response = await fetch(latestPath + '?v=' + Date.now(), { cache: 'no-store' });
         if (!response.ok) throw new Error('FILE_NOT_FOUND');
 
         const arrayBuffer = await response.arrayBuffer();
@@ -1587,6 +1666,7 @@
           return;
         }
 
+        // Master details from sheets
         const master = {};
         for (let s = 1; s < workbook.SheetNames.length; s++) {
           const rows = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[s]], { defval: '' });
@@ -1610,7 +1690,7 @@
           }
         }
 
-        currentData = { record: record, keyMap: keyMap, master: master, empId: id };
+        currentData = { record: record, keyMap: keyMap, master: master, empId: id, currentMonth: availableMonths[0] };
         setLoginMessage(null, 'info');
 
         showLoadingName(pick('name') || 'Employee');
@@ -1638,7 +1718,95 @@
     }
 
     // ------------------------------------------------------------
-    // Dashboard
+    // Dynamic Month Tabs Generation
+    // ------------------------------------------------------------
+    function renderMonthTabs() {
+      const container = document.getElementById('monthTabsContainer');
+      if(availableMonths.length <= 1) {
+        container.style.display = 'none';
+        return;
+      }
+      container.style.display = 'flex';
+      container.innerHTML = '';
+      
+      availableMonths.forEach((m) => {
+        if(m === 'attendance') return; // Skip legacy file in tabs
+        
+        const btn = document.createElement('button');
+        btn.className = 'month-tab' + (currentData.currentMonth === m ? ' active' : '');
+        btn.id = 'tab-' + m;
+        
+        // Translate Month text (e.g. Oct-2026 to translated equivalent)
+        const parts = m.split('-');
+        let displayStr = m;
+        if(parts.length === 2) {
+          const engMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          const idx = engMonths.indexOf(parts[0]);
+          if(idx !== -1) {
+            displayStr = _t('months')[idx] + ' ' + parts[1];
+          }
+        }
+        
+        btn.textContent = displayStr;
+        btn.onclick = () => loadSpecificMonth(m);
+        container.appendChild(btn);
+      });
+    }
+
+    async function loadSpecificMonth(monthStr) {
+      if(currentData.currentMonth === monthStr) return; // Already selected
+      
+      document.querySelectorAll('.month-tab').forEach(b => b.classList.remove('active'));
+      document.getElementById('tab-' + monthStr).classList.add('active');
+      
+      document.getElementById('calendarGrid').innerHTML = `<p class='empty-note'>${_t('checking')}</p>`;
+      
+      try {
+        let path = `attendance_records/${monthStr}.xlsx`;
+        const response = await fetch(path + '?v=' + Date.now(), { cache: 'no-store' });
+        if(!response.ok) throw new Error("Not found");
+        
+        const arrayBuffer = await response.arrayBuffer();
+        const workbook = XLSX.read(arrayBuffer, { type: 'array', cellDates: true });
+        
+        const data = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], { defval: '' });
+        
+        let record = null;
+        for (let i = 0; i < data.length; i++) {
+          const km = buildKeyMap(data[i]);
+          let idKey = null;
+          for (const alias of COLS.id) {
+            if (alias in km) { idKey = km[alias]; break; }
+          }
+          if (idKey === null) continue;
+
+          const rowId = data[i][idKey];
+          if (rowId !== null && rowId !== undefined && String(rowId).trim().toUpperCase() === currentData.empId) {
+            record = data[i];
+            currentData.keyMap = km; 
+            break;
+          }
+        }
+        
+        currentData.currentMonth = monthStr;
+        if (record) {
+          currentData.record = record;
+          renderDashboard(); 
+        } else {
+          document.getElementById('statTotal').textContent = '0';
+          document.getElementById('statPresent').textContent = '0';
+          document.getElementById('statAbsent').textContent = '0';
+          document.getElementById('statPercent').textContent = '0%';
+          document.getElementById('progressFill').style.width = '0%';
+          document.getElementById('calendarGrid').innerHTML = `<p class='empty-note'>${_t('noAttendance')}</p>`;
+        }
+      } catch(e) {
+        document.getElementById('calendarGrid').innerHTML = `<p class='empty-note'>Error loading data.</p>`;
+      }
+    }
+
+    // ------------------------------------------------------------
+    // Dashboard Rendering
     // ------------------------------------------------------------
     function pick(group) {
       const d = currentData;
@@ -1652,6 +1820,7 @@
       document.getElementById('dashboardSection').style.display = 'block';
       document.getElementById('mainNavbar').style.display = 'block'; 
       window.scrollTo(0, 0);
+      renderMonthTabs();
       renderDashboard();
       startSessionTimer();
     }
@@ -1815,6 +1984,11 @@
         const att = document.getElementById('printArea').cloneNode(true);
         const btns = att.querySelector('#actionButtons');
         if (btns) btns.remove();
+        
+        // Remove month tabs from PDF
+        const mTabs = att.querySelector('#monthTabsContainer');
+        if(mTabs) mTabs.remove();
+        
         root.appendChild(att);
       }
 
@@ -1844,7 +2018,10 @@
 
       const pdfBtn = document.getElementById('pdfBtn');
       const empId = currentData.empId;
-      const names = { attendance: 'Attendance_Report_', staff: 'Staff_Details_', all: 'Full_Report_' };
+      
+      // Include current month in filename if possible
+      let mthStr = currentData.currentMonth && currentData.currentMonth !== 'attendance' ? `_${currentData.currentMonth}` : '';
+      const names = { attendance: `Attendance_Report${mthStr}_`, staff: 'Staff_Details_', all: `Full_Report${mthStr}_` };
 
       pdfBtn.disabled = true;
 
@@ -1932,7 +2109,6 @@
       currentData = null;
       document.getElementById('empId').value = '';
       
-      // Reset Live Validation & Button
       document.getElementById('loginBtn').classList.remove('show-btn');
       document.getElementById('liveValidation').textContent = '';
       document.getElementById('liveValidation').className = 'live-val';
@@ -1940,6 +2116,7 @@
       setLoginMessage(null, 'info');
       document.getElementById('progressFill').style.width = '0%';
       document.getElementById('calendarGrid').textContent = '';
+      document.getElementById('monthTabsContainer').innerHTML = '';
       currentAccountFull = '';
       currentAccountMasked = '';
       accountVisible = false;

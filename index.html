@@ -77,7 +77,7 @@
 
     .dashboard-lang-bar { display: flex; justify-content: flex-end; margin-bottom: 15px; }
 
-    /* Login Section - Premium Split-Screen Design */
+    /* Login Section - Premium Split-Screen Design with Edge Background */
     .login-section {
       display: flex;
       justify-content: center;
@@ -85,6 +85,8 @@
       min-height: 100vh;
       padding: 20px;
       background: #f4f7f9;
+      position: relative;
+      overflow: hidden;
     }
     .login-split-container {
       display: flex;
@@ -94,9 +96,11 @@
       border-radius: 16px;
       box-shadow: 0 15px 35px rgba(0,0,0,0.1);
       overflow: hidden;
+      position: relative;
+      z-index: 10; /* Keeps the box above the celestial background */
     }
 
-    /* Left Brand Panel & Dynamic Celestial Animation */
+    /* Left Brand Panel */
     .login-brand-panel {
       flex: 1;
       background: linear-gradient(135deg, #004080 0%, #3182ce 100%);
@@ -106,12 +110,6 @@
       justify-content: center;
       padding: 50px;
       text-align: left;
-      position: relative;
-      overflow: hidden;
-    }
-    .login-brand-panel h1, .login-brand-panel p {
-      position: relative;
-      z-index: 2; /* Keep text above the glow */
     }
     .login-brand-panel h1 {
       font-size: 32px;
@@ -126,7 +124,7 @@
       line-height: 1.6;
     }
     
-    /* Celestial Animations Background */
+    /* Full Screen Celestial Animations (Background) */
     .celestial-container {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -135,53 +133,50 @@
     }
     .celestial-orb {
       position: absolute;
-      width: 250px;
-      height: 250px;
+      width: 400px;
+      height: 400px;
       border-radius: 50%;
-      filter: blur(60px);
+      filter: blur(90px);
       opacity: 0.5;
     }
-    /* Morning - Sunrise */
+    /* Morning - Sunrise from Bottom Left Edge */
     .orb-morning {
       background: radial-gradient(circle, #ffd700, #ff8c00);
-      animation: animMorning 12s ease-out forwards;
+      animation: animMorning 15s ease-out forwards;
     }
     @keyframes animMorning {
-      0% { bottom: -150px; left: -100px; opacity: 0; }
-      100% { bottom: 10%; left: -20px; opacity: 0.65; }
+      0% { bottom: -200px; left: -200px; opacity: 0; }
+      100% { bottom: 20%; left: -100px; opacity: 0.5; }
     }
-    /* Afternoon - High Sun */
+    /* Afternoon - High Sun on Top Center Edge */
     .orb-afternoon {
       background: radial-gradient(circle, #fffbe0, #f6e05e);
-      top: -50px; left: 50%;
-      transform: translateX(-50%);
-      animation: animAfternoon 8s ease-in-out infinite;
+      animation: animAfternoon 10s ease-in-out infinite;
     }
     @keyframes animAfternoon {
-      0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.65; }
-      50% { transform: translateX(-50%) translateY(20px); opacity: 0.85; }
+      0%, 100% { top: -200px; left: 50%; transform: translateX(-50%); opacity: 0.4; }
+      50% { top: -100px; left: 50%; transform: translateX(-50%); opacity: 0.6; }
     }
-    /* Evening - Sunset */
+    /* Evening - Sunset on Right Edge going down */
     .orb-evening {
       background: radial-gradient(circle, #ed8936, #c53030);
-      animation: animEvening 12s ease-out forwards;
+      animation: animEvening 15s ease-out forwards;
     }
     @keyframes animEvening {
-      0% { bottom: 20%; right: -20px; opacity: 0.7; }
-      100% { bottom: -100px; right: -50px; opacity: 0.4; }
+      0% { top: 20%; right: -150px; opacity: 0.6; }
+      100% { top: 80%; right: -200px; opacity: 0.3; }
     }
-    /* Night - Moon */
+    /* Night - Moon floating on Top Right Edge */
     .orb-night {
       background: radial-gradient(circle, #e2e8f0, #718096);
-      width: 200px; height: 200px;
-      top: 15%; right: 10%;
-      animation: animNight 10s ease-in-out infinite;
+      width: 350px; height: 350px;
+      animation: animNight 12s ease-in-out infinite;
     }
     @keyframes animNight {
-      0%, 100% { transform: translateY(0); opacity: 0.5; }
-      50% { transform: translateY(15px); opacity: 0.7; }
+      0%, 100% { top: 5%; right: 5%; transform: translateY(0); opacity: 0.4; }
+      50% { top: 5%; right: 5%; transform: translateY(30px); opacity: 0.6; }
     }
-    /* Night - Stars */
+    /* Night - Stars across the full screen background */
     .twinkle-star {
       position: absolute;
       background: white;
@@ -631,13 +626,16 @@
   <!-- Top Navbar - Hidden on Login -->
   <div class="navbar" id="mainNavbar">Geekay Human Resources Pvt. Ltd.<span class="session-timer" id="sessionTimer" data-i18n-title="sessionLeft" style="display:none;">02:00</span></div>
 
-  <!-- Login Section with Split-Screen Design -->
+  <!-- Login Section with Full Screen Edge Background Animation -->
   <div class="login-section" id="loginSection">
+    
+    <!-- Full Screen Celestial Animation Background -->
+    <div class="celestial-container" id="celestialContainer"></div>
+
     <div class="login-split-container">
       
-      <!-- Brand Panel (Left) with Dynamic Celestial Animation -->
+      <!-- Brand Panel (Left) -->
       <div class="login-brand-panel">
-        <div class="celestial-container" id="celestialContainer"></div>
         <h1>Geekay Human Resources Pvt. Ltd.</h1>
         <p data-i18n="brandSlogan">Empowering our workforce with seamless and secure HR solutions.</p>
       </div>
@@ -1217,7 +1215,7 @@
     }
 
     // ------------------------------------------------------------
-    // Language & Dynamic Greetings with Celestial Animation
+    // Language & Dynamic Greetings with Full Screen Celestial Animation
     // ------------------------------------------------------------
     const _t = t;
 
@@ -1242,7 +1240,7 @@
       const el = document.getElementById('dynamicGreeting');
       if(el) el.textContent = _t(greetKey);
 
-      // Celestial Animation Injection
+      // Celestial Animation Injection for Full Screen Background
       const container = document.getElementById('celestialContainer');
       if (container) {
         container.innerHTML = ''; 
@@ -1251,7 +1249,7 @@
         container.appendChild(orb);
 
         if (timeClass === 'night') {
-          for(let i=0; i<15; i++) {
+          for(let i=0; i<30; i++) {
             const star = document.createElement('div');
             star.className = 'twinkle-star';
             star.style.width = Math.random() * 3 + 'px';

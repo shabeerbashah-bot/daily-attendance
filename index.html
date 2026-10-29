@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Geekay Human Resources Pvt Ltd - Employee Portal</title>
 
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Fonts: Poppins for English, Noto Sans Tamil for Tamil -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Libraries: Excel reading and PDF generation -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -16,12 +16,14 @@
     * { box-sizing: border-box; }
 
     body {
-      font-family: 'Poppins', Arial, sans-serif;
+      font-family: 'Poppins', 'Noto Sans Tamil', Arial, sans-serif;
       background: #f4f7f9;
       color: #2d3748;
       margin: 0;
       padding: 0;
+      line-height: 1.5;
     }
+    button, input { font-family: inherit; }
 
     /* Navbar */
     .navbar {
@@ -35,6 +37,30 @@
       letter-spacing: 0.5px;
     }
 
+    /* Language switch */
+    .lang-switch {
+      display: inline-flex;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #ffffff;
+    }
+    .lang-btn {
+      border: none;
+      background: #ffffff;
+      color: #4a5568;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .lang-btn + .lang-btn { border-left: 1px solid #cbd5e1; }
+    .lang-btn.active { background: #004080; color: #ffffff; }
+    .lang-btn:focus-visible { outline: 2px solid #3182ce; outline-offset: -2px; }
+
+    .login-lang { margin-bottom: 20px; }
+    .dashboard-lang-bar { display: flex; justify-content: flex-end; margin-bottom: 15px; }
+
     /* Login */
     .login-section {
       display: flex;
@@ -45,19 +71,14 @@
     }
     .login-box {
       background: white;
-      padding: 40px 30px;
+      padding: 30px 30px 40px;
       width: 100%;
       max-width: 400px;
       border-radius: 12px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.08);
       text-align: center;
     }
-    .login-box h2 {
-      margin-top: 0;
-      color: #004080;
-      font-weight: 600;
-      margin-bottom: 25px;
-    }
+    .login-box h2 { margin-top: 0; color: #004080; font-weight: 600; margin-bottom: 25px; }
     .login-box input {
       width: 100%;
       padding: 15px;
@@ -65,10 +86,9 @@
       border: 1px solid #cbd5e1;
       border-radius: 8px;
       font-size: 16px;
-      font-family: 'Poppins', Arial, sans-serif;
     }
     .login-box input:focus { outline: 2px solid #3182ce; border-color: #3182ce; }
-    .login-box button {
+    .login-box button.login-btn {
       width: 100%;
       padding: 15px;
       background: #004080;
@@ -79,26 +99,15 @@
       font-weight: 600;
       cursor: pointer;
       transition: background 0.3s;
-      font-family: 'Poppins', Arial, sans-serif;
     }
-    .login-box button:hover { background: #002d59; }
-    .login-box button:disabled { background: #94a3b8; cursor: not-allowed; }
-    #loginError {
-      margin-top: 15px;
-      font-size: 14px;
-      font-weight: 500;
-      min-height: 20px;
-    }
+    .login-box button.login-btn:hover { background: #002d59; }
+    .login-box button.login-btn:disabled { background: #94a3b8; cursor: not-allowed; }
+    #loginError { margin-top: 15px; font-size: 14px; font-weight: 500; min-height: 20px; }
     #loginError.error { color: #e53e3e; }
     #loginError.info { color: #004080; }
 
     /* Dashboard */
-    .dashboard-section {
-      display: none;
-      padding: 30px 20px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+    .dashboard-section { display: none; padding: 30px 20px; max-width: 1100px; margin: 0 auto; }
     .dashboard-header {
       display: flex;
       justify-content: space-between;
@@ -108,7 +117,7 @@
       gap: 15px;
     }
     .welcome-text { font-size: 24px; font-weight: 600; color: #1a202c; margin: 0; }
-    .welcome-text span { color: #004080; }
+    .welcome-text .name { color: #004080; }
     .current-date { color: #718096; font-size: 15px; font-weight: 500; margin: 8px 0 0 0; }
 
     .action-buttons { display: flex; flex-wrap: wrap; gap: 10px; }
@@ -118,7 +127,6 @@
       border-radius: 8px;
       font-weight: 600;
       cursor: pointer;
-      font-family: 'Poppins', Arial, sans-serif;
       transition: 0.3s;
     }
     .btn-primary { background: #004080; color: white; }
@@ -178,7 +186,7 @@
     .calendar-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; }
     .day-card {
       background: white;
-      padding: 15px;
+      padding: 15px 10px;
       border-radius: 10px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.03);
       text-align: center;
@@ -189,13 +197,14 @@
     .day-card.half { border-bottom-color: #d69e2e; }
     .day-card.leave { border-bottom-color: #3182ce; }
     .day-card.off { border-bottom-color: #a0aec0; }
-    .day-card .date-text { font-size: 13px; color: #718096; margin-bottom: 8px; font-weight: 500; }
+    .day-card .date-text { font-size: 13px; color: #718096; margin-bottom: 8px; font-weight: 500; word-break: break-word; }
     .day-card .status-text { font-size: 18px; font-weight: 700; }
-    .day-card.present .status-text { color: #38a169; }
-    .day-card.absent .status-text { color: #e53e3e; }
-    .day-card.half .status-text { color: #b7791f; }
-    .day-card.leave .status-text { color: #2b6cb0; }
-    .day-card.off .status-text { color: #718096; }
+    .day-card .status-label { font-size: 12px; font-weight: 500; margin-top: 2px; min-height: 18px; }
+    .day-card.present .status-text, .day-card.present .status-label { color: #38a169; }
+    .day-card.absent .status-text, .day-card.absent .status-label { color: #e53e3e; }
+    .day-card.half .status-text, .day-card.half .status-label { color: #b7791f; }
+    .day-card.leave .status-text, .day-card.leave .status-label { color: #2b6cb0; }
+    .day-card.off .status-text, .day-card.off .status-label { color: #718096; }
     .empty-note { grid-column: 1 / -1; color: #718096; }
 
     /* Footer note */
@@ -279,7 +288,6 @@
       padding: 0;
       margin-top: 4px;
       text-align: left;
-      font-family: 'Poppins', Arial, sans-serif;
     }
 
     /* Responsive */
@@ -290,6 +298,7 @@
       .calendar-grid { grid-template-columns: repeat(2, 1fr); }
       .about-details { flex-direction: column; gap: 15px; }
       .modal-grid { grid-template-columns: 1fr; }
+      .dashboard-lang-bar { justify-content: flex-start; }
     }
   </style>
 </head>
@@ -300,42 +309,54 @@
   <!-- Login -->
   <div class="login-section" id="loginSection">
     <div class="login-box">
-      <h2>Employee Portal</h2>
-      <input type="text" id="empId" placeholder="Enter Employee ID" autocomplete="off">
-      <button id="loginBtn" onclick="login()">View Profile</button>
+      <div class="lang-switch login-lang" role="group" aria-label="Language">
+        <button type="button" class="lang-btn" data-lang="en">English</button>
+        <button type="button" class="lang-btn" data-lang="ta">தமிழ்</button>
+      </div>
+      <h2 data-i18n="portalTitle">Employee Portal</h2>
+      <input type="text" id="empId" autocomplete="off" data-i18n-placeholder="idPlaceholder" placeholder="Enter Employee ID">
+      <button type="button" class="login-btn" id="loginBtn" onclick="login()" data-i18n="viewProfile">View Profile</button>
       <div id="loginError" class="info"></div>
     </div>
   </div>
 
   <!-- Dashboard -->
   <div class="dashboard-section" id="dashboardSection">
+
+    <div class="dashboard-lang-bar">
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" class="lang-btn" data-lang="en">English</button>
+        <button type="button" class="lang-btn" data-lang="ta">தமிழ்</button>
+      </div>
+    </div>
+
     <div id="printArea">
 
       <div class="dashboard-header">
         <div>
-          <h2 class="welcome-text">Welcome back, <span id="displayName">Employee</span>!</h2>
-          <p class="current-date" id="currentDate">Loading date...</p>
+          <h2 class="welcome-text"><span data-i18n="welcome">Welcome back,</span> <span class="name" id="displayName">Employee</span>!</h2>
+          <p class="current-date" id="currentDate">...</p>
         </div>
         <div class="action-buttons" id="actionButtons">
-          <button class="btn btn-primary" onclick="openStaffModal()">View Staff Details</button>
-          <button class="btn btn-secondary" id="pdfBtn" onclick="downloadPDF()">Download PDF</button>
-          <button class="btn btn-light" onclick="logout()">Logout</button>
+          <button type="button" class="btn btn-primary" onclick="openStaffModal()" data-i18n="viewStaff">View Staff Details</button>
+          <button type="button" class="btn btn-secondary" id="pdfBtn" onclick="downloadPDF()" data-i18n="downloadPdf">Download PDF</button>
+          <button type="button" class="btn btn-light" onclick="logout()" data-i18n="logout">Logout</button>
         </div>
       </div>
 
       <div class="about-card">
-        <div class="about-title">About Employee</div>
+        <div class="about-title" data-i18n="aboutEmployee">About Employee</div>
         <div class="about-details">
           <div class="detail-item">
-            <span class="detail-label">Employee ID</span>
+            <span class="detail-label" data-i18n="employeeId">Employee ID</span>
             <span class="detail-value" id="displayId">---</span>
           </div>
           <div class="detail-item">
-            <span class="detail-label">Date of Joining (DOJ)</span>
+            <span class="detail-label" data-i18n="doj">Date of Joining (DOJ)</span>
             <span class="detail-value" id="displayDoj">-</span>
           </div>
           <div class="detail-item">
-            <span class="detail-label">Last Working Day (LWD)</span>
+            <span class="detail-label" data-i18n="lwd">Last Working Day (LWD)</span>
             <span class="detail-value" id="displayLwd">-</span>
           </div>
         </div>
@@ -343,19 +364,19 @@
 
       <div class="analytics-grid">
         <div class="stat-card">
-          <div class="stat-title">Total Working Days</div>
+          <div class="stat-title" data-i18n="totalWorking">Total Working Days</div>
           <div class="stat-number" id="statTotal">0</div>
         </div>
         <div class="stat-card present-stat">
-          <div class="stat-title">Total Present</div>
+          <div class="stat-title" data-i18n="totalPresent">Total Present</div>
           <div class="stat-number" id="statPresent">0</div>
         </div>
         <div class="stat-card absent-stat">
-          <div class="stat-title">Total Absent</div>
+          <div class="stat-title" data-i18n="totalAbsent">Total Absent</div>
           <div class="stat-number" id="statAbsent">0</div>
         </div>
         <div class="stat-card percent-stat">
-          <div class="stat-title">Attendance Percentage</div>
+          <div class="stat-title" data-i18n="attPercent">Attendance Percentage</div>
           <div class="stat-number" id="statPercent">0%</div>
           <div class="progress-bar-bg">
             <div class="progress-bar-fill" id="progressFill"></div>
@@ -363,11 +384,11 @@
         </div>
       </div>
 
-      <div class="section-title">Attendance Overview</div>
+      <div class="section-title" data-i18n="attOverview">Attendance Overview</div>
       <div class="calendar-grid" id="calendarGrid"></div>
 
       <div class="hr-footer">
-        <strong>Note:</strong> In case of any discrepancies in your attendance or for further inquiries, please contact the HR / Admin Department.
+        <strong data-i18n="noteLabel">Note:</strong> <span data-i18n="noteText">In case of any discrepancies in your attendance or for further inquiries, please contact the HR / Admin Department.</span>
       </div>
 
     </div>
@@ -376,67 +397,67 @@
   <!-- Staff Details Modal -->
   <div class="modal-overlay" id="staffModal" onclick="overlayClick(event)">
     <div class="modal-content">
-      <button class="close-modal" onclick="closeStaffModal()" aria-label="Close">&times;</button>
-      <div class="modal-header">Staff Personal Details</div>
+      <button type="button" class="close-modal" onclick="closeStaffModal()" aria-label="Close">&times;</button>
+      <div class="modal-header" data-i18n="staffTitle">Staff Personal Details</div>
 
       <div class="modal-section">
-        <div class="modal-section-title">1. Basic Information</div>
+        <div class="modal-section-title" data-i18n="secBasic">1. Basic Information</div>
         <div class="modal-grid">
           <div class="detail-item">
-            <span class="detail-label">Employee Name</span>
+            <span class="detail-label" data-i18n="empName">Employee Name</span>
             <span class="detail-value" id="modalName">---</span>
           </div>
           <div class="detail-item">
-            <span class="detail-label">Employee ID</span>
+            <span class="detail-label" data-i18n="employeeId">Employee ID</span>
             <span class="detail-value" id="modalId">---</span>
           </div>
           <div class="detail-item">
-            <span class="detail-label">Status</span>
+            <span class="detail-label" data-i18n="status">Status</span>
             <span class="detail-value"><span class="status-badge status-active" id="modalStatus">Active</span></span>
           </div>
           <div class="detail-item">
-            <span class="detail-label">Date of Birth (DOB)</span>
+            <span class="detail-label" data-i18n="dob">Date of Birth (DOB)</span>
             <span class="detail-value" id="modalDob">---</span>
           </div>
           <div class="detail-item">
-            <span class="detail-label">Last Working Day (LWD)</span>
+            <span class="detail-label" data-i18n="lwd">Last Working Day (LWD)</span>
             <span class="detail-value" id="modalLwd">---</span>
           </div>
           <div class="detail-item">
-            <span class="detail-label">ESI Number</span>
+            <span class="detail-label" data-i18n="esi">ESI Number</span>
             <span class="detail-value" id="modalEsi">---</span>
           </div>
         </div>
       </div>
 
       <div class="modal-section">
-        <div class="modal-section-title">2. Contact Information</div>
+        <div class="modal-section-title" data-i18n="secContact">2. Contact Information</div>
         <div class="modal-grid">
           <div class="detail-item">
-            <span class="detail-label">Mobile Number</span>
+            <span class="detail-label" data-i18n="mobile">Mobile Number</span>
             <span class="detail-value" id="modalMobile">---</span>
           </div>
           <div class="detail-item">
-            <span class="detail-label">Email ID</span>
+            <span class="detail-label" data-i18n="email">Email ID</span>
             <span class="detail-value" id="modalEmail">---</span>
           </div>
         </div>
       </div>
 
       <div class="modal-section">
-        <div class="modal-section-title">3. Bank Details</div>
+        <div class="modal-section-title" data-i18n="secBank">3. Bank Details</div>
         <div class="modal-grid">
           <div class="detail-item">
-            <span class="detail-label">Bank Name</span>
+            <span class="detail-label" data-i18n="bankName">Bank Name</span>
             <span class="detail-value" id="modalBankName">---</span>
           </div>
           <div class="detail-item">
-            <span class="detail-label">Account Number</span>
+            <span class="detail-label" data-i18n="accNo">Account Number</span>
             <span class="detail-value" id="modalAccNo">---</span>
-            <button class="link-btn" id="toggleAccBtn" onclick="toggleAccount()" style="display:none;">Show full number</button>
+            <button type="button" class="link-btn" id="toggleAccBtn" onclick="toggleAccount()" style="display:none;">Show full number</button>
           </div>
           <div class="detail-item">
-            <span class="detail-label">IFSC Code</span>
+            <span class="detail-label" data-i18n="ifsc">IFSC Code</span>
             <span class="detail-value" id="modalIfsc">---</span>
           </div>
         </div>
@@ -450,6 +471,135 @@
     // Settings
     // ------------------------------------------------------------
     const EXCEL_FILE = 'attendance.xlsx';
+    const LANG_STORAGE_KEY = 'geekayPortalLang';
+
+    // ------------------------------------------------------------
+    // Translations
+    // To add another language later (for example Hindi), copy the "en"
+    // block, rename it (for example "hi"), translate the values, and add
+    // a button with data-lang="hi" in the two language switches above.
+    // ------------------------------------------------------------
+    const I18N = {
+      en: {
+        locale: 'en-US',
+        months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        portalTitle: 'Employee Portal',
+        idPlaceholder: 'Enter Employee ID',
+        viewProfile: 'View Profile',
+        welcome: 'Welcome back,',
+        viewStaff: 'View Staff Details',
+        downloadPdf: 'Download PDF',
+        logout: 'Logout',
+        aboutEmployee: 'About Employee',
+        employeeId: 'Employee ID',
+        doj: 'Date of Joining (DOJ)',
+        lwd: 'Last Working Day (LWD)',
+        totalWorking: 'Total Working Days',
+        totalPresent: 'Total Present',
+        totalAbsent: 'Total Absent',
+        attPercent: 'Attendance Percentage',
+        attOverview: 'Attendance Overview',
+        noteLabel: 'Note:',
+        noteText: 'In case of any discrepancies in your attendance or for further inquiries, please contact the HR / Admin Department.',
+        staffTitle: 'Staff Personal Details',
+        secBasic: '1. Basic Information',
+        empName: 'Employee Name',
+        status: 'Status',
+        dob: 'Date of Birth (DOB)',
+        esi: 'ESI Number',
+        secContact: '2. Contact Information',
+        mobile: 'Mobile Number',
+        email: 'Email ID',
+        secBank: '3. Bank Details',
+        bankName: 'Bank Name',
+        accNo: 'Account Number',
+        ifsc: 'IFSC Code',
+        showAcc: 'Show full number',
+        hideAcc: 'Hide number',
+        active: 'Active',
+        inactive: 'Inactive',
+        lblPresent: 'Present',
+        lblAbsent: 'Absent',
+        lblHalf: 'Half Day',
+        lblLeave: 'Leave',
+        lblWeeklyOff: 'Weekly Off',
+        lblHoliday: 'Holiday',
+        lblOff: 'Off Day',
+        noAttendance: 'No attendance dates recorded yet.',
+        msgEnterId: 'Please enter your Employee ID.',
+        msgFileProtocol: 'Open this page from a web server (or hosting). Browsers block reading attendance.xlsx from a local file.',
+        msgAuth: 'Authenticating...',
+        msgIdColumn: 'Employee ID column not found in the Excel file. Please contact HR / Admin.',
+        msgInvalid: 'Invalid ID. Record not found.',
+        msgFileNotFound: 'attendance.xlsx was not found. Please contact HR / Admin.',
+        msgEmptyBook: 'The attendance file is empty. Please contact HR / Admin.',
+        msgSystem: 'System error. Data could not be loaded. Please try again.',
+        msgPdf: 'PDF could not be created. Please try again.'
+      },
+      ta: {
+        locale: 'ta-IN',
+        months: ['ஜன', 'பிப்', 'மார்', 'ஏப்', 'மே', 'ஜூன்', 'ஜூலை', 'ஆக', 'செப்', 'அக்', 'நவ', 'டிச'],
+        portalTitle: 'ஊழியர் இணையதளம்',
+        idPlaceholder: 'உங்கள் ஊழியர் ID-ஐ உள்ளிடவும்',
+        viewProfile: 'விவரங்களைப் பார்க்க',
+        welcome: 'மீண்டும் வரவேற்கிறோம்,',
+        viewStaff: 'ஊழியர் விவரங்கள்',
+        downloadPdf: 'PDF பதிவிறக்கம்',
+        logout: 'வெளியேறு',
+        aboutEmployee: 'ஊழியர் பற்றிய தகவல்',
+        employeeId: 'ஊழியர் ID',
+        doj: 'பணியில் சேர்ந்த தேதி (DOJ)',
+        lwd: 'கடைசி பணி நாள் (LWD)',
+        totalWorking: 'மொத்த பணி நாட்கள்',
+        totalPresent: 'மொத்த வருகை நாட்கள்',
+        totalAbsent: 'மொத்த வராத நாட்கள்',
+        attPercent: 'வருகை சதவீதம்',
+        attOverview: 'வருகைப் பதிவு விவரம்',
+        noteLabel: 'குறிப்பு:',
+        noteText: 'உங்கள் வருகைப் பதிவில் ஏதேனும் வேறுபாடு இருந்தாலோ, மேலும் விவரங்கள் தேவைப்பட்டாலோ, தயவுசெய்து HR / நிர்வாகத் துறையைத் தொடர்பு கொள்ளவும்.',
+        staffTitle: 'ஊழியர் தனிப்பட்ட விவரங்கள்',
+        secBasic: '1. அடிப்படைத் தகவல்',
+        empName: 'ஊழியர் பெயர்',
+        status: 'நிலை',
+        dob: 'பிறந்த தேதி (DOB)',
+        esi: 'ESI எண்',
+        secContact: '2. தொடர்புத் தகவல்',
+        mobile: 'மொபைல் எண்',
+        email: 'மின்னஞ்சல் முகவரி',
+        secBank: '3. வங்கி விவரங்கள்',
+        bankName: 'வங்கியின் பெயர்',
+        accNo: 'வங்கிக் கணக்கு எண்',
+        ifsc: 'IFSC குறியீடு',
+        showAcc: 'முழு எண்ணைக் காட்டு',
+        hideAcc: 'எண்ணை மறை',
+        active: 'பணியில் உள்ளார்',
+        inactive: 'பணியில் இல்லை',
+        lblPresent: 'வருகை',
+        lblAbsent: 'வரவில்லை',
+        lblHalf: 'அரை நாள்',
+        lblLeave: 'விடுப்பு',
+        lblWeeklyOff: 'வார விடுமுறை',
+        lblHoliday: 'விடுமுறை நாள்',
+        lblOff: 'ஓய்வு நாள்',
+        noAttendance: 'வருகைப் பதிவுகள் இன்னும் இல்லை.',
+        msgEnterId: 'தயவுசெய்து உங்கள் ஊழியர் ID-ஐ உள்ளிடவும்.',
+        msgFileProtocol: 'இந்தப் பக்கத்தை இணையதள சேவையகம் (hosting) வழியாகத் திறக்கவும். கணினியில் உள்ள கோப்பாகத் திறந்தால் attendance.xlsx-ஐப் படிக்க முடியாது.',
+        msgAuth: 'சரிபார்க்கிறது...',
+        msgIdColumn: 'Excel கோப்பில் ஊழியர் ID column கிடைக்கவில்லை. தயவுசெய்து HR / நிர்வாகத் துறையைத் தொடர்பு கொள்ளவும்.',
+        msgInvalid: 'தவறான ID. உங்கள் பதிவு கிடைக்கவில்லை.',
+        msgFileNotFound: 'attendance.xlsx கோப்பு கிடைக்கவில்லை. தயவுசெய்து HR / நிர்வாகத் துறையைத் தொடர்பு கொள்ளவும்.',
+        msgEmptyBook: 'வருகைக் கோப்பு காலியாக உள்ளது. தயவுசெய்து HR / நிர்வாகத் துறையைத் தொடர்பு கொள்ளவும்.',
+        msgSystem: 'கணினிப் பிழை. தரவை ஏற்ற முடியவில்லை. மீண்டும் முயற்சிக்கவும்.',
+        msgPdf: 'PDF உருவாக்க முடியவில்லை. மீண்டும் முயற்சிக்கவும்.'
+      }
+    };
+
+    let currentLang = 'en';
+
+    function t(key) {
+      const pack = I18N[currentLang] || I18N.en;
+      return (key in pack) ? pack[key] : (I18N.en[key] || key);
+    }
 
     // Column name aliases. Names are compared after removing spaces,
     // symbols and capital letters, so "User/Employee Id" = "useremployeeid".
@@ -471,12 +621,16 @@
     };
 
     // Attendance codes (all in capital letters)
-    const CODE_PRESENT = ['PP', 'P', 'PRESENT'];
-    const CODE_ABSENT  = ['AA', 'A', 'ABSENT'];
-    const CODE_HALF    = ['HD', 'HALFDAY', 'HALF DAY', 'PA', 'AP'];
-    const CODE_LEAVE   = ['L', 'CL', 'SL', 'PL', 'EL', 'LEAVE', 'LL'];
-    const CODE_OFF     = ['WO', 'WOFF', 'OFF', 'H', 'HOL', 'HOLIDAY', 'PH', 'FH'];
+    const CODE_PRESENT    = ['PP', 'P', 'PRESENT'];
+    const CODE_ABSENT     = ['AA', 'A', 'ABSENT'];
+    const CODE_HALF       = ['HD', 'HALFDAY', 'HALF DAY', 'PA', 'AP'];
+    const CODE_LEAVE      = ['L', 'CL', 'SL', 'PL', 'EL', 'LEAVE', 'LL'];
+    const CODE_WEEKLY_OFF = ['WO', 'WOFF'];
+    const CODE_HOLIDAY    = ['H', 'HOL', 'HOLIDAY', 'PH', 'FH'];
+    const CODE_OFF        = ['OFF'];
 
+    let currentData = null;          // { record, keyMap, master, empId }
+    let currentLoginMessage = null;  // { key, type }
     let currentAccountFull = '';
     let currentAccountMasked = '';
     let accountVisible = false;
@@ -488,8 +642,6 @@
       return String(k).toLowerCase().replace(/[^a-z0-9]/g, '');
     }
 
-    // Returns a copy of the row where every key is trimmed
-    // and a lookup map from normalised key to real key.
     function buildKeyMap(row) {
       const map = {};
       for (const key in row) {
@@ -517,23 +669,20 @@
       return false;
     }
 
-    const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
     function formatDate(d) {
       // Small shift avoids Excel/SheetJS rounding showing the previous day
       const x = new Date(d.getTime() + 60000);
       const dd = String(x.getDate()).padStart(2, '0');
-      return dd + '-' + MONTHS[x.getMonth()] + '-' + x.getFullYear();
+      return dd + '-' + t('months')[x.getMonth()] + '-' + x.getFullYear();
     }
 
-    // Converts any cell value to readable text
     function formatValue(v) {
       if (v === null || v === undefined) return '';
       if (v instanceof Date) return isNaN(v.getTime()) ? '' : formatDate(v);
       return String(v).trim();
     }
 
-    // Column headers that are Excel serial numbers (e.g. 45678) become dates
+    // Column headers that are Excel serial numbers (for example 45678) become dates
     function formatHeader(key) {
       const k = String(key).trim();
       if (/^\d{5}$/.test(k)) {
@@ -550,15 +699,71 @@
       return Number.isInteger(n) ? String(n) : n.toFixed(1);
     }
 
-    function setLoginMessage(text, type) {
-      const el = document.getElementById('loginError');
-      el.textContent = text;
-      el.className = type;
-    }
-
     function setText(id, value) {
       const v = (value === '' || value === null || value === undefined) ? '---' : value;
       document.getElementById(id).textContent = v;
+    }
+
+    // ------------------------------------------------------------
+    // Language
+    // ------------------------------------------------------------
+    const _t = t;   // short alias; t('months') returns the month-name list
+
+    function applyStaticTranslations() {
+      document.documentElement.lang = currentLang === 'ta' ? 'ta' : 'en';
+
+      document.querySelectorAll('[data-i18n]').forEach(function (el) {
+        el.textContent = _t(el.getAttribute('data-i18n'));
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
+        el.setAttribute('placeholder', _t(el.getAttribute('data-i18n-placeholder')));
+      });
+      document.querySelectorAll('.lang-btn').forEach(function (btn) {
+        const active = btn.getAttribute('data-lang') === currentLang;
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+
+      setDate();
+
+      // Login message
+      if (currentLoginMessage) {
+        setLoginMessage(currentLoginMessage.key, currentLoginMessage.type);
+      }
+
+      // Account button text
+      const toggleBtn = document.getElementById('toggleAccBtn');
+      if (toggleBtn) toggleBtn.textContent = accountVisible ? _t('hideAcc') : _t('showAcc');
+    }
+
+    function setLanguage(lang) {
+      if (!I18N[lang]) lang = 'en';
+      currentLang = lang;
+      try { localStorage.setItem(LANG_STORAGE_KEY, lang); } catch (e) { /* storage not available */ }
+      applyStaticTranslations();
+      if (currentData) renderDashboard();   // re-draw dynamic parts in the new language
+    }
+
+    function loadSavedLanguage() {
+      let saved = 'en';
+      try { saved = localStorage.getItem(LANG_STORAGE_KEY) || 'en'; } catch (e) { /* ignore */ }
+      currentLang = I18N[saved] ? saved : 'en';
+    }
+
+    document.querySelectorAll('.lang-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        setLanguage(btn.getAttribute('data-lang'));
+      });
+    });
+
+    // ------------------------------------------------------------
+    // Messages on the login box
+    // ------------------------------------------------------------
+    function setLoginMessage(key, type) {
+      const el = document.getElementById('loginError');
+      currentLoginMessage = key ? { key: key, type: type } : null;
+      el.textContent = key ? _t(key) : '';
+      el.className = type || 'info';
     }
 
     // ------------------------------------------------------------
@@ -566,9 +771,14 @@
     // ------------------------------------------------------------
     function setDate() {
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', options);
+      let text;
+      try {
+        text = new Date().toLocaleDateString(_t('locale'), options);
+      } catch (e) {
+        text = new Date().toLocaleDateString('en-US', options);
+      }
+      document.getElementById('currentDate').textContent = text;
     }
-    setDate();
 
     // ------------------------------------------------------------
     // Modal
@@ -589,7 +799,7 @@
     function toggleAccount() {
       accountVisible = !accountVisible;
       document.getElementById('modalAccNo').textContent = accountVisible ? currentAccountFull : currentAccountMasked;
-      document.getElementById('toggleAccBtn').textContent = accountVisible ? 'Hide number' : 'Show full number';
+      document.getElementById('toggleAccBtn').textContent = accountVisible ? _t('hideAcc') : _t('showAcc');
     }
 
     // ------------------------------------------------------------
@@ -605,17 +815,17 @@
       const id = input.value.trim().toUpperCase();
 
       if (id === '') {
-        setLoginMessage('Please enter your Employee ID.', 'error');
+        setLoginMessage('msgEnterId', 'error');
         return;
       }
 
       if (location.protocol === 'file:') {
-        setLoginMessage('Open this page from a web server (or hosting). Browsers block reading attendance.xlsx from a local file.', 'error');
+        setLoginMessage('msgFileProtocol', 'error');
         return;
       }
 
       btn.disabled = true;
-      setLoginMessage('Authenticating...', 'info');
+      setLoginMessage('msgAuth', 'info');
 
       try {
         // no-store + timestamp = always the latest Excel file
@@ -653,15 +863,15 @@
         }
 
         if (!idColumnFound && data.length > 0) {
-          setLoginMessage('Employee ID column not found in the Excel file. Please contact HR / Admin.', 'error');
+          setLoginMessage('msgIdColumn', 'error');
           return;
         }
         if (!record) {
-          setLoginMessage('Invalid ID. Record not found.', 'error');
+          setLoginMessage('msgInvalid', 'error');
           return;
         }
 
-        // Other sheets (for example "Master Data") = personal details.
+        // Other sheets (for example "Master Data") = personal details
         const master = {};
         for (let s = 1; s < workbook.SheetNames.length; s++) {
           const rows = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[s]], { defval: '' });
@@ -685,17 +895,18 @@
           }
         }
 
-        showDashboard(record, keyMap, master, id);
-        setLoginMessage('', 'info');
+        currentData = { record: record, keyMap: keyMap, master: master, empId: id };
+        setLoginMessage(null, 'info');
+        showDashboard();
 
       } catch (error) {
         console.error(error);
         if (error.message === 'FILE_NOT_FOUND') {
-          setLoginMessage('attendance.xlsx was not found. Please contact HR / Admin.', 'error');
+          setLoginMessage('msgFileNotFound', 'error');
         } else if (error.message === 'EMPTY_BOOK') {
-          setLoginMessage('The attendance file is empty. Please contact HR / Admin.', 'error');
+          setLoginMessage('msgEmptyBook', 'error');
         } else {
-          setLoginMessage('System error. Data could not be loaded. Please try again.', 'error');
+          setLoginMessage('msgSystem', 'error');
         }
       } finally {
         btn.disabled = false;
@@ -705,39 +916,47 @@
     // ------------------------------------------------------------
     // Dashboard
     // ------------------------------------------------------------
-    function pick(record, keyMap, master, group) {
-      // Attendance sheet first, then master sheet
-      let v = getField(record, keyMap, COLS[group]);
-      if (v === '' && master[group] !== undefined) v = master[group];
+    function pick(group) {
+      const d = currentData;
+      let v = getField(d.record, d.keyMap, COLS[group]);
+      if (v === '' && d.master[group] !== undefined) v = d.master[group];
       return formatValue(v);
     }
 
-    function showDashboard(record, keyMap, master, empId) {
+    function showDashboard() {
       document.getElementById('loginSection').style.display = 'none';
       document.getElementById('dashboardSection').style.display = 'block';
       window.scrollTo(0, 0);
+      renderDashboard();
+    }
 
-      const empName = pick(record, keyMap, master, 'name') || 'Employee';
-      const doj     = pick(record, keyMap, master, 'doj');
-      const lwd     = pick(record, keyMap, master, 'lwd');
-      const dob     = pick(record, keyMap, master, 'dob');
-      const esi     = pick(record, keyMap, master, 'esi');
-      const mobile  = pick(record, keyMap, master, 'mobile');
-      const email   = pick(record, keyMap, master, 'email');
-      const bank    = pick(record, keyMap, master, 'bank');
-      const account = pick(record, keyMap, master, 'account');
-      const ifsc    = pick(record, keyMap, master, 'ifsc');
-      let statusTxt = pick(record, keyMap, master, 'status');
+    // Draws every changing part of the dashboard in the selected language
+    function renderDashboard() {
+      const d = currentData;
+      if (!d) return;
+      const record = d.record;
+
+      const empName = pick('name') || 'Employee';
+      const doj     = pick('doj');
+      const lwd     = pick('lwd');
+      const dob     = pick('dob');
+      const esi     = pick('esi');
+      const mobile  = pick('mobile');
+      const email   = pick('email');
+      const bank    = pick('bank');
+      const account = pick('account');
+      const ifsc    = pick('ifsc');
+      const statusRaw = pick('status');
 
       // Header
       document.getElementById('displayName').textContent = empName;
-      document.getElementById('displayId').textContent = empId;
+      document.getElementById('displayId').textContent = d.empId;
       document.getElementById('displayDoj').textContent = doj || '-';
       document.getElementById('displayLwd').textContent = lwd || '-';
 
       // Staff details modal
       setText('modalName', empName);
-      setText('modalId', empId);
+      setText('modalId', d.empId);
       setText('modalLwd', lwd);
       setText('modalDob', dob);
       setText('modalEsi', esi);
@@ -746,26 +965,34 @@
       setText('modalBankName', bank);
       setText('modalIfsc', ifsc);
 
-      // Status: use the Status column; if missing, LWD present = Inactive
-      if (statusTxt === '') statusTxt = lwd ? 'Inactive' : 'Active';
+      // Status: use the Status column. If it is missing, an LWD means Inactive.
+      let statusKey = null;
+      let statusShown = statusRaw;
+      const su = statusRaw.toUpperCase();
+      if (statusRaw === '') {
+        statusKey = lwd ? 'inactive' : 'active';
+      } else if (['ACTIVE', 'WORKING', 'CONTINUING'].includes(su)) {
+        statusKey = 'active';
+      } else if (['INACTIVE', 'IN-ACTIVE', 'IN ACTIVE'].includes(su)) {
+        statusKey = 'inactive';
+      }
+      if (statusKey) statusShown = _t(statusKey);
+
       const badge = document.getElementById('modalStatus');
-      badge.textContent = statusTxt;
-      const isActive = ['ACTIVE', 'WORKING', 'CONTINUING'].includes(statusTxt.toUpperCase());
-      badge.className = 'status-badge ' + (isActive ? 'status-active' : 'status-inactive');
+      badge.textContent = statusShown;
+      badge.className = 'status-badge ' + (statusKey === 'active' ? 'status-active' : 'status-inactive');
 
       // Bank account: masked by default
       currentAccountFull = account;
-      accountVisible = false;
+      currentAccountMasked = account.length > 4
+        ? '*'.repeat(account.length - 4) + account.slice(-4)
+        : account;
       const toggleBtn = document.getElementById('toggleAccBtn');
       if (account) {
-        currentAccountMasked = account.length > 4
-          ? '*'.repeat(account.length - 4) + account.slice(-4)
-          : account;
-        document.getElementById('modalAccNo').textContent = currentAccountMasked;
+        document.getElementById('modalAccNo').textContent = accountVisible ? currentAccountFull : currentAccountMasked;
         toggleBtn.style.display = 'inline-block';
-        toggleBtn.textContent = 'Show full number';
+        toggleBtn.textContent = accountVisible ? _t('hideAcc') : _t('showAcc');
       } else {
-        currentAccountMasked = '';
         document.getElementById('modalAccNo').textContent = '---';
         toggleBtn.style.display = 'none';
       }
@@ -785,11 +1012,14 @@
         if (statusVal === '') statusVal = '-';
 
         let cardClass = '';
-        if (CODE_PRESENT.includes(statusVal))      { cardClass = 'present'; cntPresent++; }
-        else if (CODE_ABSENT.includes(statusVal))  { cardClass = 'absent';  cntAbsent++; }
-        else if (CODE_HALF.includes(statusVal))    { cardClass = 'half';    cntHalf++; }
-        else if (CODE_LEAVE.includes(statusVal))   { cardClass = 'leave'; }
-        else if (CODE_OFF.includes(statusVal))     { cardClass = 'off'; }
+        let labelKey = '';
+        if (CODE_PRESENT.includes(statusVal))         { cardClass = 'present'; labelKey = 'lblPresent';   cntPresent++; }
+        else if (CODE_ABSENT.includes(statusVal))     { cardClass = 'absent';  labelKey = 'lblAbsent';    cntAbsent++; }
+        else if (CODE_HALF.includes(statusVal))       { cardClass = 'half';    labelKey = 'lblHalf';      cntHalf++; }
+        else if (CODE_LEAVE.includes(statusVal))      { cardClass = 'leave';   labelKey = 'lblLeave'; }
+        else if (CODE_WEEKLY_OFF.includes(statusVal)) { cardClass = 'off';     labelKey = 'lblWeeklyOff'; }
+        else if (CODE_HOLIDAY.includes(statusVal))    { cardClass = 'off';     labelKey = 'lblHoliday'; }
+        else if (CODE_OFF.includes(statusVal))        { cardClass = 'off';     labelKey = 'lblOff'; }
 
         const card = document.createElement('div');
         card.className = 'day-card' + (cardClass ? ' ' + cardClass : '');
@@ -802,8 +1032,13 @@
         statusDiv.className = 'status-text';
         statusDiv.textContent = statusVal;
 
+        const labelDiv = document.createElement('div');
+        labelDiv.className = 'status-label';
+        labelDiv.textContent = labelKey ? _t(labelKey) : '';
+
         card.appendChild(dateDiv);
         card.appendChild(statusDiv);
+        card.appendChild(labelDiv);
         grid.appendChild(card);
         cardsAdded++;
       }
@@ -811,12 +1046,12 @@
       if (cardsAdded === 0) {
         const p = document.createElement('p');
         p.className = 'empty-note';
-        p.textContent = 'No attendance dates recorded yet.';
+        p.textContent = _t('noAttendance');
         grid.appendChild(p);
       }
 
       // Analytics: a half day counts as 0.5 present and 0.5 absent.
-      // Leave and weekly off / holiday are not counted as working days.
+      // Leave, weekly off and holidays are not counted as working days.
       const totalCount = cntPresent + cntAbsent + cntHalf;
       const presentCount = cntPresent + cntHalf * 0.5;
       const absentCount = cntAbsent + cntHalf * 0.5;
@@ -832,7 +1067,7 @@
     // ------------------------------------------------------------
     // PDF
     // ------------------------------------------------------------
-    function downloadPDF() {
+    async function downloadPDF() {
       const buttons = document.getElementById('actionButtons');
       const pdfBtn = document.getElementById('pdfBtn');
       const empId = document.getElementById('displayId').textContent.trim();
@@ -840,24 +1075,26 @@
       pdfBtn.disabled = true;
       buttons.style.display = 'none';
 
-      const element = document.getElementById('printArea');
-      const opt = {
-        margin: 0.3,
-        filename: 'Attendance_Report_' + (empId || 'Employee') + '.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, scrollY: 0 },
-        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-      };
+      try {
+        // Make sure the Tamil / English fonts are loaded before drawing the PDF
+        if (document.fonts && document.fonts.ready) await document.fonts.ready;
 
-      html2pdf().set(opt).from(element).save()
-        .catch(function (err) {
-          console.error(err);
-          alert('PDF could not be created. Please try again.');
-        })
-        .finally(function () {
-          buttons.style.display = 'flex';
-          pdfBtn.disabled = false;
-        });
+        const element = document.getElementById('printArea');
+        const opt = {
+          margin: 0.3,
+          filename: 'Attendance_Report_' + (empId || 'Employee') + '.pdf',
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2, scrollY: 0 },
+          jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+        };
+        await html2pdf().set(opt).from(element).save();
+      } catch (err) {
+        console.error(err);
+        alert(_t('msgPdf'));
+      } finally {
+        buttons.style.display = 'flex';
+        pdfBtn.disabled = false;
+      }
     }
 
     // ------------------------------------------------------------
@@ -865,8 +1102,9 @@
     // ------------------------------------------------------------
     function logout() {
       closeStaffModal();
+      currentData = null;
       document.getElementById('empId').value = '';
-      setLoginMessage('', 'info');
+      setLoginMessage(null, 'info');
       document.getElementById('progressFill').style.width = '0%';
       document.getElementById('calendarGrid').textContent = '';
       currentAccountFull = '';
@@ -876,6 +1114,12 @@
       document.getElementById('loginSection').style.display = 'flex';
       document.getElementById('empId').focus();
     }
+
+    // ------------------------------------------------------------
+    // Start
+    // ------------------------------------------------------------
+    loadSavedLanguage();
+    applyStaticTranslations();
   </script>
 </body>
 </html>

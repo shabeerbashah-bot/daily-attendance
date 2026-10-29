@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Attendance</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      text-align: center; 
+      background-color: #f4f7f6; 
+      margin: 0; 
+      padding: 20px; 
+    }
+    .box { 
+      background: white; 
+      padding: 30px 20px; 
+      width: 100%; 
+      max-width: 350px; 
+      margin: 50px auto; 
+      border-radius: 12px; 
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+      box-sizing: border-box;
+    }
+    h2 { color: #333; margin-bottom: 20px; }
+    input { 
+      margin-bottom: 15px; 
+      padding: 12px; 
+      width: 100%; 
+      border: 1.5px solid #ccc; 
+      border-radius: 8px; 
+      box-sizing: border-box; 
+      font-size: 16px; 
+    }
+    button { 
+      padding: 12px; 
+      width: 100%; 
+      background: #007bff; 
+      color: white; 
+      border: none; 
+      border-radius: 8px; 
+      cursor: pointer; 
+      font-size: 16px; 
+      font-weight: bold; 
+    }
+    button:hover { background: #0056b3; }
+    #result { 
+      margin-top: 20px; 
+      font-weight: bold; 
+      font-size: 18px; 
+      color: #333; 
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+    <h2>Daily Attendance</h2>
+    <input type="text" id="empId" placeholder="Enter Employee ID">
+    <button onclick="checkData()">Submit</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    async function checkData() {
+      let id = document.getElementById('empId').value.trim();
+      let resultDiv = document.getElementById('result');
+
+      if(id === "") {
+        resultDiv.innerHTML = "<span style='color:red;'>Please enter your Employee ID!</span>";
+        return;
+      }
+
+      let response = await fetch('attendance.csv');
+      let data = await response.text();
+
+      let rows = data.split('\n');
+      let found = false;
+
+      for(let i = 1; i < rows.length; i++) {
+        let cols = rows[i].split(',');
+        
+        if(cols.length >= 3) {
+          let csvId = cols[0].trim();
+          let csvName = cols[1].trim();
+          let csvStatus = cols[2].trim();
+
+          if(id === csvId) {
+            resultDiv.innerHTML = "Hello <b>" + csvName + "</b>,<br> Today's Status: <span style='color:green;'>" + csvStatus + "</span>";
+            found = true;
+            break;
+          }
+        }
+      }
+
+      if(!found) {
+        resultDiv.innerHTML = "<span style='color:red;'>Invalid ID or data not found!</span>";
+      }
+    }
+  </script>
+</body>
+</html>

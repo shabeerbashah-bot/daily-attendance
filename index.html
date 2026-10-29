@@ -27,15 +27,35 @@
 
     /* Navbar */
     .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 500;
       background: #ffffff;
       color: #3182ce;
-      padding: 20px;
+      padding: 20px 80px;
       text-align: center;
       font-size: 22px;
       font-weight: 700;
       box-shadow: 0 4px 12px rgba(0,0,0,0.05);
       letter-spacing: 0.5px;
     }
+
+    /* Session timer (top right corner of the header) */
+    .session-timer {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #edf2f7;
+      color: #3182ce;
+      border-radius: 14px;
+      padding: 3px 10px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0;
+      font-variant-numeric: tabular-nums;
+    }
+    .session-timer.low { background: #fed7d7; color: #c53030; }
 
     /* Language switch */
     .lang-switch { display: inline-flex; align-items: center; gap: 20px; }
@@ -50,7 +70,6 @@
       border-bottom: 2px solid transparent;
       transition: color 0.2s, border-color 0.2s;
     }
-    .lang-btn:hover { color: #3182ce; }
     .lang-btn.active { color: #3182ce; border-bottom-color: #3182ce; }
     .lang-btn:focus-visible { outline: 2px solid #3182ce; outline-offset: 2px; }
 
@@ -332,15 +351,19 @@
     .pdf-root .pdf-generated { font-size: 13px; color: #718096; margin-top: 2px; }
     .pdf-root .dashboard-header { flex-direction: row; align-items: flex-start; }
     .pdf-root .about-details { flex-direction: row; gap: 40px; }
-    .pdf-root .analytics-grid { grid-template-columns: repeat(4, 1fr); }
-    .pdf-root .calendar-grid { grid-template-columns: repeat(6, 1fr); }
-    .pdf-root .modal-grid { grid-template-columns: repeat(2, 1fr); }
+    .pdf-root .analytics-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .pdf-root .calendar-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+    .pdf-root .modal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .pdf-root .stat-card, .pdf-root .day-card, .pdf-root .detail-item { min-width: 0; }
+    .pdf-root .stat-title, .pdf-root .stat-number, .pdf-root .detail-value { overflow-wrap: anywhere; }
     .pdf-root .modal-header { padding-right: 0; }
     .pdf-root .about-card, .pdf-root .stat-card, .pdf-root .day-card { box-shadow: 0 0 0 1px #e2e8f0; }
     .pdf-root .progress-bar-fill { transition: none; }
 
     /* Responsive */
     @media (max-width: 600px) {
+      .navbar { font-size: 16px; padding: 18px 64px; }
+      .session-timer { right: 8px; padding: 3px 8px; font-size: 12px; }
       .dashboard-header { flex-direction: column; align-items: flex-start; }
       .action-buttons { width: 100%; }
       .btn { width: 100%; }
@@ -353,7 +376,7 @@
 </head>
 <body>
 
-  <div class="navbar">Geekay Human Resources Pvt Ltd</div>
+  <div class="navbar">Geekay Human Resources Pvt Ltd<span class="session-timer" id="sessionTimer" data-i18n-title="sessionLeft" style="display:none;">02:00</span></div>
 
   <!-- Login -->
   <div class="login-section" id="loginSection">
@@ -585,6 +608,8 @@
         pdfStaff: 'Staff details only',
         pdfAll: 'Overall details (Attendance + Staff details)',
         generatedOn: 'Generated on',
+        sessionLeft: 'Session time left',
+        msgSessionEnded: 'Your session has ended. Please log in again.',
         active: 'Active',
         inactive: 'Inactive',
         lblPresent: 'Present',
@@ -648,6 +673,8 @@
         pdfStaff: 'ஊழியர் விவரங்கள் மட்டும்',
         pdfAll: 'முழு விவரங்கள் (வருகை + ஊழியர் விவரங்கள்)',
         generatedOn: 'உருவாக்கிய தேதி',
+        sessionLeft: 'மீதமுள்ள நேரம்',
+        msgSessionEnded: 'உங்கள் அமர்வு நேரம் முடிந்தது. மீண்டும் உள்நுழையவும்.',
         active: 'பணியில் உள்ளார்',
         inactive: 'பணியில் இல்லை',
         lblPresent: 'வருகை',
@@ -711,6 +738,8 @@
         pdfStaff: 'केवल कर्मचारी विवरण',
         pdfAll: 'पूरा विवरण (उपस्थिति + कर्मचारी विवरण)',
         generatedOn: 'बनाने की तारीख',
+        sessionLeft: 'शेष समय',
+        msgSessionEnded: 'आपका समय समाप्त हो गया। कृपया फिर से लॉगिन करें।',
         active: 'कार्यरत',
         inactive: 'कार्यरत नहीं',
         lblPresent: 'उपस्थित',
@@ -899,8 +928,7 @@
         const lang = btn.getAttribute('data-lang');
         if (lang !== currentLang) setLanguage(lang);
       }
-      btn.addEventListener('mouseenter', choose);   // mouse pointer placed on the letter
-      btn.addEventListener('click', choose);        // tap on phones, or keyboard Enter
+      btn.addEventListener('click', choose);   // language changes only when the letter is clicked / tapped
     });
 
     // ------------------------------------------------------------
@@ -1134,6 +1162,7 @@
       document.getElementById('dashboardSection').style.display = 'block';
       window.scrollTo(0, 0);
       renderDashboard();
+      startSessionTimer();
     }
 
     // Draws every changing part of the dashboard in the selected language
@@ -1359,7 +1388,7 @@
           margin: [0.3, 0.25, 0.3, 0.25],
           filename: (names[mode] || 'Report_') + empId + '.pdf',
           image: { type: 'jpeg', quality: 1 },
-          html2canvas: { scale: 3, scrollX: 0, scrollY: 0, useCORS: true, backgroundColor: '#ffffff' },
+          html2canvas: { scale: 3, scrollX: 0, scrollY: 0, windowWidth: 900, useCORS: true, backgroundColor: '#ffffff' },
           jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait', compress: true },
           pagebreak: {
             mode: ['css', 'legacy'],
@@ -1377,10 +1406,56 @@
     }
 
     // ------------------------------------------------------------
+    // Session timer: the dashboard stays open for 2 minutes only
+    // ------------------------------------------------------------
+    const SESSION_SECONDS = 120;
+    let sessionTimerId = null;
+    let sessionEndTime = 0;
+
+    function formatTimer(totalSeconds) {
+      const m = Math.floor(totalSeconds / 60);
+      const sec = totalSeconds % 60;
+      return String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+    }
+
+    function tickSessionTimer() {
+      const remaining = Math.max(0, Math.ceil((sessionEndTime - Date.now()) / 1000));
+      const el = document.getElementById('sessionTimer');
+      el.textContent = formatTimer(remaining);
+      el.classList.toggle('low', remaining <= 30);
+      if (remaining <= 0) expireSession();
+    }
+
+    function startSessionTimer() {
+      stopSessionTimer();
+      sessionEndTime = Date.now() + SESSION_SECONDS * 1000;
+      document.getElementById('sessionTimer').style.display = 'inline-block';
+      tickSessionTimer();
+      sessionTimerId = setInterval(tickSessionTimer, 250);
+    }
+
+    function stopSessionTimer() {
+      if (sessionTimerId !== null) {
+        clearInterval(sessionTimerId);
+        sessionTimerId = null;
+      }
+      const el = document.getElementById('sessionTimer');
+      el.style.display = 'none';
+      el.classList.remove('low');
+    }
+
+    function expireSession() {
+      logout();
+      setLoginMessage('msgSessionEnded', 'error');
+    }
+
+    // ------------------------------------------------------------
     // Logout
     // ------------------------------------------------------------
     function logout() {
+      stopSessionTimer();
       closeStaffModal();
+      closePdfChoice();
       currentData = null;
       document.getElementById('empId').value = '';
       setLoginMessage(null, 'info');

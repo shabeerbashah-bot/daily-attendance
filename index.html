@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Daily Attendance</title>
-  <!-- Library to read Excel files -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <style>
     body { 
@@ -66,7 +65,7 @@
 
   <script>
     async function checkData() {
-      let id = document.getElementById('empId').value.trim();
+      let id = document.getElementById('empId').value.trim().toUpperCase();
       let resultDiv = document.getElementById('result');
 
       if(id === "") {
@@ -77,27 +76,39 @@
       resultDiv.innerHTML = "<span style='color:blue;'>Checking...</span>";
 
       try {
-        // Read the Excel file directly
         let response = await fetch('attendance.xlsx');
         if (!response.ok) throw new Error("File not found");
         
         let arrayBuffer = await response.arrayBuffer();
         let workbook = XLSX.read(arrayBuffer, {type: 'array'});
         
-        // Get data from the first sheet
         let firstSheetName = workbook.SheetNames[0];
         let worksheet = workbook.Sheets[firstSheetName];
-        let data = XLSX.utils.sheet_to_json(worksheet);
+        
+        let data = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
 
         let found = false;
 
         for(let i = 0; i < data.length; i++) {
-          // Your Excel file must have headers: EmpID, Name, Status
-          if(data[i].EmpID != null && String(data[i].EmpID).trim() === id) {
-            let empName = data[i].Name || "Employee";
-            let empStatus = data[i].Status || "No Status";
+          let rowEmpId = data[i]["User/Employee Id"];
+          
+          if(rowEmpId != null && String(rowEmpId).trim().toUpperCase() === id) {
+            let empName = data[i]["Display Name"] || "Employee";
             
-            resultDiv.innerHTML = "Hello <b>" + empName + "</b>,<br> Today's Status: <span style='color:green;'>" + empStatus + "</span>";
+            let keys = Object.keys(data[i]);
+            let latestDateKey = keys[keys.length - 1]; 
+            let empStatus = data[i][latestDateKey];
+
+            if(empStatus === "") {
+                empStatus = "Not Updated";
+            }
+            
+            let statusColor = "green";
+            if(empStatus.toUpperCase() === "AA" || empStatus.toUpperCase() === "ABSENT") {
+                statusColor = "red";
+            }
+
+            resultDiv.innerHTML = "Hello <b>" + empName + "</b>,<br><br> Date: <b>" + latestDateKey + "</b><br> Status: <span style='color:" + statusColor + ";'>" + empStatus + "</span>";
             found = true;
             break;
           }

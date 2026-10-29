@@ -3,25 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Geekay Human Resources Pvt Ltd</title>
-  
-  <!-- Premium Font -->
+  <title>Geekay Human Resources Pvt Ltd - Employee Portal</title>
+
+  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Libraries for Excel Reading and PDF Generation -->
+
+  <!-- Libraries: Excel reading and PDF generation -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  
+
   <style>
+    * { box-sizing: border-box; }
+
     body {
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Poppins', Arial, sans-serif;
       background: #f4f7f9;
       color: #2d3748;
       margin: 0;
       padding: 0;
     }
-    
-    /* Company Branding Navbar */
+
+    /* Navbar */
     .navbar {
       background: #ffffff;
       color: #004080;
@@ -33,7 +35,7 @@
       letter-spacing: 0.5px;
     }
 
-    /* Login Area */
+    /* Login */
     .login-section {
       display: flex;
       justify-content: center;
@@ -62,10 +64,10 @@
       margin-bottom: 20px;
       border: 1px solid #cbd5e1;
       border-radius: 8px;
-      box-sizing: border-box;
       font-size: 16px;
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Poppins', Arial, sans-serif;
     }
+    .login-box input:focus { outline: 2px solid #3182ce; border-color: #3182ce; }
     .login-box button {
       width: 100%;
       padding: 15px;
@@ -77,25 +79,26 @@
       font-weight: 600;
       cursor: pointer;
       transition: background 0.3s;
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Poppins', Arial, sans-serif;
     }
     .login-box button:hover { background: #002d59; }
+    .login-box button:disabled { background: #94a3b8; cursor: not-allowed; }
     #loginError {
-      color: #e53e3e;
       margin-top: 15px;
       font-size: 14px;
       font-weight: 500;
+      min-height: 20px;
     }
+    #loginError.error { color: #e53e3e; }
+    #loginError.info { color: #004080; }
 
-    /* Dashboard Area */
+    /* Dashboard */
     .dashboard-section {
       display: none;
       padding: 30px 20px;
       max-width: 1100px;
       margin: 0 auto;
     }
-
-    /* Header & Dynamic Date */
     .dashboard-header {
       display: flex;
       justify-content: space-between;
@@ -104,33 +107,18 @@
       flex-wrap: wrap;
       gap: 15px;
     }
-    .welcome-text {
-      font-size: 24px;
-      font-weight: 600;
-      color: #1a202c;
-      margin: 0;
-    }
+    .welcome-text { font-size: 24px; font-weight: 600; color: #1a202c; margin: 0; }
     .welcome-text span { color: #004080; }
-    
-    .current-date {
-      color: #718096;
-      font-size: 15px;
-      font-weight: 500;
-      margin: 8px 0 0 0;
-    }
+    .current-date { color: #718096; font-size: 15px; font-weight: 500; margin: 8px 0 0 0; }
 
-    .action-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
+    .action-buttons { display: flex; flex-wrap: wrap; gap: 10px; }
     .btn {
       border: none;
       padding: 10px 20px;
       border-radius: 8px;
       font-weight: 600;
       cursor: pointer;
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Poppins', Arial, sans-serif;
       transition: 0.3s;
     }
     .btn-primary { background: #004080; color: white; }
@@ -139,8 +127,9 @@
     .btn-secondary:hover { background: #2b6cb0; }
     .btn-light { background: #edf2f7; color: #4a5568; }
     .btn-light:hover { background: #e2e8f0; color: #1a202c; }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-    /* About Section */
+    /* About card */
     .about-card {
       background: white;
       padding: 25px;
@@ -157,16 +146,12 @@
       border-bottom: 1px solid #e2e8f0;
       padding-bottom: 10px;
     }
-    .about-details {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 40px;
-    }
-    .detail-item { display: flex; flex-direction: column; }
+    .about-details { display: flex; flex-wrap: wrap; gap: 40px; }
+    .detail-item { display: flex; flex-direction: column; min-width: 0; }
     .detail-label { font-size: 13px; color: #718096; font-weight: 500; margin-bottom: 4px; }
-    .detail-value { font-size: 16px; font-weight: 600; color: #2d3748; }
+    .detail-value { font-size: 16px; font-weight: 600; color: #2d3748; word-break: break-word; }
 
-    /* Analytics Section */
+    /* Analytics */
     .analytics-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -183,40 +168,37 @@
     .stat-card.present-stat { border-left-color: #38a169; }
     .stat-card.absent-stat { border-left-color: #e53e3e; }
     .stat-card.percent-stat { border-left-color: #004080; }
-    
     .stat-title { font-size: 14px; color: #718096; font-weight: 500; margin-bottom: 5px; }
     .stat-number { font-size: 28px; font-weight: 700; color: #1a202c; }
-    
-    .progress-bar-bg {
-      background: #edf2f7;
-      height: 8px;
-      border-radius: 10px;
-      margin-top: 10px;
-      overflow: hidden;
-    }
-    .progress-bar-fill {
-      background: #004080;
-      height: 100%;
-      width: 0%;
-      transition: width 1s ease-in-out;
-    }
+    .progress-bar-bg { background: #edf2f7; height: 8px; border-radius: 10px; margin-top: 10px; overflow: hidden; }
+    .progress-bar-fill { background: #004080; height: 100%; width: 0%; transition: width 1s ease-in-out; }
 
-    /* Attendance Grid */
+    /* Attendance grid */
     .section-title { font-size: 20px; color: #2d3748; margin-bottom: 20px; font-weight: 600; }
     .calendar-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; }
     .day-card {
-      background: white; padding: 15px; border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.03); text-align: center;
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      text-align: center;
       border-bottom: 4px solid #cbd5e1;
     }
     .day-card.present { border-bottom-color: #38a169; }
     .day-card.absent { border-bottom-color: #e53e3e; }
+    .day-card.half { border-bottom-color: #d69e2e; }
+    .day-card.leave { border-bottom-color: #3182ce; }
+    .day-card.off { border-bottom-color: #a0aec0; }
     .day-card .date-text { font-size: 13px; color: #718096; margin-bottom: 8px; font-weight: 500; }
     .day-card .status-text { font-size: 18px; font-weight: 700; }
     .day-card.present .status-text { color: #38a169; }
     .day-card.absent .status-text { color: #e53e3e; }
+    .day-card.half .status-text { color: #b7791f; }
+    .day-card.leave .status-text { color: #2b6cb0; }
+    .day-card.off .status-text { color: #718096; }
+    .empty-note { grid-column: 1 / -1; color: #718096; }
 
-    /* Footer Note */
+    /* Footer note */
     .hr-footer {
       margin-top: 40px;
       padding: 15px 20px;
@@ -226,12 +208,9 @@
       color: #9c4221;
       font-size: 14px;
       font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 10px;
     }
 
-    /* Pop-up Modal Design (Staff Details) */
+    /* Modal */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -267,17 +246,41 @@
       display: flex; justify-content: center; align-items: center;
     }
     .close-modal:hover { background: #e2e8f0; color: #e53e3e; }
-    
-    .modal-header { font-size: 22px; color: #004080; font-weight: 700; margin-bottom: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
-    .modal-section { margin-bottom: 25px; }
-    .modal-section-title { font-size: 16px; color: #4a5568; font-weight: 600; margin-bottom: 15px; background: #f7fafc; padding: 8px 12px; border-radius: 6px; }
-    .modal-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-    
-    .status-badge {
-      padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 600;
+    .modal-header {
+      font-size: 22px;
+      color: #004080;
+      font-weight: 700;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 10px;
+      padding-right: 45px;
     }
+    .modal-section { margin-bottom: 25px; }
+    .modal-section-title {
+      font-size: 16px;
+      color: #4a5568;
+      font-weight: 600;
+      margin-bottom: 15px;
+      background: #f7fafc;
+      padding: 8px 12px;
+      border-radius: 6px;
+    }
+    .modal-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+    .status-badge { padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 600; display: inline-block; }
     .status-active { background: #c6f6d5; color: #22543d; }
     .status-inactive { background: #fed7d7; color: #822727; }
+    .link-btn {
+      background: none;
+      border: none;
+      color: #3182ce;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0;
+      margin-top: 4px;
+      text-align: left;
+      font-family: 'Poppins', Arial, sans-serif;
+    }
 
     /* Responsive */
     @media (max-width: 600px) {
@@ -292,34 +295,30 @@
 </head>
 <body>
 
-  <div class="navbar">
-    Geekay Human Resources Pvt Ltd
-  </div>
+  <div class="navbar">Geekay Human Resources Pvt Ltd</div>
 
-  <!-- Login Section -->
+  <!-- Login -->
   <div class="login-section" id="loginSection">
     <div class="login-box">
       <h2>Employee Portal</h2>
-      <input type="text" id="empId" placeholder="Enter Employee ID">
-      <button onclick="login()">View Profile</button>
-      <div id="loginError"></div>
+      <input type="text" id="empId" placeholder="Enter Employee ID" autocomplete="off">
+      <button id="loginBtn" onclick="login()">View Profile</button>
+      <div id="loginError" class="info"></div>
     </div>
   </div>
 
-  <!-- Dashboard Section -->
+  <!-- Dashboard -->
   <div class="dashboard-section" id="dashboardSection">
-    
     <div id="printArea">
-      
+
       <div class="dashboard-header">
         <div>
           <h2 class="welcome-text">Welcome back, <span id="displayName">Employee</span>!</h2>
           <p class="current-date" id="currentDate">Loading date...</p>
         </div>
         <div class="action-buttons" id="actionButtons">
-          <!-- New Button for Staff Details -->
           <button class="btn btn-primary" onclick="openStaffModal()">View Staff Details</button>
-          <button class="btn btn-secondary" onclick="downloadPDF()">Download PDF</button>
+          <button class="btn btn-secondary" id="pdfBtn" onclick="downloadPDF()">Download PDF</button>
           <button class="btn btn-light" onclick="logout()">Logout</button>
         </div>
       </div>
@@ -342,7 +341,6 @@
         </div>
       </div>
 
-      <!-- Analytics Section -->
       <div class="analytics-grid">
         <div class="stat-card">
           <div class="stat-title">Total Working Days</div>
@@ -366,25 +364,21 @@
       </div>
 
       <div class="section-title">Attendance Overview</div>
-      <div class="calendar-grid" id="calendarGrid">
-        <!-- Generated by JS -->
-      </div>
-      
-      <!-- HR Footer Note -->
+      <div class="calendar-grid" id="calendarGrid"></div>
+
       <div class="hr-footer">
-        <strong>Note:</strong> In case of any discrepancies in your attendance or for further inquiries, please feel free to contact the HR / Admin Department.
+        <strong>Note:</strong> In case of any discrepancies in your attendance or for further inquiries, please contact the HR / Admin Department.
       </div>
-      
-    </div> <!-- End Print Area -->
+
+    </div>
   </div>
 
-  <!-- Staff Detail Pop-up Modal -->
-  <div class="modal-overlay" id="staffModal">
+  <!-- Staff Details Modal -->
+  <div class="modal-overlay" id="staffModal" onclick="overlayClick(event)">
     <div class="modal-content">
-      <button class="close-modal" onclick="closeStaffModal()">×</button>
+      <button class="close-modal" onclick="closeStaffModal()" aria-label="Close">&times;</button>
       <div class="modal-header">Staff Personal Details</div>
-      
-      <!-- Basic Info -->
+
       <div class="modal-section">
         <div class="modal-section-title">1. Basic Information</div>
         <div class="modal-grid">
@@ -414,8 +408,7 @@
           </div>
         </div>
       </div>
-      
-      <!-- Contact Info -->
+
       <div class="modal-section">
         <div class="modal-section-title">2. Contact Information</div>
         <div class="modal-grid">
@@ -429,8 +422,7 @@
           </div>
         </div>
       </div>
-      
-      <!-- Bank Details -->
+
       <div class="modal-section">
         <div class="modal-section-title">3. Bank Details</div>
         <div class="modal-grid">
@@ -441,6 +433,7 @@
           <div class="detail-item">
             <span class="detail-label">Account Number</span>
             <span class="detail-value" id="modalAccNo">---</span>
+            <button class="link-btn" id="toggleAccBtn" onclick="toggleAccount()" style="display:none;">Show full number</button>
           </div>
           <div class="detail-item">
             <span class="detail-label">IFSC Code</span>
@@ -453,163 +446,435 @@
   </div>
 
   <script>
-    // Set dynamic current date
+    // ------------------------------------------------------------
+    // Settings
+    // ------------------------------------------------------------
+    const EXCEL_FILE = 'attendance.xlsx';
+
+    // Column name aliases. Names are compared after removing spaces,
+    // symbols and capital letters, so "User/Employee Id" = "useremployeeid".
+    const COLS = {
+      id:      ['useremployeeid', 'employeeid', 'empid', 'userid', 'employeecode'],
+      name:    ['displayname', 'employeename', 'name'],
+      status:  ['status', 'employeestatus'],
+      doj:     ['doj', 'dateofjoining'],
+      lwd:     ['lwd', 'lastworkingday'],
+      dob:     ['dob', 'dateofbirth'],
+      esi:     ['esinumber', 'esino', 'esi', 'esic', 'esicnumber'],
+      mobile:  ['mobilenumber', 'mobile', 'mobileno', 'phone', 'phonenumber', 'contactnumber'],
+      email:   ['emailid', 'email', 'emailaddress'],
+      bank:    ['bankname', 'bank'],
+      account: ['accountnumber', 'accountno', 'bankaccountnumber', 'bankaccount', 'accno'],
+      ifsc:    ['ifsccode', 'ifsc'],
+      vendor:  ['vendorname', 'vendor'],
+      serial:  ['slno', 'sno', 'serialnumber', 'srno']
+    };
+
+    // Attendance codes (all in capital letters)
+    const CODE_PRESENT = ['PP', 'P', 'PRESENT'];
+    const CODE_ABSENT  = ['AA', 'A', 'ABSENT'];
+    const CODE_HALF    = ['HD', 'HALFDAY', 'HALF DAY', 'PA', 'AP'];
+    const CODE_LEAVE   = ['L', 'CL', 'SL', 'PL', 'EL', 'LEAVE', 'LL'];
+    const CODE_OFF     = ['WO', 'WOFF', 'OFF', 'H', 'HOL', 'HOLIDAY', 'PH', 'FH'];
+
+    let currentAccountFull = '';
+    let currentAccountMasked = '';
+    let accountVisible = false;
+
+    // ------------------------------------------------------------
+    // Helpers
+    // ------------------------------------------------------------
+    function normKey(k) {
+      return String(k).toLowerCase().replace(/[^a-z0-9]/g, '');
+    }
+
+    // Returns a copy of the row where every key is trimmed
+    // and a lookup map from normalised key to real key.
+    function buildKeyMap(row) {
+      const map = {};
+      for (const key in row) {
+        const nk = normKey(key);
+        if (nk && !(nk in map)) map[nk] = key;
+      }
+      return map;
+    }
+
+    function getField(row, keyMap, aliases) {
+      for (const alias of aliases) {
+        if (alias in keyMap) {
+          const v = row[keyMap[alias]];
+          if (v !== null && v !== undefined && String(v).trim() !== '') return v;
+        }
+      }
+      return '';
+    }
+
+    function isInfoColumn(key) {
+      const nk = normKey(key);
+      for (const group in COLS) {
+        if (COLS[group].includes(nk)) return true;
+      }
+      return false;
+    }
+
+    const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    function formatDate(d) {
+      // Small shift avoids Excel/SheetJS rounding showing the previous day
+      const x = new Date(d.getTime() + 60000);
+      const dd = String(x.getDate()).padStart(2, '0');
+      return dd + '-' + MONTHS[x.getMonth()] + '-' + x.getFullYear();
+    }
+
+    // Converts any cell value to readable text
+    function formatValue(v) {
+      if (v === null || v === undefined) return '';
+      if (v instanceof Date) return isNaN(v.getTime()) ? '' : formatDate(v);
+      return String(v).trim();
+    }
+
+    // Column headers that are Excel serial numbers (e.g. 45678) become dates
+    function formatHeader(key) {
+      const k = String(key).trim();
+      if (/^\d{5}$/.test(k)) {
+        const serial = Number(k);
+        if (serial > 30000 && serial < 70000) {
+          const d = new Date(Math.round((serial - 25569) * 86400 * 1000));
+          return formatDate(new Date(d.getTime() + d.getTimezoneOffset() * 60000));
+        }
+      }
+      return k;
+    }
+
+    function fmtNum(n) {
+      return Number.isInteger(n) ? String(n) : n.toFixed(1);
+    }
+
+    function setLoginMessage(text, type) {
+      const el = document.getElementById('loginError');
+      el.textContent = text;
+      el.className = type;
+    }
+
+    function setText(id, value) {
+      const v = (value === '' || value === null || value === undefined) ? '---' : value;
+      document.getElementById(id).textContent = v;
+    }
+
+    // ------------------------------------------------------------
+    // Date shown on dashboard
+    // ------------------------------------------------------------
     function setDate() {
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      document.getElementById('currentDate').innerText = new Date().toLocaleDateString('en-US', options);
+      document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', options);
     }
     setDate();
 
-    // Modal Functions
+    // ------------------------------------------------------------
+    // Modal
+    // ------------------------------------------------------------
     function openStaffModal() {
       document.getElementById('staffModal').style.display = 'flex';
     }
     function closeStaffModal() {
       document.getElementById('staffModal').style.display = 'none';
     }
+    function overlayClick(e) {
+      if (e.target.id === 'staffModal') closeStaffModal();
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeStaffModal();
+    });
+
+    function toggleAccount() {
+      accountVisible = !accountVisible;
+      document.getElementById('modalAccNo').textContent = accountVisible ? currentAccountFull : currentAccountMasked;
+      document.getElementById('toggleAccBtn').textContent = accountVisible ? 'Hide number' : 'Show full number';
+    }
+
+    // ------------------------------------------------------------
+    // Login
+    // ------------------------------------------------------------
+    document.getElementById('empId').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') login();
+    });
 
     async function login() {
-      let id = document.getElementById('empId').value.trim().toUpperCase();
-      let errorDiv = document.getElementById('loginError');
+      const input = document.getElementById('empId');
+      const btn = document.getElementById('loginBtn');
+      const id = input.value.trim().toUpperCase();
 
-      if(id === "") {
-        errorDiv.innerHTML = "Please enter your Employee ID.";
+      if (id === '') {
+        setLoginMessage('Please enter your Employee ID.', 'error');
         return;
       }
 
-      errorDiv.innerHTML = "<span style='color:#004080;'>Authenticating...</span>";
+      if (location.protocol === 'file:') {
+        setLoginMessage('Open this page from a web server (or hosting). Browsers block reading attendance.xlsx from a local file.', 'error');
+        return;
+      }
+
+      btn.disabled = true;
+      setLoginMessage('Authenticating...', 'info');
 
       try {
-        let response = await fetch('attendance.xlsx');
-        if (!response.ok) throw new Error("Database not found.");
-        
-        let arrayBuffer = await response.arrayBuffer();
-        let workbook = XLSX.read(arrayBuffer, {type: 'array'});
-        
-        let firstSheetName = workbook.SheetNames[0];
-        let worksheet = workbook.Sheets[firstSheetName];
-        let data = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+        // no-store + timestamp = always the latest Excel file
+        const response = await fetch(EXCEL_FILE + '?v=' + Date.now(), { cache: 'no-store' });
+        if (!response.ok) throw new Error('FILE_NOT_FOUND');
 
-        let found = false;
+        const arrayBuffer = await response.arrayBuffer();
+        const workbook = XLSX.read(arrayBuffer, { type: 'array', cellDates: true });
+
+        if (!workbook.SheetNames.length) throw new Error('EMPTY_BOOK');
+
+        // Sheet 1 = attendance
+        const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+        const data = XLSX.utils.sheet_to_json(firstSheet, { defval: '' });
+
         let record = null;
+        let keyMap = null;
+        let idColumnFound = false;
 
-        for(let i = 0; i < data.length; i++) {
-          let rowEmpId = data[i]["User/Employee Id"];
-          if(rowEmpId != null && String(rowEmpId).trim().toUpperCase() === id) {
+        for (let i = 0; i < data.length; i++) {
+          const km = buildKeyMap(data[i]);
+          let idKey = null;
+          for (const alias of COLS.id) {
+            if (alias in km) { idKey = km[alias]; break; }
+          }
+          if (idKey === null) continue;
+          idColumnFound = true;
+
+          const rowId = data[i][idKey];
+          if (rowId !== null && rowId !== undefined && String(rowId).trim().toUpperCase() === id) {
             record = data[i];
-            found = true;
+            keyMap = km;
             break;
           }
         }
 
-        if(!found) {
-          errorDiv.innerHTML = "Invalid ID. Record not found.";
-        } else {
-          showDashboard(record, id);
+        if (!idColumnFound && data.length > 0) {
+          setLoginMessage('Employee ID column not found in the Excel file. Please contact HR / Admin.', 'error');
+          return;
         }
+        if (!record) {
+          setLoginMessage('Invalid ID. Record not found.', 'error');
+          return;
+        }
+
+        // Other sheets (for example "Master Data") = personal details.
+        const master = {};
+        for (let s = 1; s < workbook.SheetNames.length; s++) {
+          const rows = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[s]], { defval: '' });
+          for (let r = 0; r < rows.length; r++) {
+            const km = buildKeyMap(rows[r]);
+            let idKey = null;
+            for (const alias of COLS.id) {
+              if (alias in km) { idKey = km[alias]; break; }
+            }
+            if (idKey === null) continue;
+            if (String(rows[r][idKey]).trim().toUpperCase() === id) {
+              for (const group in COLS) {
+                if (group === 'id') continue;
+                if (!(group in master)) {
+                  const val = getField(rows[r], km, COLS[group]);
+                  if (val !== '') master[group] = val;
+                }
+              }
+              break;
+            }
+          }
+        }
+
+        showDashboard(record, keyMap, master, id);
+        setLoginMessage('', 'info');
+
       } catch (error) {
-        errorDiv.innerHTML = "System error. Data not loaded yet.";
+        console.error(error);
+        if (error.message === 'FILE_NOT_FOUND') {
+          setLoginMessage('attendance.xlsx was not found. Please contact HR / Admin.', 'error');
+        } else if (error.message === 'EMPTY_BOOK') {
+          setLoginMessage('The attendance file is empty. Please contact HR / Admin.', 'error');
+        } else {
+          setLoginMessage('System error. Data could not be loaded. Please try again.', 'error');
+        }
+      } finally {
+        btn.disabled = false;
       }
     }
 
-    function showDashboard(record, empId) {
+    // ------------------------------------------------------------
+    // Dashboard
+    // ------------------------------------------------------------
+    function pick(record, keyMap, master, group) {
+      // Attendance sheet first, then master sheet
+      let v = getField(record, keyMap, COLS[group]);
+      if (v === '' && master[group] !== undefined) v = master[group];
+      return formatValue(v);
+    }
+
+    function showDashboard(record, keyMap, master, empId) {
       document.getElementById('loginSection').style.display = 'none';
       document.getElementById('dashboardSection').style.display = 'block';
+      window.scrollTo(0, 0);
 
-      // Header Details
-      let empName = record["Display Name"] || "Employee";
-      document.getElementById('displayName').innerText = empName;
-      document.getElementById('displayId').innerText = empId;
-      
-      let doj = record["DOJ"];
-      let lwd = record["LWD"];
-      document.getElementById('displayDoj').innerText = (doj && String(doj).trim() !== "") ? doj : "-";
-      document.getElementById('displayLwd').innerText = (lwd && String(lwd).trim() !== "") ? lwd : "-";
+      const empName = pick(record, keyMap, master, 'name') || 'Employee';
+      const doj     = pick(record, keyMap, master, 'doj');
+      const lwd     = pick(record, keyMap, master, 'lwd');
+      const dob     = pick(record, keyMap, master, 'dob');
+      const esi     = pick(record, keyMap, master, 'esi');
+      const mobile  = pick(record, keyMap, master, 'mobile');
+      const email   = pick(record, keyMap, master, 'email');
+      const bank    = pick(record, keyMap, master, 'bank');
+      const account = pick(record, keyMap, master, 'account');
+      const ifsc    = pick(record, keyMap, master, 'ifsc');
+      let statusTxt = pick(record, keyMap, master, 'status');
 
-      // Temporary Mapping for Modal (Until Master Data is linked)
-      document.getElementById('modalName').innerText = empName;
-      document.getElementById('modalId').innerText = empId;
-      document.getElementById('modalLwd').innerText = (lwd && String(lwd).trim() !== "") ? lwd : "-";
+      // Header
+      document.getElementById('displayName').textContent = empName;
+      document.getElementById('displayId').textContent = empId;
+      document.getElementById('displayDoj').textContent = doj || '-';
+      document.getElementById('displayLwd').textContent = lwd || '-';
 
-      let ignoreColumns = ["User/Employee Id", "Display Name", "Status", "DOJ", "LWD", "Vendor Name", "DOB"];
-      let gridHtml = "";
-      
-      let totalCount = 0;
-      let presentCount = 0;
-      let absentCount = 0;
-      
-      for (let key in record) {
-        let cleanKey = key.trim();
-        
-        if(!ignoreColumns.includes(cleanKey) && !cleanKey.startsWith("__EMPTY")) {
-          
-          let statusVal = String(record[key]).trim().toUpperCase();
-          if(statusVal === "") statusVal = "-";
+      // Staff details modal
+      setText('modalName', empName);
+      setText('modalId', empId);
+      setText('modalLwd', lwd);
+      setText('modalDob', dob);
+      setText('modalEsi', esi);
+      setText('modalMobile', mobile);
+      setText('modalEmail', email);
+      setText('modalBankName', bank);
+      setText('modalIfsc', ifsc);
 
-          let cardClass = "";
-          
-          // Analytics Counting
-          if(statusVal === "PP" || statusVal === "PRESENT" || statusVal === "P") {
-            cardClass = "present";
-            presentCount++;
-            totalCount++;
-          } else if(statusVal === "AA" || statusVal === "ABSENT" || statusVal === "A") {
-            cardClass = "absent";
-            absentCount++;
-            totalCount++;
-          }
+      // Status: use the Status column; if missing, LWD present = Inactive
+      if (statusTxt === '') statusTxt = lwd ? 'Inactive' : 'Active';
+      const badge = document.getElementById('modalStatus');
+      badge.textContent = statusTxt;
+      const isActive = ['ACTIVE', 'WORKING', 'CONTINUING'].includes(statusTxt.toUpperCase());
+      badge.className = 'status-badge ' + (isActive ? 'status-active' : 'status-inactive');
 
-          gridHtml += `
-            <div class="day-card ${cardClass}">
-              <div class="date-text">${cleanKey}</div>
-              <div class="status-text">${statusVal}</div>
-            </div>
-          `;
-        }
+      // Bank account: masked by default
+      currentAccountFull = account;
+      accountVisible = false;
+      const toggleBtn = document.getElementById('toggleAccBtn');
+      if (account) {
+        currentAccountMasked = account.length > 4
+          ? '*'.repeat(account.length - 4) + account.slice(-4)
+          : account;
+        document.getElementById('modalAccNo').textContent = currentAccountMasked;
+        toggleBtn.style.display = 'inline-block';
+        toggleBtn.textContent = 'Show full number';
+      } else {
+        currentAccountMasked = '';
+        document.getElementById('modalAccNo').textContent = '---';
+        toggleBtn.style.display = 'none';
       }
 
-      if(gridHtml === "") {
-        gridHtml = "<p style='grid-column: 1 / -1; color: #718096;'>No attendance dates recorded yet.</p>";
-      }
-      document.getElementById('calendarGrid').innerHTML = gridHtml;
+      // Attendance cards
+      const grid = document.getElementById('calendarGrid');
+      grid.textContent = '';
 
-      // Update Analytics
-      document.getElementById('statTotal').innerText = totalCount;
-      document.getElementById('statPresent').innerText = presentCount;
-      document.getElementById('statAbsent').innerText = absentCount;
-      
-      let percent = 0;
-      if(totalCount > 0) {
-        percent = Math.round((presentCount / totalCount) * 100);
+      let cntPresent = 0, cntAbsent = 0, cntHalf = 0;
+      let cardsAdded = 0;
+
+      for (const key in record) {
+        const cleanKey = String(key).trim();
+        if (cleanKey === '' || cleanKey.startsWith('__EMPTY') || isInfoColumn(cleanKey)) continue;
+
+        let statusVal = formatValue(record[key]).toUpperCase();
+        if (statusVal === '') statusVal = '-';
+
+        let cardClass = '';
+        if (CODE_PRESENT.includes(statusVal))      { cardClass = 'present'; cntPresent++; }
+        else if (CODE_ABSENT.includes(statusVal))  { cardClass = 'absent';  cntAbsent++; }
+        else if (CODE_HALF.includes(statusVal))    { cardClass = 'half';    cntHalf++; }
+        else if (CODE_LEAVE.includes(statusVal))   { cardClass = 'leave'; }
+        else if (CODE_OFF.includes(statusVal))     { cardClass = 'off'; }
+
+        const card = document.createElement('div');
+        card.className = 'day-card' + (cardClass ? ' ' + cardClass : '');
+
+        const dateDiv = document.createElement('div');
+        dateDiv.className = 'date-text';
+        dateDiv.textContent = formatHeader(cleanKey);
+
+        const statusDiv = document.createElement('div');
+        statusDiv.className = 'status-text';
+        statusDiv.textContent = statusVal;
+
+        card.appendChild(dateDiv);
+        card.appendChild(statusDiv);
+        grid.appendChild(card);
+        cardsAdded++;
       }
-      document.getElementById('statPercent').innerText = percent + "%";
-      document.getElementById('progressFill').style.width = percent + "%";
+
+      if (cardsAdded === 0) {
+        const p = document.createElement('p');
+        p.className = 'empty-note';
+        p.textContent = 'No attendance dates recorded yet.';
+        grid.appendChild(p);
+      }
+
+      // Analytics: a half day counts as 0.5 present and 0.5 absent.
+      // Leave and weekly off / holiday are not counted as working days.
+      const totalCount = cntPresent + cntAbsent + cntHalf;
+      const presentCount = cntPresent + cntHalf * 0.5;
+      const absentCount = cntAbsent + cntHalf * 0.5;
+      const percent = totalCount > 0 ? Math.round((presentCount / totalCount) * 100) : 0;
+
+      document.getElementById('statTotal').textContent = fmtNum(totalCount);
+      document.getElementById('statPresent').textContent = fmtNum(presentCount);
+      document.getElementById('statAbsent').textContent = fmtNum(absentCount);
+      document.getElementById('statPercent').textContent = percent + '%';
+      document.getElementById('progressFill').style.width = percent + '%';
     }
 
+    // ------------------------------------------------------------
+    // PDF
+    // ------------------------------------------------------------
     function downloadPDF() {
-      // Hide buttons temporarily so they don't appear in PDF
-      document.getElementById('actionButtons').style.display = 'none';
-      
-      let element = document.getElementById('printArea');
-      let opt = {
-        margin:       0.3,
-        filename:     'Attendance_Report.pdf',
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2 },
-        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+      const buttons = document.getElementById('actionButtons');
+      const pdfBtn = document.getElementById('pdfBtn');
+      const empId = document.getElementById('displayId').textContent.trim();
+
+      pdfBtn.disabled = true;
+      buttons.style.display = 'none';
+
+      const element = document.getElementById('printArea');
+      const opt = {
+        margin: 0.3,
+        filename: 'Attendance_Report_' + (empId || 'Employee') + '.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, scrollY: 0 },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
       };
-      
-      html2pdf().set(opt).from(element).save().then(() => {
-        // Show buttons again after PDF is generated
-        document.getElementById('actionButtons').style.display = 'flex';
-      });
+
+      html2pdf().set(opt).from(element).save()
+        .catch(function (err) {
+          console.error(err);
+          alert('PDF could not be created. Please try again.');
+        })
+        .finally(function () {
+          buttons.style.display = 'flex';
+          pdfBtn.disabled = false;
+        });
     }
 
+    // ------------------------------------------------------------
+    // Logout
+    // ------------------------------------------------------------
     function logout() {
-      document.getElementById('empId').value = "";
-      document.getElementById('loginError').innerHTML = "";
+      closeStaffModal();
+      document.getElementById('empId').value = '';
+      setLoginMessage('', 'info');
+      document.getElementById('progressFill').style.width = '0%';
+      document.getElementById('calendarGrid').textContent = '';
+      currentAccountFull = '';
+      currentAccountMasked = '';
+      accountVisible = false;
       document.getElementById('dashboardSection').style.display = 'none';
       document.getElementById('loginSection').style.display = 'flex';
+      document.getElementById('empId').focus();
     }
   </script>
 </body>

@@ -76,50 +76,111 @@
 
     .dashboard-lang-bar { display: flex; justify-content: flex-end; margin-bottom: 15px; }
 
-    /* Login */
+    /* Login Section - New Premium Split-Screen Design */
     .login-section {
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 80vh;
+      min-height: calc(100vh - 70px);
       padding: 20px;
+      background: #f4f7f9;
     }
-    .login-box {
-      background: white;
-      padding: 30px 30px 40px;
+    .login-split-container {
+      display: flex;
       width: 100%;
-      max-width: 400px;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-      text-align: left;
+      max-width: 1000px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+      overflow: hidden;
     }
-    .login-lang { display: flex; justify-content: flex-end; }
-    .login-box h2 {
+    .login-brand-panel {
+      flex: 1;
+      background: linear-gradient(135deg, #004080 0%, #3182ce 100%);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 50px;
+      text-align: left;
+      position: relative;
+    }
+    .login-brand-panel h1 {
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 20px;
+    }
+    .login-brand-panel p {
+      font-size: 16px;
+      font-weight: 400;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+    .login-form-panel {
+      flex: 1;
+      padding: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: #ffffff;
+    }
+    .login-form-inner {
+      max-width: 360px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .login-lang { display: flex; justify-content: flex-end; margin-bottom: 25px; }
+    
+    .login-form-inner h2 {
       margin: 0 0 6px 0;
       color: #1a202c;
-      font-size: 24px;
+      font-size: 26px;
       font-weight: 700;
       letter-spacing: 0.2px;
     }
     .login-accent { width: 44px; height: 4px; background: #3182ce; border-radius: 2px; margin-bottom: 14px; }
-    .login-subtitle { margin: 0 0 30px 0; font-size: 14px; color: #718096; line-height: 1.6; }
-    .field-label { display: block; font-size: 13px; font-weight: 600; color: #718096; margin-bottom: 2px; }
-    .login-box input {
-      width: 100%;
-      padding: 10px 2px;
+    .login-subtitle { margin: 0 0 35px 0; font-size: 14px; color: #718096; line-height: 1.6; }
+    
+    /* Floating Input Animation */
+    .floating-input-group {
+      position: relative;
       margin-bottom: 30px;
-      border: none;
-      border-bottom: 2px solid #cbd5e1;
-      border-radius: 0;
-      background: transparent;
-      color: #1a202c;
+    }
+    .floating-input-group input {
+      width: 100%;
+      padding: 15px 10px 10px 5px;
       font-size: 18px;
       font-weight: 500;
-      letter-spacing: 0.5px;
-      transition: border-color 0.2s;
+      color: #1a202c;
+      border: none;
+      border-bottom: 2px solid #cbd5e1;
+      background: transparent;
+      outline: none;
+      transition: border-color 0.3s;
+      font-family: 'Poppins', sans-serif;
     }
-    .login-box input:focus { outline: none; border-bottom-color: #3182ce; }
-    .login-box button.login-btn {
+    .floating-input-group label {
+      position: absolute;
+      top: 15px;
+      left: 5px;
+      font-size: 16px;
+      color: #718096;
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+    .floating-input-group input:focus {
+      border-bottom-color: #3182ce;
+    }
+    .floating-input-group input:focus ~ label,
+    .floating-input-group input:not(:placeholder-shown) ~ label {
+      top: -10px;
+      font-size: 12px;
+      color: #3182ce;
+      font-weight: 600;
+    }
+
+    .login-btn {
       width: 100%;
       padding: 14px;
       background: #3182ce;
@@ -130,13 +191,27 @@
       font-weight: 600;
       letter-spacing: 0.3px;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: background 0.3s, transform 0.1s;
     }
-    .login-box button.login-btn:hover { background: #2b6cb0; }
-    .login-box button.login-btn:disabled { background: #94a3b8; cursor: not-allowed; }
-    #loginError { margin-top: 15px; font-size: 14px; font-weight: 500; min-height: 20px; }
+    .login-btn:hover { background: #2b6cb0; }
+    .login-btn:active { transform: scale(0.98); }
+    .login-btn:disabled { background: #94a3b8; cursor: not-allowed; transform: none; }
+    
+    #loginError { margin-top: 15px; font-size: 14px; font-weight: 500; min-height: 20px; text-align: center; }
     #loginError.error { color: #e53e3e; }
     #loginError.info { color: #004080; }
+
+    .security-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 30px;
+      color: #718096;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .security-badge svg { width: 14px; height: 14px; color: #38a169; }
 
     /* Dashboard */
     .dashboard-section { display: none; padding: 30px 20px; max-width: 1100px; margin: 0 auto; }
@@ -361,7 +436,7 @@
     .pdf-option:hover { border-color: #3182ce; color: #3182ce; background: #f7fbff; }
     .pdf-option:focus-visible { outline: 2px solid #3182ce; }
 
-    /* PDF page layout (fixed desktop-like width so the PDF looks the same on phone and laptop) */
+    /* PDF page layout */
     .pdf-root { width: 900px; padding: 8px 12px; background: #ffffff; color: #2d3748; }
     .pdf-root .pdf-head { margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #3182ce; }
     .pdf-root .pdf-company { font-size: 22px; font-weight: 700; color: #3182ce; }
@@ -377,7 +452,7 @@
     .pdf-root .about-card, .pdf-root .stat-card, .pdf-root .day-card { box-shadow: 0 0 0 1px #e2e8f0; }
     .pdf-root .progress-bar-fill { transition: none; }
 
-    /* Full-screen loading screen shown after login */
+    /* Loading screen */
     .loading-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -429,7 +504,12 @@
       .rainbow-ring { animation-duration: 3s; }
     }
 
-    /* Responsive */
+    /* Responsive Design Adjustments */
+    @media (max-width: 768px) {
+      .login-split-container { flex-direction: column; }
+      .login-brand-panel { padding: 40px 20px; text-align: center; }
+      .login-form-panel { padding: 40px 20px; }
+    }
     @media (max-width: 600px) {
       .session-timer { right: 8px; padding: 3px 8px; font-size: 12px; }
       .dashboard-header { flex-direction: column; align-items: flex-start; }
@@ -446,21 +526,47 @@
 
   <div class="navbar">Geekay Human Resources Pvt Ltd<span class="session-timer" id="sessionTimer" data-i18n-title="sessionLeft" style="display:none;">02:00</span></div>
 
-  <!-- Login -->
+  <!-- Login Section with Split-Screen Design -->
   <div class="login-section" id="loginSection">
-    <div class="login-box">
-      <div class="lang-switch login-lang" role="group" aria-label="Language">
-        <button type="button" class="lang-btn" data-lang="en" title="English" aria-label="English">E</button>
-        <button type="button" class="lang-btn" data-lang="ta" title="தமிழ்" aria-label="தமிழ்">த</button>
-        <button type="button" class="lang-btn" data-lang="hi" title="हिन्दी" aria-label="हिन्दी">हि</button>
+    <div class="login-split-container">
+      
+      <!-- Brand Panel (Left) -->
+      <div class="login-brand-panel">
+        <h1>Geekay Human Resources Pvt Ltd</h1>
+        <p data-i18n="brandSlogan">Empowering our workforce with seamless and secure HR solutions.</p>
       </div>
-      <h2 data-i18n="portalTitle">Employee Self-Service</h2>
-      <div class="login-accent"></div>
-      <p class="login-subtitle" data-i18n="portalSubtitle">Enter your Employee ID to view your attendance and staff details.</p>
-      <label class="field-label" for="empId" data-i18n="employeeId">Employee ID</label>
-      <input type="text" id="empId" autocomplete="off" spellcheck="false">
-      <button type="button" class="login-btn" id="loginBtn" onclick="login()" data-i18n="viewProfile">Continue</button>
-      <div id="loginError" class="info"></div>
+      
+      <!-- Form Panel (Right) -->
+      <div class="login-form-panel">
+        <div class="login-form-inner">
+          <div class="lang-switch login-lang" role="group" aria-label="Language">
+            <button type="button" class="lang-btn" data-lang="en" title="English" aria-label="English">E</button>
+            <button type="button" class="lang-btn" data-lang="ta" title="தமிழ்" aria-label="தமிழ்">த</button>
+            <button type="button" class="lang-btn" data-lang="hi" title="हिन्दी" aria-label="हिन्दी">हि</button>
+          </div>
+          
+          <h2 id="dynamicGreeting">Good Morning</h2>
+          <div class="login-accent"></div>
+          <p class="login-subtitle" data-i18n="portalSubtitle">Enter your Employee ID to view your attendance and staff details.</p>
+          
+          <div class="floating-input-group">
+            <input type="text" id="empId" autocomplete="off" spellcheck="false" placeholder=" ">
+            <label for="empId" data-i18n="employeeId">Employee ID</label>
+          </div>
+          
+          <button type="button" class="login-btn" id="loginBtn" onclick="login()" data-i18n="viewProfile">Continue</button>
+          <div id="loginError" class="info"></div>
+
+          <div class="security-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <span data-i18n="securityBadge">Secure HRMS Portal - 256-bit Encrypted</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -644,14 +750,16 @@
 
     // ------------------------------------------------------------
     // Translations
-    // To add another language later, copy the "en" block, rename it
-    // (for example "te"), translate the values, and add a button with
-    // data-lang="te" in the two language switches above.
     // ------------------------------------------------------------
     const I18N = {
       en: {
         locale: 'en-US',
         months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        brandSlogan: 'Empowering our workforce with seamless and secure HR solutions.',
+        securityBadge: 'Secure HRMS Portal - 256-bit Encrypted',
+        greetingMorning: 'Good Morning',
+        greetingAfternoon: 'Good Afternoon',
+        greetingEvening: 'Good Evening',
         portalTitle: 'Employee Self-Service',
         portalSubtitle: 'Enter your Employee ID to view your attendance and staff details.',
         idPlaceholder: 'Enter Employee ID',
@@ -675,7 +783,7 @@
         secBasic: '1. Basic Information',
         empName: 'Employee Name',
         status: 'Status',
-        dob: 'Date of Birth (DOB)',
+        dob: 'Date of Birth (DOJ)',
         esi: 'ESI Number',
         secContact: '2. Contact Information',
         mobile: 'Mobile Number',
@@ -719,6 +827,11 @@
       ta: {
         locale: 'ta-IN',
         months: ['ஜன', 'பிப்', 'மார்', 'ஏப்', 'மே', 'ஜூன்', 'ஜூலை', 'ஆக', 'செப்', 'அக்', 'நவ', 'டிச'],
+        brandSlogan: 'பாதுகாப்பான மற்றும் சிறப்பான மனிதவள சேவைகளுடன் நமது ஊழியர்களை மேம்படுத்துகிறோம்.',
+        securityBadge: 'பாதுகாப்பான HRMS போர்ட்டல் - 256-bit Encrypted',
+        greetingMorning: 'காலை வணக்கம்',
+        greetingAfternoon: 'மதிய வணக்கம்',
+        greetingEvening: 'மாலை வணக்கம்',
         portalTitle: 'ஊழியர் சுய சேவை',
         portalSubtitle: 'உங்கள் வருகைப் பதிவு மற்றும் ஊழியர் விவரங்களைப் பார்க்க, உங்கள் ஊழியர் ID-ஐ உள்ளிடவும்.',
         idPlaceholder: 'உங்கள் ஊழியர் ID-ஐ உள்ளிடவும்',
@@ -786,6 +899,11 @@
       hi: {
         locale: 'hi-IN',
         months: ['जन॰', 'फ़र॰', 'मार्च', 'अप्रैल', 'मई', 'जून', 'जुल॰', 'अग॰', 'सित॰', 'अक्टू॰', 'नव॰', 'दिस॰'],
+        brandSlogan: 'निर्बाध और सुरक्षित मानव संसाधन समाधानों के साथ हमारे कर्मचारियों को सशक्त बनाना।',
+        securityBadge: 'सुरक्षित HRMS पोर्टल - 256-bit Encrypted',
+        greetingMorning: 'सुप्रभात',
+        greetingAfternoon: 'शुभ दोपहर',
+        greetingEvening: 'शुभ संध्या',
         portalTitle: 'कर्मचारी स्व-सेवा',
         portalSubtitle: 'अपनी उपस्थिति और कर्मचारी विवरण देखने के लिए अपना कर्मचारी ID दर्ज करें।',
         idPlaceholder: 'अपना कर्मचारी ID दर्ज करें',
@@ -859,8 +977,7 @@
       return (key in pack) ? pack[key] : (I18N.en[key] || key);
     }
 
-    // Column name aliases. Names are compared after removing spaces,
-    // symbols and capital letters, so "User/Employee Id" = "useremployeeid".
+    // Column name aliases.
     const COLS = {
       id:      ['useremployeeid', 'employeeid', 'empid', 'userid', 'employeecode'],
       name:    ['displayname', 'employeename', 'name'],
@@ -878,7 +995,7 @@
       serial:  ['slno', 'sno', 'serialnumber', 'srno']
     };
 
-    // Attendance codes (all in capital letters)
+    // Attendance codes
     const CODE_PRESENT    = ['PP', 'P', 'PRESENT'];
     const CODE_ABSENT     = ['AA', 'A', 'ABSENT'];
     const CODE_HALF       = ['HD', 'HALFDAY', 'HALF DAY', 'PA', 'AP'];
@@ -887,8 +1004,8 @@
     const CODE_HOLIDAY    = ['H', 'HOL', 'HOLIDAY', 'PH', 'FH'];
     const CODE_OFF        = ['OFF'];
 
-    let currentData = null;          // { record, keyMap, master, empId }
-    let currentLoginMessage = null;  // { key, type }
+    let currentData = null;
+    let currentLoginMessage = null;
     let currentAccountFull = '';
     let currentAccountMasked = '';
     let accountVisible = false;
@@ -928,7 +1045,6 @@
     }
 
     function formatDate(d) {
-      // Small shift avoids Excel/SheetJS rounding showing the previous day
       const x = new Date(d.getTime() + 60000);
       const dd = String(x.getDate()).padStart(2, '0');
       return dd + '-' + t('months')[x.getMonth()] + '-' + x.getFullYear();
@@ -940,7 +1056,6 @@
       return String(v).trim();
     }
 
-    // Column headers that are Excel serial numbers (for example 45678) become dates
     function formatHeader(key) {
       const k = String(key).trim();
       if (/^\d{5}$/.test(k)) {
@@ -963,9 +1078,19 @@
     }
 
     // ------------------------------------------------------------
-    // Language
+    // Language & Dynamic Greetings
     // ------------------------------------------------------------
-    const _t = t;   // short alias; t('months') returns the month-name list
+    const _t = t;
+
+    function updateDynamicGreeting() {
+      const hour = new Date().getHours();
+      let greetKey = 'greetingEvening';
+      if (hour < 12) greetKey = 'greetingMorning';
+      else if (hour < 17) greetKey = 'greetingAfternoon';
+      
+      const el = document.getElementById('dynamicGreeting');
+      if(el) el.textContent = _t(greetKey);
+    }
 
     function applyStaticTranslations() {
       document.documentElement.lang = currentLang;
@@ -988,13 +1113,12 @@
       });
 
       setDate();
+      updateDynamicGreeting();
 
-      // Login message
       if (currentLoginMessage) {
         setLoginMessage(currentLoginMessage.key, currentLoginMessage.type);
       }
 
-      // Account button text
       const toggleBtn = document.getElementById('toggleAccBtn');
       if (toggleBtn) toggleBtn.textContent = accountVisible ? _t('hideAcc') : _t('showAcc');
     }
@@ -1002,14 +1126,14 @@
     function setLanguage(lang) {
       if (!I18N[lang]) lang = 'en';
       currentLang = lang;
-      try { localStorage.setItem(LANG_STORAGE_KEY, lang); } catch (e) { /* storage not available */ }
+      try { localStorage.setItem(LANG_STORAGE_KEY, lang); } catch (e) { }
       applyStaticTranslations();
-      if (currentData) renderDashboard();   // re-draw dynamic parts in the new language
+      if (currentData) renderDashboard();
     }
 
     function loadSavedLanguage() {
       let saved = 'en';
-      try { saved = localStorage.getItem(LANG_STORAGE_KEY) || 'en'; } catch (e) { /* ignore */ }
+      try { saved = localStorage.getItem(LANG_STORAGE_KEY) || 'en'; } catch (e) { }
       currentLang = I18N[saved] ? saved : 'en';
     }
 
@@ -1018,7 +1142,7 @@
         const lang = btn.getAttribute('data-lang');
         if (lang !== currentLang) setLanguage(lang);
       }
-      btn.addEventListener('click', choose);   // language changes only when the letter is clicked / tapped
+      btn.addEventListener('click', choose);
     });
 
     // ------------------------------------------------------------
@@ -1068,17 +1192,16 @@
     }
 
     // ------------------------------------------------------------
-    // Copy buttons (staff details pop-up)
+    // Copy buttons
     // ------------------------------------------------------------
     function getCopyText(btn) {
       const src = btn.getAttribute('data-copy');
-      if (src === 'account') return currentAccountFull;   // always the full number
+      if (src === 'account') return currentAccountFull;
       const el = document.getElementById(src);
       const txt = el ? el.textContent.trim() : '';
       return txt === '---' ? '' : txt;
     }
 
-    // Show a copy button only when its value exists
     function updateCopyButtons() {
       document.querySelectorAll('.copy-btn').forEach(function (btn) {
         btn.style.display = getCopyText(btn) ? 'inline-flex' : 'none';
@@ -1105,7 +1228,7 @@
           await navigator.clipboard.writeText(text);
           return true;
         }
-      } catch (e) { /* use fallback below */ }
+      } catch (e) { }
       return fallbackCopy(text);
     }
 
@@ -1127,7 +1250,7 @@
     });
 
     // ------------------------------------------------------------
-    // Loading screen (rainbow ring + welcome name), shown for at least 5 seconds
+    // Loading screen
     // ------------------------------------------------------------
     const LOADING_MIN_MS = 5000;
     let loginBusy = false;
@@ -1182,7 +1305,6 @@
       showLoadingOverlay();
 
       try {
-        // no-store + timestamp = always the latest Excel file
         const response = await fetch(EXCEL_FILE + '?v=' + Date.now(), { cache: 'no-store' });
         if (!response.ok) throw new Error('FILE_NOT_FOUND');
 
@@ -1191,7 +1313,6 @@
 
         if (!workbook.SheetNames.length) throw new Error('EMPTY_BOOK');
 
-        // Sheet 1 = attendance
         const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
         const data = XLSX.utils.sheet_to_json(firstSheet, { defval: '' });
 
@@ -1225,7 +1346,6 @@
           return;
         }
 
-        // Other sheets (for example "Master Data") = personal details
         const master = {};
         for (let s = 1; s < workbook.SheetNames.length; s++) {
           const rows = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[s]], { defval: '' });
@@ -1252,7 +1372,6 @@
         currentData = { record: record, keyMap: keyMap, master: master, empId: id };
         setLoginMessage(null, 'info');
 
-        // Show "Welcome + name" on the loading screen, keep it for at least 5 seconds in total
         showLoadingName(pick('name') || 'Employee');
         const waitMore = LOADING_MIN_MS - (Date.now() - startedAt);
         if (waitMore > 0) await sleep(waitMore);
@@ -1295,7 +1414,6 @@
       startSessionTimer();
     }
 
-    // Draws every changing part of the dashboard in the selected language
     function renderDashboard() {
       const d = currentData;
       if (!d) return;
@@ -1313,13 +1431,11 @@
       const ifsc    = pick('ifsc');
       const statusRaw = pick('status');
 
-      // Header
       document.getElementById('displayName').textContent = empName;
       document.getElementById('displayId').textContent = d.empId;
       document.getElementById('displayDoj').textContent = doj || '-';
       document.getElementById('displayLwd').textContent = lwd || '-';
 
-      // Staff details modal
       setText('modalName', empName);
       setText('modalId', d.empId);
       setText('modalLwd', lwd);
@@ -1330,7 +1446,6 @@
       setText('modalBankName', bank);
       setText('modalIfsc', ifsc);
 
-      // Status: use the Status column. If it is missing, an LWD means Inactive.
       let statusKey = null;
       let statusShown = statusRaw;
       const su = statusRaw.toUpperCase();
@@ -1347,12 +1462,10 @@
       badge.textContent = statusShown;
       badge.className = 'status-badge ' + (statusKey === 'active' ? 'status-active' : 'status-inactive');
 
-      // Same status also shown in the "About Employee" card
       const aboutBadge = document.getElementById('displayStatus');
       aboutBadge.textContent = statusShown;
       aboutBadge.className = badge.className;
 
-      // Bank account: masked by default
       currentAccountFull = account;
       currentAccountMasked = account.length > 4
         ? '*'.repeat(account.length - 4) + account.slice(-4)
@@ -1369,7 +1482,6 @@
 
       updateCopyButtons();
 
-      // Attendance cards
       const grid = document.getElementById('calendarGrid');
       grid.textContent = '';
 
@@ -1422,8 +1534,6 @@
         grid.appendChild(p);
       }
 
-      // Analytics: a half day counts as 0.5 present and 0.5 absent.
-      // Leave, weekly off and holidays are not counted as working days.
       const totalCount = cntPresent + cntAbsent + cntHalf;
       const presentCount = cntPresent + cntHalf * 0.5;
       const absentCount = cntAbsent + cntHalf * 0.5;
@@ -1437,24 +1547,16 @@
     }
 
     // ------------------------------------------------------------
-    // PDF (the person chooses: Attendance only / Staff details only / Overall)
+    // PDF
     // ------------------------------------------------------------
-    function openPdfChoice() {
-      document.getElementById('pdfModal').style.display = 'flex';
-    }
-    function closePdfChoice() {
-      document.getElementById('pdfModal').style.display = 'none';
-    }
-    function pdfOverlayClick(e) {
-      if (e.target.id === 'pdfModal') closePdfChoice();
-    }
+    function openPdfChoice() { document.getElementById('pdfModal').style.display = 'flex'; }
+    function closePdfChoice() { document.getElementById('pdfModal').style.display = 'none'; }
+    function pdfOverlayClick(e) { if (e.target.id === 'pdfModal') closePdfChoice(); }
 
-    // Builds the page that will become the PDF
     function buildPdfRoot(mode) {
       const root = document.createElement('div');
       root.className = 'pdf-root';
 
-      // Header: company name and date
       const head = document.createElement('div');
       head.className = 'pdf-head';
       const company = document.createElement('div');
@@ -1467,7 +1569,6 @@
       head.appendChild(generated);
       root.appendChild(head);
 
-      // Attendance part (same as the dashboard on screen, without the buttons)
       if (mode === 'attendance' || mode === 'all') {
         const att = document.getElementById('printArea').cloneNode(true);
         const btns = att.querySelector('#actionButtons');
@@ -1475,14 +1576,12 @@
         root.appendChild(att);
       }
 
-      // Page break between the two parts
       if (mode === 'all') {
         const br = document.createElement('div');
         br.className = 'html2pdf__page-break';
         root.appendChild(br);
       }
 
-      // Staff details part (same as the pop-up on screen, without the buttons)
       if (mode === 'staff' || mode === 'all') {
         const staff = document.createElement('div');
         const source = document.querySelector('#staffModal .modal-content');
@@ -1493,7 +1592,6 @@
         root.appendChild(staff);
       }
 
-      // Duplicate ids are not needed in the copy
       root.querySelectorAll('[id]').forEach(function (el) { el.removeAttribute('id'); });
       return root;
     }
@@ -1508,7 +1606,6 @@
 
       pdfBtn.disabled = true;
 
-      // The page is built outside the visible screen, then turned into a PDF
       const wrapper = document.createElement('div');
       wrapper.style.cssText = 'position:fixed;top:0;left:-10000px;width:900px;overflow:hidden;';
       const root = buildPdfRoot(mode);
@@ -1516,7 +1613,6 @@
       document.body.appendChild(wrapper);
 
       try {
-        // Wait until English / Tamil / Hindi fonts are loaded
         if (document.fonts && document.fonts.ready) await document.fonts.ready;
 
         const opt = {
@@ -1541,7 +1637,7 @@
     }
 
     // ------------------------------------------------------------
-    // Session timer: the dashboard stays open for 2 minutes only
+    // Session timer
     // ------------------------------------------------------------
     const SESSION_SECONDS = 120;
     let sessionTimerId = null;

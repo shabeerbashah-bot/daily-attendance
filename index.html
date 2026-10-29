@@ -377,6 +377,58 @@
     .pdf-root .about-card, .pdf-root .stat-card, .pdf-root .day-card { box-shadow: 0 0 0 1px #e2e8f0; }
     .pdf-root .progress-bar-fill { transition: none; }
 
+    /* Full-screen loading screen shown after login */
+    .loading-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 2000;
+      background: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+    .loading-overlay.show { opacity: 1; visibility: visible; }
+    .rainbow-ring {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: conic-gradient(#ff3b30, #ff9500, #ffcc00, #34c759, #00c7be, #007aff, #5856d6, #af52de, #ff2d55, #ff3b30);
+      -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 10px), #000 calc(100% - 9px));
+      mask: radial-gradient(farthest-side, transparent calc(100% - 10px), #000 calc(100% - 9px));
+      animation: ringSpin 1.1s linear infinite;
+    }
+    @keyframes ringSpin { to { transform: rotate(360deg); } }
+    .loading-welcome {
+      position: absolute;
+      top: calc(50% + 78px);
+      left: 0;
+      right: 0;
+      text-align: center;
+      padding: 0 20px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .loading-welcome.in { opacity: 1; transform: translateY(0); }
+    .lw-small { font-size: 15px; font-weight: 500; letter-spacing: 3px; color: #718096; margin-bottom: 6px; }
+    .lw-name {
+      font-size: clamp(24px, 6vw, 38px);
+      font-weight: 700;
+      line-height: 1.3;
+      background: linear-gradient(90deg, #3182ce, #805ad5, #d53f8c);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      overflow-wrap: anywhere;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .rainbow-ring { animation-duration: 3s; }
+    }
+
     /* Responsive */
     @media (max-width: 600px) {
       .session-timer { right: 8px; padding: 3px 8px; font-size: 12px; }
@@ -563,6 +615,15 @@
     </div>
   </div>
 
+  <!-- Loading screen (shown after login) -->
+  <div class="loading-overlay" id="loadingOverlay" role="status" aria-live="polite">
+    <div class="rainbow-ring"></div>
+    <div class="loading-welcome" id="loadingWelcome">
+      <div class="lw-small" data-i18n="welcomeLoading">Welcome</div>
+      <div class="lw-name" id="loadingName"></div>
+    </div>
+  </div>
+
   <!-- PDF choice pop-up -->
   <div class="modal-overlay" id="pdfModal" onclick="pdfOverlayClick(event)">
     <div class="modal-content pdf-choice">
@@ -632,6 +693,7 @@
         pdfStaff: 'Staff details only',
         pdfAll: 'Overall details (Attendance + Staff details)',
         generatedOn: 'Generated on',
+        welcomeLoading: 'Welcome',
         sessionLeft: 'Session time left',
         msgSessionEnded: 'Your session has ended. Please log in again.',
         active: 'Active',
@@ -698,6 +760,7 @@
         pdfStaff: 'ஊழியர் விவரங்கள் மட்டும்',
         pdfAll: 'முழு விவரங்கள் (வருகை + ஊழியர் விவரங்கள்)',
         generatedOn: 'உருவாக்கிய தேதி',
+        welcomeLoading: 'வரவேற்கிறோம்',
         sessionLeft: 'மீதமுள்ள நேரம்',
         msgSessionEnded: 'உங்கள் அமர்வு நேரம் முடிந்தது. மீண்டும் உள்நுழையவும்.',
         active: 'பணியில் உள்ளார்',
@@ -764,6 +827,7 @@
         pdfStaff: 'केवल कर्मचारी विवरण',
         pdfAll: 'पूरा विवरण (उपस्थिति + कर्मचारी विवरण)',
         generatedOn: 'बनाने की तारीख',
+        welcomeLoading: 'स्वागत है',
         sessionLeft: 'शेष समय',
         msgSessionEnded: 'आपका समय समाप्त हो गया। कृपया फिर से लॉगिन करें।',
         active: 'कार्यरत',
@@ -1063,6 +1127,31 @@
     });
 
     // ------------------------------------------------------------
+    // Loading screen (rainbow ring + welcome name), shown for at least 5 seconds
+    // ------------------------------------------------------------
+    const LOADING_MIN_MS = 5000;
+    let loginBusy = false;
+
+    function sleep(ms) {
+      return new Promise(function (resolve) { setTimeout(resolve, ms); });
+    }
+
+    function showLoadingOverlay() {
+      document.getElementById('loadingWelcome').classList.remove('in');
+      document.getElementById('loadingName').textContent = '';
+      document.getElementById('loadingOverlay').classList.add('show');
+    }
+
+    function showLoadingName(name) {
+      document.getElementById('loadingName').textContent = name;
+      document.getElementById('loadingWelcome').classList.add('in');
+    }
+
+    function hideLoadingOverlay() {
+      document.getElementById('loadingOverlay').classList.remove('show');
+    }
+
+    // ------------------------------------------------------------
     // Login
     // ------------------------------------------------------------
     document.getElementById('empId').addEventListener('keydown', function (e) {
@@ -1070,6 +1159,7 @@
     });
 
     async function login() {
+      if (loginBusy) return;
       const input = document.getElementById('empId');
       const btn = document.getElementById('loginBtn');
       const id = input.value.trim().toUpperCase();
@@ -1084,8 +1174,12 @@
         return;
       }
 
+      loginBusy = true;
       btn.disabled = true;
-      setLoginMessage('msgAuth', 'info');
+      setLoginMessage(null, 'info');
+      const startedAt = Date.now();
+      let success = false;
+      showLoadingOverlay();
 
       try {
         // no-store + timestamp = always the latest Excel file
@@ -1157,7 +1251,15 @@
 
         currentData = { record: record, keyMap: keyMap, master: master, empId: id };
         setLoginMessage(null, 'info');
+
+        // Show "Welcome + name" on the loading screen, keep it for at least 5 seconds in total
+        showLoadingName(pick('name') || 'Employee');
+        const waitMore = LOADING_MIN_MS - (Date.now() - startedAt);
+        if (waitMore > 0) await sleep(waitMore);
+
         showDashboard();
+        hideLoadingOverlay();
+        success = true;
 
       } catch (error) {
         console.error(error);
@@ -1169,6 +1271,8 @@
           setLoginMessage('msgSystem', 'error');
         }
       } finally {
+        if (!success) hideLoadingOverlay();
+        loginBusy = false;
         btn.disabled = false;
       }
     }

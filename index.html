@@ -28,7 +28,7 @@
     /* Navbar */
     .navbar {
       background: #ffffff;
-      color: #004080;
+      color: #3182ce;
       padding: 20px;
       text-align: center;
       font-size: 22px;
@@ -279,6 +279,19 @@
     .status-badge { padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 600; display: inline-block; }
     .status-active { background: #c6f6d5; color: #22543d; }
     .status-inactive { background: #fed7d7; color: #822727; }
+    .value-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .copy-btn {
+      background: #edf2f7;
+      color: #3182ce;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 3px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .copy-btn:hover { background: #e2e8f0; }
+    .copy-btn.copied { background: #c6f6d5; color: #22543d; border-color: #9ae6b4; }
     .link-btn {
       background: none;
       border: none;
@@ -337,7 +350,7 @@
 
       <div class="dashboard-header">
         <div>
-          <h2 class="welcome-text"><span data-i18n="welcome">Welcome back,</span> <span class="name" id="displayName">Employee</span>!</h2>
+          <h2 class="welcome-text"><span data-i18n="welcome">Welcome,</span> <span class="name" id="displayName">Employee</span></h2>
           <p class="current-date" id="currentDate">...</p>
         </div>
         <div class="action-buttons" id="actionButtons">
@@ -412,7 +425,7 @@
           </div>
           <div class="detail-item">
             <span class="detail-label" data-i18n="employeeId">Employee ID</span>
-            <span class="detail-value" id="modalId">---</span>
+            <div class="value-row"><span class="detail-value" id="modalId">---</span><button type="button" class="copy-btn" data-copy="modalId" data-i18n="copy" style="display:none;">Copy</button></div>
           </div>
           <div class="detail-item">
             <span class="detail-label" data-i18n="status">Status</span>
@@ -428,7 +441,7 @@
           </div>
           <div class="detail-item">
             <span class="detail-label" data-i18n="esi">ESI Number</span>
-            <span class="detail-value" id="modalEsi">---</span>
+            <div class="value-row"><span class="detail-value" id="modalEsi">---</span><button type="button" class="copy-btn" data-copy="modalEsi" data-i18n="copy" style="display:none;">Copy</button></div>
           </div>
         </div>
       </div>
@@ -438,11 +451,11 @@
         <div class="modal-grid">
           <div class="detail-item">
             <span class="detail-label" data-i18n="mobile">Mobile Number</span>
-            <span class="detail-value" id="modalMobile">---</span>
+            <div class="value-row"><span class="detail-value" id="modalMobile">---</span><button type="button" class="copy-btn" data-copy="modalMobile" data-i18n="copy" style="display:none;">Copy</button></div>
           </div>
           <div class="detail-item">
             <span class="detail-label" data-i18n="email">Email ID</span>
-            <span class="detail-value" id="modalEmail">---</span>
+            <div class="value-row"><span class="detail-value" id="modalEmail">---</span><button type="button" class="copy-btn" data-copy="modalEmail" data-i18n="copy" style="display:none;">Copy</button></div>
           </div>
         </div>
       </div>
@@ -456,12 +469,12 @@
           </div>
           <div class="detail-item">
             <span class="detail-label" data-i18n="accNo">Account Number</span>
-            <span class="detail-value" id="modalAccNo">---</span>
+            <div class="value-row"><span class="detail-value" id="modalAccNo">---</span><button type="button" class="copy-btn" data-copy="account" data-i18n="copy" style="display:none;">Copy</button></div>
             <button type="button" class="link-btn" id="toggleAccBtn" onclick="toggleAccount()" style="display:none;">Show full number</button>
           </div>
           <div class="detail-item">
             <span class="detail-label" data-i18n="ifsc">IFSC Code</span>
-            <span class="detail-value" id="modalIfsc">---</span>
+            <div class="value-row"><span class="detail-value" id="modalIfsc">---</span><button type="button" class="copy-btn" data-copy="modalIfsc" data-i18n="copy" style="display:none;">Copy</button></div>
           </div>
         </div>
       </div>
@@ -489,7 +502,7 @@
         portalTitle: 'Employee Portal',
         idPlaceholder: 'Enter Employee ID',
         viewProfile: 'View Profile',
-        welcome: 'Welcome back,',
+        welcome: 'Welcome,',
         viewStaff: 'View Staff Details',
         downloadPdf: 'Download PDF',
         logout: 'Logout',
@@ -519,6 +532,8 @@
         ifsc: 'IFSC Code',
         showAcc: 'Show full number',
         hideAcc: 'Hide number',
+        copy: 'Copy',
+        copied: 'Copied',
         active: 'Active',
         inactive: 'Inactive',
         lblPresent: 'Present',
@@ -545,7 +560,7 @@
         portalTitle: 'ஊழியர் இணையதளம்',
         idPlaceholder: 'உங்கள் ஊழியர் ID-ஐ உள்ளிடவும்',
         viewProfile: 'விவரங்களைப் பார்க்க',
-        welcome: 'மீண்டும் வரவேற்கிறோம்,',
+        welcome: 'வரவேற்கிறோம்,',
         viewStaff: 'ஊழியர் விவரங்கள்',
         downloadPdf: 'PDF பதிவிறக்கம்',
         logout: 'வெளியேறு',
@@ -575,6 +590,8 @@
         ifsc: 'IFSC குறியீடு',
         showAcc: 'முழு எண்ணைக் காட்டு',
         hideAcc: 'எண்ணை மறை',
+        copy: 'நகலெடு',
+        copied: 'நகலெடுக்கப்பட்டது',
         active: 'பணியில் உள்ளார்',
         inactive: 'பணியில் இல்லை',
         lblPresent: 'வருகை',
@@ -601,7 +618,7 @@
         portalTitle: 'कर्मचारी पोर्टल',
         idPlaceholder: 'अपना कर्मचारी ID दर्ज करें',
         viewProfile: 'विवरण देखें',
-        welcome: 'फिर से स्वागत है,',
+        welcome: 'स्वागत है,',
         viewStaff: 'कर्मचारी विवरण',
         downloadPdf: 'PDF डाउनलोड करें',
         logout: 'लॉगआउट',
@@ -631,6 +648,8 @@
         ifsc: 'IFSC कोड',
         showAcc: 'पूरा नंबर दिखाएँ',
         hideAcc: 'नंबर छिपाएँ',
+        copy: 'कॉपी करें',
+        copied: 'कॉपी हो गया',
         active: 'कार्यरत',
         inactive: 'कार्यरत नहीं',
         lblPresent: 'उपस्थित',
@@ -862,6 +881,63 @@
     }
 
     // ------------------------------------------------------------
+    // Copy buttons (staff details pop-up)
+    // ------------------------------------------------------------
+    function getCopyText(btn) {
+      const src = btn.getAttribute('data-copy');
+      if (src === 'account') return currentAccountFull;   // always the full number
+      const el = document.getElementById(src);
+      const txt = el ? el.textContent.trim() : '';
+      return txt === '---' ? '' : txt;
+    }
+
+    // Show a copy button only when its value exists
+    function updateCopyButtons() {
+      document.querySelectorAll('.copy-btn').forEach(function (btn) {
+        btn.style.display = getCopyText(btn) ? 'inline-block' : 'none';
+      });
+    }
+
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      let ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+      document.body.removeChild(ta);
+      return ok;
+    }
+
+    async function copyText(text) {
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          return true;
+        }
+      } catch (e) { /* use fallback below */ }
+      return fallbackCopy(text);
+    }
+
+    document.querySelectorAll('.copy-btn').forEach(function (btn) {
+      btn.addEventListener('click', async function () {
+        const text = getCopyText(btn);
+        if (!text) return;
+        const ok = await copyText(text);
+        if (!ok) return;
+        btn.textContent = _t('copied');
+        btn.classList.add('copied');
+        setTimeout(function () {
+          btn.textContent = _t('copy');
+          btn.classList.remove('copied');
+        }, 1500);
+      });
+    });
+
+    // ------------------------------------------------------------
     // Login
     // ------------------------------------------------------------
     document.getElementById('empId').addEventListener('keydown', function (e) {
@@ -1055,6 +1131,8 @@
         document.getElementById('modalAccNo').textContent = '---';
         toggleBtn.style.display = 'none';
       }
+
+      updateCopyButtons();
 
       // Attendance cards
       const grid = document.getElementById('calendarGrid');

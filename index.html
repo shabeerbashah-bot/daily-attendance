@@ -210,14 +210,14 @@
     .login-accent { width: 44px; height: 4px; background: #3182ce; border-radius: 2px; margin-bottom: 14px; }
     .login-subtitle { margin: 0 0 35px 0; font-size: 14px; color: #718096; line-height: 1.6; }
     
-    /* Floating Input Animation */
+    /* Floating Input Animation with Inline Validation */
     .floating-input-group {
       position: relative;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
     }
     .floating-input-group input {
       width: 100%;
-      padding: 15px 10px 10px 5px;
+      padding: 15px 80px 10px 5px; /* Added right padding for validation text */
       font-size: 18px;
       font-weight: 500;
       color: #1a202c;
@@ -248,20 +248,41 @@
       font-weight: 600;
     }
 
-    /* Live Validation Feedback */
-    .live-val {
+    /* Inline Validation Status (Right aligned on underline) */
+    .input-status {
+      position: absolute;
+      right: 0;
+      bottom: 10px;
       font-size: 13.5px;
       font-weight: 600;
-      margin-top: -20px;
-      margin-bottom: 25px;
-      min-height: 20px;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
+      opacity: 0;
     }
-    .live-val.valid { color: #38a169; }
-    .live-val.invalid { color: #e53e3e; }
-    .live-val.checking { color: #3182ce; }
+    .input-status.show { opacity: 1; }
+    .input-status.valid { color: #38a169; }
+    .input-status.invalid { color: #e53e3e; }
+    .input-status.checking { color: #3182ce; }
+
+    /* Password Group */
+    #pwdGroup {
+      display: none;
+      animation: fadeInDown 0.4s ease forwards;
+    }
+    @keyframes fadeInDown {
+      0% { opacity: 0; transform: translateY(-10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .password-hint {
+      font-size: 11.5px;
+      color: #a0aec0;
+      margin-top: -15px;
+      margin-bottom: 25px;
+      line-height: 1.4;
+    }
 
     /* Animated Hidden Login Button */
     .login-btn {
@@ -685,15 +706,24 @@
           <div class="login-accent"></div>
           <p class="login-subtitle" data-i18n="portalSubtitle">Enter your Employee ID to view your attendance and details.</p>
           
+          <!-- Employee ID Field -->
           <div class="floating-input-group">
             <input type="text" id="empId" autocomplete="off" spellcheck="false" placeholder=" ">
             <label for="empId" data-i18n="employeeId">Employee ID</label>
+            <div id="idStatus" class="input-status"></div>
           </div>
 
-          <!-- Live Validation Feedback Area -->
-          <div id="liveValidation" class="live-val"></div>
+          <!-- Password Field (Hidden initially) -->
+          <div id="pwdGroup">
+            <div class="floating-input-group">
+              <input type="password" id="empPwd" autocomplete="off" spellcheck="false" placeholder=" ">
+              <label for="empPwd" data-i18n="password">Password</label>
+              <div id="pwdStatus" class="input-status"></div>
+            </div>
+            <div class="password-hint" data-i18n="passwordHint">Hint: First 4 letters of your name + Birth Year (e.g., THIL1997, RAM1995)</div>
+          </div>
           
-          <!-- Hidden Button (Shows only if Valid) -->
+          <!-- Hidden Button (Shows only if ID and Password are Valid) -->
           <button type="button" class="login-btn" id="loginBtn" onclick="login()" data-i18n="viewProfile">Continue</button>
           <div id="loginError" class="info"></div>
         </div>
@@ -920,8 +950,11 @@
         portalTitle: 'Employee Self-Service',
         portalSubtitle: 'Enter your Employee ID to view your attendance and details.',
         idPlaceholder: 'Enter Employee ID',
+        employeeId: 'Employee ID',
+        password: 'Password',
+        passwordHint: 'Hint: First 4 letters of your name + Birth Year (e.g., THIL1997, RAM1995)',
         viewProfile: 'Continue',
-        validId: 'Valid',
+        validId: 'Verified',
         invalidId: 'Invalid',
         checking: 'Checking...',
         welcome: 'Welcome,',
@@ -929,7 +962,6 @@
         downloadPdf: 'Download PDF',
         logout: 'Logout',
         aboutEmployee: 'About Employee',
-        employeeId: 'Employee ID',
         doj: 'Date of Joining (DOJ)',
         lwd: 'Last Working Day (LWD)',
         bloodGroup: 'Blood Group',
@@ -999,6 +1031,9 @@
         portalTitle: 'ஊழியர் சுய சேவை',
         portalSubtitle: 'உங்கள் வருகைப் பதிவு மற்றும் விவரங்களைப் பார்க்க, உங்கள் ஊழியர் ID-ஐ உள்ளிடவும்.',
         idPlaceholder: 'உங்கள் ஊழியர் ID-ஐ உள்ளிடவும்',
+        employeeId: 'ஊழியர் ID',
+        password: 'பாஸ்வேர்ட்',
+        passwordHint: 'குறிப்பு: உங்கள் பெயரின் முதல் 4 எழுத்துக்கள் + பிறந்த வருடம் (உ-ம்: THIL1997, RAM1995)',
         viewProfile: 'தொடரவும்',
         validId: 'சரியானது',
         invalidId: 'தவறானது',
@@ -1008,7 +1043,6 @@
         downloadPdf: 'PDF பதிவிறக்கம்',
         logout: 'வெளியேறு',
         aboutEmployee: 'ஊழியர் பற்றிய தகவல்',
-        employeeId: 'ஊழியர் ID',
         doj: 'பணியில் சேர்ந்த தேதி (DOJ)',
         lwd: 'கடைசி பணி நாள் (LWD)',
         bloodGroup: 'இரத்த வகை (Blood Group)',
@@ -1078,8 +1112,11 @@
         portalTitle: 'कर्मचारी स्व-सेवा',
         portalSubtitle: 'अपनी उपस्थिति और विवरण देखने के लिए अपना कर्मचारी ID दर्ज करें।',
         idPlaceholder: 'अपना कर्मचारी ID दर्ज करें',
+        employeeId: 'कर्मचारी ID',
+        password: 'पासवर्ड',
+        passwordHint: 'संकेत: आपके नाम के पहले 4 अक्षर + जन्म वर्ष (उदा: THIL1997, RAM1995)',
         viewProfile: 'जारी रखें',
-        validId: 'मान्य',
+        validId: 'सत्यापित',
         invalidId: 'अमान्य',
         checking: 'जाँच हो रही है...',
         welcome: 'स्वागत है,',
@@ -1087,7 +1124,6 @@
         downloadPdf: 'PDF डाउनलोड करें',
         logout: 'लॉगआउट',
         aboutEmployee: 'कर्मचारी के बारे में जानकारी',
-        employeeId: 'कर्मचारी ID',
         doj: 'कार्यग्रहण की तारीख (DOJ)',
         lwd: 'अंतिम कार्य दिवस (LWD)',
         bloodGroup: 'रक्त समूह (Blood Group)',
@@ -1186,6 +1222,7 @@
     const CODE_OFF        = ['OFF'];
 
     let currentData = null;
+    let expectedPassword = ''; // Stores dynamically generated password
     let currentLoginMessage = null;
     let currentAccountFull = '';
     let currentAccountMasked = '';
@@ -1200,7 +1237,7 @@
       if (isPreloading) return;
       isPreloading = true;
       
-      // 1. Fetch Master Data (for fast validation)
+      // 1. Fetch Master Data
       try {
         const response = await fetch(MASTER_FILE + '?v=' + Date.now(), { cache: 'no-store' });
         if (response.ok) {
@@ -1215,7 +1252,7 @@
         console.error("Master data load failed", e);
       }
 
-      // 2. Probe Attendance Folders for available months
+      // 2. Probe Attendance Folders
       try {
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         let probes = [];
@@ -1316,6 +1353,40 @@
       document.getElementById(id).textContent = v;
     }
 
+    // Auto-Generate Password from Master Data (First 4 letters of name + 4 digit birth year)
+    function calculatePassword(nameRaw, dobRaw) {
+      let n = String(nameRaw).replace(/\s+/g, '').toUpperCase();
+      let namePart = n.substring(0, 4);
+      let yearPart = "";
+
+      if (dobRaw instanceof Date) {
+        yearPart = dobRaw.getFullYear();
+      } else if (!isNaN(dobRaw) && typeof dobRaw === 'number') {
+        let d = new Date(Math.round((dobRaw - 25569) * 86400 * 1000));
+        yearPart = d.getFullYear();
+      } else {
+        let str = String(dobRaw).trim();
+        let y4 = str.match(/\b(19|20)\d{2}\b/);
+        if (y4) {
+          yearPart = y4[0];
+        } else {
+          let d = new Date(str);
+          if (!isNaN(d.getTime())) yearPart = d.getFullYear();
+          else {
+            let parts = str.split(/[-/]/);
+            let lastPart = parts[parts.length-1];
+            if(lastPart && lastPart.length === 2) {
+               let y = parseInt(lastPart);
+               yearPart = y > 50 ? "19"+lastPart : "20"+lastPart;
+            } else if(lastPart && lastPart.length === 4) {
+               yearPart = lastPart;
+            }
+          }
+        }
+      }
+      return namePart + yearPart;
+    }
+
     // ------------------------------------------------------------
     // Language & Dynamic Greetings with Full Screen Celestial Animation
     // ------------------------------------------------------------
@@ -1342,7 +1413,6 @@
       const el = document.getElementById('dynamicGreeting');
       if(el) el.textContent = _t(greetKey);
 
-      // Celestial Animation Injection for Full Screen Background
       const container = document.getElementById('celestialContainer');
       if (container) {
         container.innerHTML = ''; 
@@ -1397,7 +1467,7 @@
       
       if(currentData) {
         renderMonthTabs();
-        renderDashboard(); // Re-render logic to apply language strings to status badges
+        renderDashboard(); 
       }
     }
 
@@ -1433,150 +1503,40 @@
     }
 
     // ------------------------------------------------------------
-    // Date shown on dashboard
-    // ------------------------------------------------------------
-    function setDate() {
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      let text;
-      try {
-        text = new Date().toLocaleDateString(_t('locale'), options);
-      } catch (e) {
-        text = new Date().toLocaleDateString('en-US', options);
-      }
-      document.getElementById('currentDate').textContent = text;
-    }
-
-    // ------------------------------------------------------------
-    // Modal
-    // ------------------------------------------------------------
-    function openStaffModal() {
-      document.getElementById('staffModal').style.display = 'flex';
-    }
-    function closeStaffModal() {
-      document.getElementById('staffModal').style.display = 'none';
-    }
-    function overlayClick(e) {
-      if (e.target.id === 'staffModal') closeStaffModal();
-    }
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') { closeStaffModal(); closePdfChoice(); }
-    });
-
-    function toggleAccount() {
-      accountVisible = !accountVisible;
-      document.getElementById('modalAccNo').textContent = accountVisible ? currentAccountFull : currentAccountMasked;
-      document.getElementById('toggleAccBtn').textContent = accountVisible ? _t('hideAcc') : _t('showAcc');
-    }
-
-    // ------------------------------------------------------------
-    // Copy buttons
-    // ------------------------------------------------------------
-    function getCopyText(btn) {
-      const src = btn.getAttribute('data-copy');
-      if (src === 'account') return currentAccountFull;
-      const el = document.getElementById(src);
-      const txt = el ? el.textContent.trim() : '';
-      return txt === '---' ? '' : txt;
-    }
-
-    function updateCopyButtons() {
-      document.querySelectorAll('.copy-btn').forEach(function (btn) {
-        btn.style.display = getCopyText(btn) ? 'inline-flex' : 'none';
-      });
-    }
-
-    function fallbackCopy(text) {
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      ta.setAttribute('readonly', '');
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
-      let ok = false;
-      try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
-      document.body.removeChild(ta);
-      return ok;
-    }
-
-    async function copyText(text) {
-      try {
-        if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(text);
-          return true;
-        }
-      } catch (e) { }
-      return fallbackCopy(text);
-    }
-
-    document.querySelectorAll('.copy-btn').forEach(function (btn) {
-      btn.addEventListener('click', async function () {
-        const text = getCopyText(btn);
-        if (!text) return;
-        const ok = await copyText(text);
-        if (!ok) return;
-        btn.classList.add('copied');
-        btn.setAttribute('title', _t('copied'));
-        btn.setAttribute('aria-label', _t('copied'));
-        setTimeout(function () {
-          btn.classList.remove('copied');
-          btn.setAttribute('title', _t('copy'));
-          btn.setAttribute('aria-label', _t('copy'));
-        }, 1500);
-      });
-    });
-
-    // ------------------------------------------------------------
-    // Loading screen
-    // ------------------------------------------------------------
-    const LOADING_MIN_MS = 5000;
-    let loginBusy = false;
-
-    function sleep(ms) {
-      return new Promise(function (resolve) { setTimeout(resolve, ms); });
-    }
-
-    function showLoadingOverlay() {
-      document.getElementById('loadingWelcome').classList.remove('in');
-      document.getElementById('loadingName').textContent = '';
-      document.getElementById('loadingOverlay').classList.add('show');
-    }
-
-    function showLoadingName(name) {
-      document.getElementById('loadingName').textContent = name;
-      document.getElementById('loadingWelcome').classList.add('in');
-    }
-
-    function hideLoadingOverlay() {
-      document.getElementById('loadingOverlay').classList.remove('show');
-    }
-
-    // ------------------------------------------------------------
-    // Live ID Validation against MASTER DATA
+    // Live Inline ID & Password Validation
     // ------------------------------------------------------------
     const empIdInput = document.getElementById('empId');
+    const idStatus = document.getElementById('idStatus');
+    const pwdGroup = document.getElementById('pwdGroup');
+    const empPwdInput = document.getElementById('empPwd');
+    const pwdStatus = document.getElementById('pwdStatus');
     const loginBtn = document.getElementById('loginBtn');
-    const liveVal = document.getElementById('liveValidation');
     
     let typingTimer;
-    const doneTypingInterval = 3000; 
+    const doneTypingInterval = 2500; 
 
     async function validateId() {
       const id = empIdInput.value.trim().toUpperCase();
       if(!id) return;
 
-      liveVal.className = 'live-val checking';
-      liveVal.innerHTML = `<span style="font-size:16px">⏳</span> ${_t('checking')}`;
+      idStatus.className = 'input-status checking show';
+      idStatus.innerHTML = `⏳ ${_t('checking')}`;
+      pwdGroup.style.display = 'none';
+      empPwdInput.value = '';
+      pwdStatus.className = 'input-status';
+      loginBtn.classList.remove('show-btn');
       
       while(isPreloading) { await sleep(100); }
       if (!cachedMasterData) await preloadSystemData(); 
 
       if (!cachedMasterData) {
-        liveVal.textContent = ''; 
+        idStatus.className = 'input-status';
         return;
       }
 
-      let found = false;
+      let masterRecord = null;
+      let masterKm = null;
+      
       for (let i = 0; i < cachedMasterData.length; i++) {
         const km = buildKeyMap(cachedMasterData[i]);
         let idKey = null;
@@ -1586,27 +1546,48 @@
         if (idKey === null) continue;
         const rowId = cachedMasterData[i][idKey];
         if (rowId !== null && rowId !== undefined && String(rowId).trim().toUpperCase() === id) {
-          found = true; break;
+          masterRecord = cachedMasterData[i];
+          masterKm = km;
+          break;
         }
       }
 
       if (empIdInput.value.trim().toUpperCase() !== id) return;
 
-      if (found) {
-        liveVal.className = 'live-val valid';
-        liveVal.innerHTML = `<span style="font-size:16px">✔</span> ${_t('validId')}`;
-        loginBtn.classList.add('show-btn'); 
+      if (masterRecord) {
+        idStatus.className = 'input-status valid show';
+        idStatus.innerHTML = `✔ ${_t('validId')}`;
+        
+        // Calculate Expected Password
+        const nameRaw = getField(masterRecord, masterKm, COLS.name);
+        const dobRaw = getField(masterRecord, masterKm, COLS.dob);
+        expectedPassword = calculatePassword(nameRaw, dobRaw);
+        
+        // Store Data temporarily for Login Step
+        currentData = { 
+          masterRow: masterRecord, 
+          masterKeyMap: masterKm, 
+          empId: id, 
+          attRow: null, 
+          attKeyMap: null, 
+          currentMonth: null 
+        };
+
+        // Reveal Password Field
+        pwdGroup.style.display = 'block';
+        
       } else {
-        liveVal.className = 'live-val invalid';
-        liveVal.innerHTML = `<span style="font-size:16px">✖</span> ${_t('invalidId')}`;
-        loginBtn.classList.remove('show-btn');
+        idStatus.className = 'input-status invalid show';
+        idStatus.innerHTML = `✖ ${_t('invalidId')}`;
       }
     }
 
     empIdInput.addEventListener('input', function() {
+      idStatus.className = 'input-status';
+      pwdGroup.style.display = 'none';
+      empPwdInput.value = '';
+      pwdStatus.className = 'input-status';
       loginBtn.classList.remove('show-btn');
-      liveVal.textContent = '';
-      liveVal.className = 'live-val';
       setLoginMessage(null, 'info');
 
       clearTimeout(typingTimer);
@@ -1617,10 +1598,38 @@
 
     empIdInput.addEventListener('blur', function() {
       clearTimeout(typingTimer);
-      if (this.value.trim()) validateId();
+      if (this.value.trim() && pwdGroup.style.display === 'none') validateId();
     });
 
-    empIdInput.addEventListener('keydown', function (e) {
+    // Password Validation (Instant)
+    empPwdInput.addEventListener('input', function() {
+      // Hide ID Verified status organically when user starts typing password
+      idStatus.style.opacity = '0';
+      
+      const pwd = this.value.trim().toUpperCase();
+      loginBtn.classList.remove('show-btn');
+      
+      if(pwd.length === 0) {
+        pwdStatus.className = 'input-status';
+        return;
+      }
+
+      if (pwd === expectedPassword) {
+        pwdStatus.className = 'input-status valid show';
+        pwdStatus.innerHTML = `✔ ${_t('validId')}`;
+        loginBtn.classList.add('show-btn');
+      } else {
+        // Only show invalid cross if they've typed at least 5 chars (to prevent immediate red cross)
+        if(pwd.length >= 5) {
+          pwdStatus.className = 'input-status invalid show';
+          pwdStatus.innerHTML = `✖ ${_t('invalidId')}`;
+        } else {
+          pwdStatus.className = 'input-status';
+        }
+      }
+    });
+
+    empPwdInput.addEventListener('keydown', function (e) {
       if (e.key === 'Enter') {
         e.preventDefault();
         if(loginBtn.classList.contains('show-btn')) login();
@@ -1629,75 +1638,22 @@
     });
 
     // ------------------------------------------------------------
-    // Login & Architecture Update (Master + Attendance)
+    // Final Login (Fetch Attendance & Show Dashboard)
     // ------------------------------------------------------------
     async function login() {
-      if (loginBusy) return;
-      const input = document.getElementById('empId');
-      const btn = document.getElementById('loginBtn');
-      const id = input.value.trim().toUpperCase();
-
-      if (id === '') {
-        setLoginMessage('msgEnterId', 'error');
-        return;
-      }
-      if (location.protocol === 'file:') {
-        setLoginMessage('msgFileProtocol', 'error');
-        return;
-      }
-
+      if (loginBusy || !currentData || !currentData.masterRow) return;
+      
       loginBusy = true;
-      btn.disabled = true;
+      loginBtn.disabled = true;
       setLoginMessage(null, 'info');
       const startedAt = Date.now();
       let success = false;
       showLoadingOverlay();
 
       try {
-        if(!cachedMasterData) await preloadSystemData();
-        if(!cachedMasterData) throw new Error('MASTER_NOT_FOUND');
-
-        // 1. Fetch Employee from Master Data
-        let masterRecord = null;
-        let masterKm = null;
-        let idColumnFound = false;
-
-        for (let i = 0; i < cachedMasterData.length; i++) {
-          const km = buildKeyMap(cachedMasterData[i]);
-          let idKey = null;
-          for (const alias of COLS.id) {
-            if (alias in km) { idKey = km[alias]; break; }
-          }
-          if (idKey === null) continue;
-          idColumnFound = true;
-          
-          const rowId = cachedMasterData[i][idKey];
-          if (rowId !== null && rowId !== undefined && String(rowId).trim().toUpperCase() === id) {
-            masterRecord = cachedMasterData[i];
-            masterKm = km;
-            break;
-          }
-        }
-
-        if (!idColumnFound && cachedMasterData.length > 0) {
-          setLoginMessage('msgIdColumn', 'error');
-          return;
-        }
-        if (!masterRecord) {
-          setLoginMessage('msgInvalid', 'error');
-          return;
-        }
-
-        currentData = { 
-          masterRow: masterRecord, 
-          masterKeyMap: masterKm, 
-          empId: id, 
-          attRow: null, 
-          attKeyMap: null, 
-          currentMonth: null 
-        };
-
-        // 2. Fetch Attendance for the latest available month (if any)
+        if(availableMonths.length === 0) await preloadSystemData();
+        
+        // Fetch Attendance for the latest available month
         if (availableMonths.length > 0) {
           const latestMonth = availableMonths[0];
           currentData.currentMonth = latestMonth;
@@ -1712,7 +1668,7 @@
                   const km = buildKeyMap(attData[i]);
                   let idKey = null;
                   for (let alias of COLS.id) { if (alias in km) { idKey = km[alias]; break; } }
-                  if (idKey && String(attData[i][idKey]).trim().toUpperCase() === id) {
+                  if (idKey && String(attData[i][idKey]).trim().toUpperCase() === currentData.empId) {
                     currentData.attRow = attData[i];
                     currentData.attKeyMap = km;
                     break;
@@ -1723,7 +1679,6 @@
           } catch(e) { console.error("Error loading attendance for month", e); }
         }
 
-        setLoginMessage(null, 'info');
         showLoadingName(pick('name') || 'Employee');
         const waitMore = LOADING_MIN_MS - (Date.now() - startedAt);
         if (waitMore > 0) await sleep(waitMore);
@@ -1734,15 +1689,11 @@
 
       } catch (error) {
         console.error(error);
-        if (error.message === 'MASTER_NOT_FOUND') {
-          setLoginMessage('msgFileNotFound', 'error');
-        } else {
-          setLoginMessage('msgSystem', 'error');
-        }
+        setLoginMessage('msgSystem', 'error');
       } finally {
         if (!success) hideLoadingOverlay();
         loginBusy = false;
-        btn.disabled = false;
+        loginBtn.disabled = false;
       }
     }
 
@@ -1889,7 +1840,6 @@
       let statusShown = statusRaw;
       
       if (lwd && String(lwd).trim() !== '' && String(lwd).trim() !== '-') {
-        // If LWD has a date, automatically set status to Resigned
         statusKey = 'resigned';
       } else {
         const su = statusRaw.toUpperCase();
@@ -1906,7 +1856,6 @@
 
       const badge = document.getElementById('modalStatus');
       badge.textContent = statusShown;
-      // Use status-inactive styling (Red) for Resigned as well
       badge.className = 'status-badge ' + (statusKey === 'active' ? 'status-active' : 'status-inactive');
 
       const aboutBadge = document.getElementById('displayStatus');
@@ -1935,7 +1884,6 @@
       let cntPresent = 0, cntAbsent = 0, cntHalf = 0;
       let cardsAdded = 0;
 
-      // Loop over attendance row if it exists
       if (d.attRow) {
         for (const key in d.attRow) {
           const cleanKey = String(key).trim();
@@ -2093,7 +2041,7 @@
     }
 
     // ------------------------------------------------------------
-    // Session timer
+    // Session timer & Logout
     // ------------------------------------------------------------
     const SESSION_SECONDS = 120;
     let sessionTimerId = null;
@@ -2136,19 +2084,21 @@
       setLoginMessage('msgSessionEnded', 'error');
     }
 
-    // ------------------------------------------------------------
-    // Logout
-    // ------------------------------------------------------------
     function logout() {
       stopSessionTimer();
       closeStaffModal();
       closePdfChoice();
       currentData = null;
-      document.getElementById('empId').value = '';
+      expectedPassword = '';
       
+      document.getElementById('empId').value = '';
+      document.getElementById('empPwd').value = '';
+      
+      document.getElementById('idStatus').className = 'input-status';
+      document.getElementById('idStatus').style.opacity = '1'; // Reset opacity
+      document.getElementById('pwdStatus').className = 'input-status';
+      document.getElementById('pwdGroup').style.display = 'none';
       document.getElementById('loginBtn').classList.remove('show-btn');
-      document.getElementById('liveValidation').textContent = '';
-      document.getElementById('liveValidation').className = 'live-val';
       
       setLoginMessage(null, 'info');
       document.getElementById('progressFill').style.width = '0%';
